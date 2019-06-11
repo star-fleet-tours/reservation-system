@@ -1,0 +1,141 @@
+body {
+    font-family: Raleway, "DejaVu Sans", "Open Sans", "Liberation Sans", Helvetica, Arial, sans-serif;
+    color: var(--theme-fg-alt-color);
+    background: var(--theme-bg-color);
+    font-size: 1.1rem;
+    margin-top: 56px;
+    min-width: 315px;
+}
+
+#menu-logo a {
+    padding-top: 15px;
+    font-size: 11px;
+}
+.navbar-brand {
+    line-height: inherit;
+}
+
+.navbar {
+    background: var(--theme-bg-color);
+    box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.6);
+    min-width: 315px;
+}
+.navbar-brand, .starfleet-font {
+    font-family: "bitsumishiregular", Raleway, "DejaVu Sans", "Open Sans", "Liberation Sans", Helvetica, Arial, sans-serif;
+}
+
+.rule-under-heading {
+    position: inherit;
+    margin-left: auto;
+    margin-right: auto;
+    content: "";
+    width: 50px;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background: var(--theme-accent-color);
+    margin-bottom: 1rem;
+}
+
+.alt-bg-section {
+    padding: 15px 0px;
+    background: var(--theme-bg-alt-color);
+}
+
+.hidden {
+    display: none;
+}
+.btn-increment, .btn-decrement {
+    min-width: 2rem;
+}
+
+input[type="number"]:invalid {
+    color: #ff0000;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
+
+a, a:hover {
+    color: var(--theme-accent-color);
+}
+
+input.shirt-qty {
+    max-width: 3.5rem;
+}
+
+input#accept-terms {
+    transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+}
+
+div#accept-terms-wrapper {
+    padding-top: 10px;
+}
+small#fine-print {
+    padding-top: 20px;
+}
+
+.StripeElement {
+  background-color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}
+
+.ElementsApp, .ElementsApp .InputElement {
+  color: #32325d;line-height: 24px;font-family: "Helvetica Neue", Helvetica, sans-serif;font-size: 16px;height: 24px;-webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.ElementsApp:not(.is-autofilled) .InputElement:-webkit-autofill {
+  color: #32325d;
+  -webkit-text-fill-color: #32325d;
+}
+.ElementsApp .InputElement + .Input-placeholder--ie {
+  opacity: 1;color: #aab7c4;
+}
+.ElementsApp .InputElement::-webkit-input-placeholder {
+  opacity: 1;color: #aab7c4;
+}
+.ElementsApp .InputElement::-moz-placeholder {
+  opacity: 1;color: #aab7c4;
+}
+.ElementsApp .InputElement:-ms-input-placeholder {
+  opacity: 1;color: #aab7c4;
+}
+.ElementsApp .InputElement::placeholder {
+  opacity: 1;color: #aab7c4;
+}
+.ElementsApp .InputElement.is-invalid {
+  color: #fa755a;
+}
+.ElementsApp:not(.is-autofilled) .InputElement.is-invalid:-webkit-autofill {
+  color: #fa755a;
+  -webkit-text-fill-color: #fa755a;
+}
+.ElementsApp.is-invalid .Icon-fill--invalid {
+  fill: #fa755a;
+}

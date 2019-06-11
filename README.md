@@ -1,0 +1,1 @@
+This is a highly-specialized e-commerce platform developed with the unique needs of the Star✦Fleet Tours group in mind. The goal is to automate as much of the booking, payment processing, reservation management, and boat assignment processes as possible.

@@ -1,0 +1,34 @@
+{
+    "name": "star-fleet-tours/reservation",
+    "description": "A reservation system for Star Fleet Tours.",
+    "homepage": "https://github.com/star-fleet-tours",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Evan Coury",
+            "email": "me@evancoury.com",
+            "homepage": "https://evan.dev/"
+        }
+    ],
+    "require": {
+        "php": ">=5.6",
+        "bryanjhv/slim-session": "~3.0",
+        "hashids/hashids": "^4.0",
+        "monolog/monolog": "^1.17",
+        "predis/predis": "^1.1",
+        "slim/php-view": "^2.0",
+        "slim/slim": "^3.1",
+        "stripe/stripe-php": "^6.37",
+        "vlucas/phpdotenv": "^3.3"
+    },
+    "config": {
+        "process-timeout": 0,
+        "sort-packages": true
+    },
+    "scripts": {
+        "start": "php -S localhost:8080 -t public"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master"
+    }
+}

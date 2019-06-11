@@ -1,0 +1,35 @@
+<style>
+#total-price {
+    display: none !important;
+}
+</style>
+<div class="alt-bg-section">
+    <form action="/complete" method="post" class="container justify-content-center mb-5" id="launch-form">
+
+    <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Review</legend></fieldset>
+
+    <? var_dump($reservation) ?>
+
+
+    <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Pay</legend></fieldset>
+
+    <? if ($reservation['skipStripe']): ?>
+        <p>No payment is required. Click next to proceed...</p>
+    <? else: ?>
+        <? include __DIR__ . '/stripe-input.phtml' ?>
+    <? endif; ?>
+
+    <button class="button btn btn-warning float-right btn-lg" type="submit">Complete Reservation &raquo;</button><br>
+    </form>
+</div>
+
+<script>
+window.addEventListener( "pageshow", function (event) {
+  var historyTraversal = event.persisted ||
+                         ( typeof window.performance != "undefined" &&
+                              window.performance.navigation.type === 2 );
+  if ( historyTraversal ) {
+    window.location.reload(true);
+  }
+});
+</script>

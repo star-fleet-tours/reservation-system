@@ -1,0 +1,66 @@
+
+    <div class="form-group form-row justify-content-center">
+    <label for="card-element" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">
+    Credit or Debit Card:
+    </label>
+    <div id="card-element" class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+    <!-- A Stripe Element will be inserted here. -->
+    </div>
+
+    <!-- Used to display Element errors. -->
+    <div id="card-errors" role="alert"></div>
+    </div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script type="text/javascript">
+var stripe = Stripe('<?= $stripePubKey ?>');
+var elements = stripe.elements();
+var style = {
+  base: {
+    color: '#303238',
+    fontSize: '16px',
+    //color: "#32325d",
+    fontSmoothing: 'antialiased',
+    '::placeholder': {
+      color: '#aaa',
+    },
+  },
+  invalid: {
+    color: '#e5424d',
+    ':focus': {
+      color: '#303238',
+    },
+  },
+};
+var card = elements.create('card', {style: style});
+card.mount('#card-element');
+card.addEventListener('change', function(event) {
+  var displayError = document.getElementById('card-errors');
+  if (event.error) {
+    displayError.textContent = event.error.message;
+  } else {
+    displayError.textContent = '';
+  }
+});
+var form = document.getElementById('launch-form');
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+  stripe.createToken(card).then(function(result) {
+    if (result.error) {
+      var errorElement = document.getElementById('card-errors');
+      errorElement.textContent = result.error.message;
+    } else {
+      stripeTokenHandler(result.token);
+    }
+  });
+});
+function stripeTokenHandler(token) {
+  var form = document.getElementById('launch-form');
+  var hiddenInput = document.createElement('input');
+  hiddenInput.setAttribute('type', 'hidden');
+  hiddenInput.setAttribute('name', 'stripeToken');
+  hiddenInput.setAttribute('value', token.id);
+  form.appendChild(hiddenInput);
+  form.submit();
+}
+</script>
