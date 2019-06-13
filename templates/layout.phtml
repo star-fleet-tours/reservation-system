@@ -26,11 +26,13 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top justify-content-between">
         <div class="container">
             <a href="#" class="navbar-brand">Star✦Fleet Tours</a>
+                <?php if (isset($totalInTopBar)): ?>
                 <ul class="navbar-nav ml-auto" id="total-price">
                     <li class="nav-item active">
                     <span class="nav-link"><strong>Total:</strong> $<span id="cart-total">0.00</span></span>
                     </li>
                 </ul>
+                <?php endif ?>
         </div>
     </nav>
     <?=$content?>

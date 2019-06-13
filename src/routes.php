@@ -9,6 +9,7 @@ return function (App $app) {
     $container = $app->getContainer();
 
     $app->get('/', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        $args['totalInTopBar'] = true;
         if (isset($_GET['discountCode'])) {
             $discount = $container->get('redis')->hGetAll("$currentMission:discount:" . $_GET['discountCode']);
             if ($discount) {
@@ -132,5 +133,22 @@ return function (App $app) {
 
     $app->get('/reservation/{id}', function (Request $request, Response $response, array $args) use ($container) {
         return $container->get('renderer')->render($response, 'reservation.phtml', $args);
+    });
+
+    $app->get('/admin/login', function (Request $request, Response $response, array $args) use ($container) {
+        return $container->get('renderer')->render($response, 'admin/login.phtml', $args);
+    });
+    $app->post('/admin/login', function (Request $request, Response $response, array $args) use ($container) {
+        if (!password_verify($_POST['password'], getenv('ADMIN_PASS'))) return $response->withRedirect('/admin/login');
+        $container->get('session')->admin = true;
+        return $response->withRedirect('/admin');
+    });
+    $app->get('/admin/logout', function (Request $request, Response $response, array $args) use ($container) {
+        $container->session->delete('admin');
+        return $response->withRedirect('/admin/login');
+    });
+    $app->get('/admin', function (Request $request, Response $response, array $args) use ($container) {
+        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
+        return $container->get('renderer')->render($response, 'admin/index.phtml', $args);
     });
 };
