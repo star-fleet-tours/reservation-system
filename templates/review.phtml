@@ -14,7 +14,7 @@
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Pay</legend></fieldset>
 
     <? if ($reservation['skipStripe']): ?>
-        <p>No payment is required. Click next to proceed...</p>
+        <p>No payment is required. Click "Complete Reservation" to proceed...</p>
     <? else: ?>
         <? include __DIR__ . '/stripe-input.phtml' ?>
     <? endif; ?>
