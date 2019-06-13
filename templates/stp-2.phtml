@@ -17,10 +17,10 @@
         <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
             <div class="input-group">
                 <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
-                <input type="number" id="upper-qty" name="upperQty" data-price="75" min="0" max="<?= $inventory['upper'] ?>" step="1" value="0" pattern="[0-9]*" class="ticket price-calc form-control form-control-lg text-center" aria-describedby="upper-qty-hint">
+                <input type="number" id="upper-qty" name="upperQty" data-price="<?= $prices['upper'] ?>" min="0" max="<?= $inventory['upper'] ?>" step="1" value="0" pattern="[0-9]*" class="ticket price-calc form-control form-control-lg text-center" aria-describedby="upper-qty-hint">
                 <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
             </div>
-            <span id="upper-qty-hint" class="form-text text-center">$75 per person (<?= $inventory['upper'] ?> remaining)</span>
+            <span id="upper-qty-hint" class="form-text text-center">$<?= $prices['upper'] ?> per person (<?= $inventory['upper'] ?> remaining)</span>
         </div>
     </div>
 
@@ -29,10 +29,10 @@
         <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
             <div class="input-group">
                 <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
-                <input type="number" id="standard-qty" name="standardQty" data-price="65" min="0" max="<?= $inventory['standard'] ?>" step="1" value="0" pattern="[0-9]*" class="ticket price-calc form-control form-control-lg text-center" aria-describedby="standard-qty-hint">
+                <input type="number" id="standard-qty" name="standardQty" data-price="<?= $prices['standard'] ?>" min="0" max="<?= $inventory['standard'] ?>" step="1" value="0" pattern="[0-9]*" class="ticket price-calc form-control form-control-lg text-center" aria-describedby="standard-qty-hint">
                 <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
             </div>
-            <span id="standard-qty-hint" class="form-text text-center">$65 per person (<?= $inventory['standard'] ?> remaining)</span>
+            <span id="standard-qty-hint" class="form-text text-center">$<?= $prices['standard']; ?> per person (<?= $inventory['standard'] ?> remaining)</span>
         </div>
     </div>
 
@@ -94,10 +94,10 @@
         <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
             <div class="input-group">
                 <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
-                <input type="number" id="private-qty" name="privateQty" data-price="95" min="0" max="<?= $inventory['private'] ?>" step="1" value="0" pattern="[0-9]*" class="ticket price-calc form-control form-control-lg text-center" aria-describedby="private-qty-hint">
+                <input type="number" id="private-qty" name="privateQty" data-price="<?= $prices['private']; ?>" min="0" max="<?= $inventory['private'] ?>" step="1" value="0" pattern="[0-9]*" class="ticket price-calc form-control form-control-lg text-center" aria-describedby="private-qty-hint">
                 <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
             </div>
-            <span id="private-qty-hint" class="form-text text-center">$95 per person (<?= $inventory['private'] ?> remaining)</span>
+            <span id="private-qty-hint" class="form-text text-center">$<?= $prices['private']; ?> per person (<?= $inventory['private'] ?> remaining)</span>
         </div>
     </div>
 </fieldset>
@@ -118,10 +118,10 @@
         <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
             <div class="input-group">
                 <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
-                <input type="number" id="tour-qty" name="tourQty" data-price="80" min="0" max="<?= $inventory['tour'] ?>" step="1" value="0" pattern="[0-9]*" class="ticket price-calc form-control form-control-lg text-center" aria-describedby="tour-qty-hint">
+                <input type="number" id="tour-qty" name="tourQty" data-price="<?= $prices['tour']; ?>" min="0" max="<?= $inventory['tour'] ?>" step="1" value="0" pattern="[0-9]*" class="ticket price-calc form-control form-control-lg text-center" aria-describedby="tour-qty-hint">
                 <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
             </div>
-            <span id="tour-qty-hint" class="form-text text-center">$80 per person (<?= $inventory['tour'] ?> remaining)</span>
+            <span id="tour-qty-hint" class="form-text text-center">$<?= $prices['tour']; ?> per person (<?= $inventory['tour'] ?> remaining)</span>
 
             <div class="alert alert-success hidden text-center mt-1" role="alert" id="discount-text"></div>
         </div>
@@ -186,7 +186,7 @@
                     <span class="form-text text-center">S</span>
                     <div class="input-group justify-content-center">
                         <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
-                        <input type="number" id="shirt-qty-sm" name="shirtQtySm" data-price="20" min="0" step="1" value="0" pattern="[0-9]*" class="price-calc form-control text-center shirt-qty" aria-describedby="shirt-qty-hint">
+                        <input type="number" id="shirt-qty-sm" name="shirtQtySm" data-price="<?= $prices['shirt']; ?>" min="0" step="1" value="0" pattern="[0-9]*" class="price-calc form-control text-center shirt-qty" aria-describedby="shirt-qty-hint">
                         <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
                     </div>
                 </div>
@@ -195,7 +195,7 @@
                     <span class="form-text text-center">M</span>
                     <div class="input-group justify-content-center">
                         <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
-                        <input type="number" id="shirt-qty-md" name="shirtQtyMd" data-price="20" min="0" step="1" value="0" pattern="[0-9]*" class="price-calc form-control text-center shirt-qty" aria-describedby="shirt-qty-hint">
+                        <input type="number" id="shirt-qty-md" name="shirtQtyMd" data-price="<?= $prices['shirt']; ?>" min="0" step="1" value="0" pattern="[0-9]*" class="price-calc form-control text-center shirt-qty" aria-describedby="shirt-qty-hint">
                         <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
                     </div>
                 </div>
@@ -204,7 +204,7 @@
                     <span class="form-text text-center">L</span>
                     <div class="input-group justify-content-center">
                         <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
-                        <input type="number" id="shirt-qty-lg" name="shirtQtyLg" data-price="20" min="0" step="1" value="0" pattern="[0-9]*" class="price-calc form-control text-center shirt-qty" aria-describedby="shirt-qty-hint">
+                        <input type="number" id="shirt-qty-lg" name="shirtQtyLg" data-price="<?= $prices['shirt']; ?>" min="0" step="1" value="0" pattern="[0-9]*" class="price-calc form-control text-center shirt-qty" aria-describedby="shirt-qty-hint">
                         <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
                     </div>
                 </div>
@@ -213,7 +213,7 @@
                     <span class="form-text text-center">XL</span>
                     <div class="input-group justify-content-center">
                         <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
-                        <input type="number" id="shirt-qty-xl" name="shirtQtyXl" data-price="20" min="0" step="1" value="0" pattern="[0-9]*" class="price-calc form-control text-center shirt-qty" aria-describedby="shirt-qty-hint">
+                        <input type="number" id="shirt-qty-xl" name="shirtQtyXl" data-price="<?= $prices['shirt']; ?>" min="0" step="1" value="0" pattern="[0-9]*" class="price-calc form-control text-center shirt-qty" aria-describedby="shirt-qty-hint">
                         <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
                     </div>
                 </div>
@@ -222,7 +222,7 @@
                     <span class="form-text text-center">2XL</span>
                     <div class="input-group justify-content-center">
                         <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
-                        <input type="number" id="shirt-qty-xxl" name="shirtQty2xl" data-price="20" min="0" step="1" value="0" pattern="[0-9]*" class="price-calc form-control text-center shirt-qty" aria-describedby="shirt-qty-hint">
+                        <input type="number" id="shirt-qty-xxl" name="shirtQty2xl" data-price="<?= $prices['shirt']; ?>" min="0" step="1" value="0" pattern="[0-9]*" class="price-calc form-control text-center shirt-qty" aria-describedby="shirt-qty-hint">
                         <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
                     </div>
                 </div>
@@ -231,13 +231,13 @@
                     <span class="form-text text-center">3XL</span>
                     <div class="input-group justify-content-center">
                         <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
-                        <input type="number" id="shirt-qty-xxxl" name="shirtQty3xl" data-price="20" min="0" step="1" value="0" pattern="[0-9]*" class="price-calc form-control text-center shirt-qty" aria-describedby="shirt-qty-hint">
+                        <input type="number" id="shirt-qty-xxxl" name="shirtQty3xl" data-price="<?= $prices['shirt']; ?>" min="0" step="1" value="0" pattern="[0-9]*" class="price-calc form-control text-center shirt-qty" aria-describedby="shirt-qty-hint">
                         <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
                     </div>
                 </div>
             </div>
             <div class="row justify-content-center mt-3">
-                <span id="shirt-qty-hint" class="form-text text-center">All sizes $20 each</span>
+                <span id="shirt-qty-hint" class="form-text text-center">All sizes $<?= $prices['shirt']; ?> each</span>
             </div>
         </div>
     </div>
@@ -255,10 +255,10 @@
         <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
             <div class="input-group">
                 <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
-                <input type="number" id="cookie-qty" name="cookieQty" data-price="2" min="0" step="1" value="0" pattern="[0-9]*" class="price-calc form-control form-control-lg text-center" aria-describedby="cookie-qty-hint">
+                <input type="number" id="cookie-qty" name="cookieQty" data-price="<?= $prices['cookie']; ?>" min="0" step="1" value="0" pattern="[0-9]*" class="price-calc form-control form-control-lg text-center" aria-describedby="cookie-qty-hint">
                 <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
             </div>
-            <span id="cookie-qty-hint" class="form-text text-center">$2 each</span>
+            <span id="cookie-qty-hint" class="form-text text-center">$<?= $prices['cookie']; ?> each</span>
         </div>
     </div>
     <div class="form-group form-row justify-content-center">

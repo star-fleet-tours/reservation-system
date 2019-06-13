@@ -17,19 +17,20 @@ return function (App $app) {
             }
         }
         $args['inventory'] = $container->get('redis')->hGetAll("$currentMission:inventory");
+        $args['prices'] = $container->get('redis')->hGetAll("$currentMission:prices");
         return $container->get('renderer')->render($response, $currentMission . '.phtml', $args);
     });
 
     $app->post('/review', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         // TODO: Server-side validation... Someday.
+        $prices = $container->get('redis')->hGetAll("$currentMission:prices");
         $reservation = $_POST;
-
-        $reservation['upperPrice']         = 75;
-        $reservation['standardPrice']      = 65;
-        $reservation['privatePrice']       = 95;
-        $reservation['tourPrice']          = 80;
-        $reservation['shirtPrice']         = 20;
-        $reservation['cookiePrice']        = 2;
+        $reservation['upperPrice']         = $prices['upper'];
+        $reservation['standardPrice']      = $prices['standard'];
+        $reservation['privatePrice']       = $prices['private'];
+        $reservation['tourPrice']          = $prices['tour'];
+        $reservation['shirtPrice']         = $prices['shirt'];
+        $reservation['cookiePrice']        = $prices['cookie'];
         $reservation['tourDiscountValue']  = 10;
 
         $totalPrice = 0;
