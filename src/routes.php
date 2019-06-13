@@ -151,4 +151,9 @@ return function (App $app) {
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
         return $container->get('renderer')->render($response, 'admin/index.phtml', $args);
     });
+    $app->get('/admin/checkin/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
+        $args['reservation'] = $container->get('redis')->hGetAll("$currentMission:reservation:{$args['id']}");
+        return $container->get('renderer')->render($response, 'admin/checkin.phtml', $args);
+    });
 };
