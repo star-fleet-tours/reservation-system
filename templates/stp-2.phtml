@@ -5,7 +5,7 @@
 
 <? if (isset($discountCode)): ?>
     <div class="alert alert-success text-center" role="alert">
-        <b>Discount code "<?= $discountCode ?>" activated!</b> You will see your discount applied on the confirmation page.
+    <b>Discount code "<?= $discountCode ?>" activated!</b> You will see your $<?= $discount['amount'] ?> discount applied on the confirmation page.
     </div>
     <input type="hidden" name="discountCode" value="<?= $discountCode ?>">
 <? endif ?>
