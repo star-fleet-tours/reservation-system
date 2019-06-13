@@ -50,9 +50,8 @@ return function (App $app) {
 
         $reservation['launchQty']         = $reservation['upperQty'] + $reservation['standardQty'] + $reservation['privateQty'];
         $reservation['tourDiscountQty']   = (int) min($reservation['launchQty'], $reservation['tourQty']);
-        $reservation['tourDiscountAmount'] = $reservation['tourDiscountValue'] * $reservation['tourDiscountQty'];
 
-        $totalPrice -= $reservation['tourDiscountAmount'];
+        $totalPrice -= $reservation['tourDiscountValue'] * $reservation['tourDiscountQty'];
 
         if (isset($reservation['discountCode'])) {
             $discount = $container->get('redis')->hGetAll("$currentMission:discount:" . $reservation['discountCode']);

@@ -8,8 +8,145 @@
 
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Review</legend></fieldset>
 
-    <? var_dump($reservation) ?>
+<table class="table table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Description</th>
+      <th scope="col">Price</th>
+      <th scope="col">Qty</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php if ($reservation['upperQty'] > 0): ?>
+    <tr>
+      <th scope="row">Upper Deck Launch Ticket</th>
+      <td>$<?= number_format($reservation['upperPrice'],2) ?>/ea</td>
+      <td><?= $reservation['upperQty'] ?></td>
+      <td>$<?= number_format($reservation['upperPrice'] * $reservation['upperQty'],2) ?></td>
+    </tr>
+    <?php endif; ?>
+    <?php if ($reservation['standardQty'] > 0): ?>
+    <tr>
+      <!-- TODO: Show boat preferences -->
+      <th scope="row">Standard Launch Ticket</th>
+      <td>$<?= number_format($reservation['standardPrice'],2) ?>/ea</td>
+      <td><?= $reservation['standardQty'] ?></td>
+      <td>$<?= number_format($reservation['standardPrice'] * $reservation['standardQty'],2) ?></td>
+    </tr>
+    <?php endif; ?>
+    <?php if ($reservation['privateQty'] > 0): ?>
+    <tr>
+      <th scope="row">Private Boat Launch Ticket</th>
+      <td>$<?= number_format($reservation['privatePrice'],2) ?>/ea</td>
+      <td><?= $reservation['privateQty'] ?></td>
+      <td>$<?= number_format($reservation['privatePrice'] * $reservation['privateQty'],2) ?></td>
+    </tr>
+    <?php endif; ?>
 
+    <?php if ($reservation['tourQty'] > 0): ?>
+    <tr>
+      <!-- TODO: Show time preferences -->
+      <th scope="row">Pre-Launch Tour</th>
+      <td>$<?= number_format($reservation['tourPrice'],2) ?>/ea</td>
+      <td><?= $reservation['tourQty'] ?></td>
+      <td>$<?= number_format($reservation['tourPrice'] * $reservation['tourQty'],2) ?></td>
+    </tr>
+    <?php endif; ?>
+    <?php if ($reservation['shirtQtySm'] > 0): ?>
+    <tr>
+      <th scope="row">Mission T-Shirt (Small)</th>
+      <td>$<?= number_format($reservation['shirtPrice'],2) ?>/ea</td>
+      <td><?= $reservation['shirtQtySm'] ?></td>
+      <td>$<?= number_format($reservation['shirtPrice'] * $reservation['shirtQtySm'],2) ?></td>
+    </tr>
+    <?php endif; ?>
+    <?php if ($reservation['shirtQtyMd'] > 0): ?>
+    <tr>
+      <th scope="row">Mission T-Shirt (Medium)</th>
+      <td>$<?= number_format($reservation['shirtPrice'],2) ?>/ea</td>
+      <td><?= $reservation['shirtQtyMd'] ?></td>
+      <td>$<?= number_format($reservation['shirtPrice'] * $reservation['shirtQtyMd'],2) ?></td>
+    </tr>
+    <?php endif; ?>
+    <?php if ($reservation['shirtQtyLg'] > 0): ?>
+    <tr>
+      <th scope="row">Mission T-Shirt (Large)</th>
+      <td>$<?= number_format($reservation['shirtPrice'],2) ?>/ea</td>
+      <td><?= $reservation['shirtQtyLg'] ?></td>
+      <td>$<?= number_format($reservation['shirtPrice'] * $reservation['shirtQtyLg'],2) ?></td>
+    </tr>
+    <?php endif; ?>
+    <?php if ($reservation['shirtQtyXl'] > 0): ?>
+    <tr>
+      <th scope="row">Mission T-Shirt (XL)</th>
+      <td>$<?= number_format($reservation['shirtPrice'],2) ?>/ea</td>
+      <td><?= $reservation['shirtQtyXl'] ?></td>
+      <td>$<?= number_format($reservation['shirtPrice'] * $reservation['shirtQtyXl'],2) ?></td>
+    </tr>
+    <?php endif; ?>
+    <?php if ($reservation['shirtQty2xl'] > 0): ?>
+    <tr>
+      <th scope="row">Mission T-Shirt (2XL)</th>
+      <td>$<?= number_format($reservation['shirtPrice'],2) ?>/ea</td>
+      <td><?= $reservation['shirtQty2xl'] ?></td>
+      <td>$<?= number_format($reservation['shirtPrice'] * $reservation['shirtQty2xl'],2) ?></td>
+    </tr>
+    <?php endif; ?>
+    <?php if ($reservation['shirtQty2xl'] > 0): ?>
+    <tr>
+      <th scope="row">Mission T-Shirt (3XL)</th>
+      <td>$<?= number_format($reservation['shirtPrice'],2) ?>/ea</td>
+      <td><?= $reservation['shirtQty3xl'] ?></td>
+      <td>$<?= number_format($reservation['shirtPrice'] * $reservation['shirtQty3xl'],2) ?></td>
+    </tr>
+    <?php endif; ?>
+    <?php if ($reservation['cookieQty'] > 0): ?>
+    <tr>
+      <th scope="row">Traditional Launch Day Cookie</th>
+      <td>$<?= number_format($reservation['cookiePrice'],2) ?>/ea</td>
+      <td><?= $reservation['cookieQty'] ?></td>
+      <td>$<?= number_format($reservation['cookiePrice'] * $reservation['cookieQty'],2) ?></td>
+    </tr>
+    <?php endif; ?>
+    <tr>
+      <td></td>
+      <td></td>
+      <th scope="row">Subtotal</th>
+      <td>$<?= number_format($reservation['subTotal'],2) ?></td>
+    </tr>
+    <?php if ($reservation['tourDiscountQty'] > 0): ?>
+    <tr>
+      <td></td>
+      <td></td>
+      <th scope="row">Tour + Launch Discount</th>
+      <td>-$<?= number_format($reservation['tourDiscountValue'] * $reservation['tourDiscountQty'],2) ?></td>
+    </tr>
+    <?php endif; ?>
+    <?php if (isset($reservation['discountCode'])): ?>
+    <tr>
+      <td></td>
+      <td></td>
+      <th scope="row">Discount Code "<?= $reservation['discountCode'] ?>"</th>
+      <td>-$<?= number_format($reservation['discountCodeAmount'],2) ?></td>
+    </tr>
+    <?php endif; ?>
+    <?php if ($reservation['donation'] > 0): ?>
+    <tr>
+      <td></td>
+      <td></td>
+      <th scope="row">Donation</th>
+      <td>$<?= number_format($reservation['donation'],2) ?></td>
+    </tr>
+    <?php endif; ?>
+    <tr>
+      <td></td>
+      <td></td>
+      <th scope="row">Payment Due</th>
+      <td>$<?= number_format($reservation['totalPaymentDue'],2) ?></td>
+    </tr>
+  </tbody>
+</table>
 
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Pay</legend></fieldset>
 
