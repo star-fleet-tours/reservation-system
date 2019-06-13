@@ -29,6 +29,6 @@ return function (App $app) {
     };
 
     $container['hashids'] = function ($c) {
-          return new \Hashids\Hashids('sft', 4, '0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ');
+          return new \Hashids\Hashids(getenv('HASHIDS_SALT'), 4, '0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ');
     };
 };

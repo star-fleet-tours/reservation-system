@@ -16,6 +16,7 @@ $dotenv->load();
 $dotenv->required('DISPLAY_ERRORS')->isBoolean();
 $dotenv->required('STRIPE_PUBLIC_KEY');
 $dotenv->required('STRIPE_PRIVATE_KEY');
+$dotenv->required('HASHIDS_SALT');
 
 // Instantiate the app
 $settings = require __DIR__ . '/../config/settings.php';
