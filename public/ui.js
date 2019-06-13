@@ -114,12 +114,21 @@ $(document).ready(function() {
         );
     }
 
-    $("form#launch-form").on("submit", function(event) {
+    $("form#launch-form").submit(function(e) {
         if (!moreThanOneTicket()) {
-            event.preventDefault();
+            e.preventDefault();
             alert("You must purchase at least one launch or tour ticket.");
         }
     })
+
+    $("form.submit-once").submit(function(e){
+        if($(this).hasClass("form-submitted")){
+            console.log("Double submit prevented.");
+            e.preventDefault();
+            return;
+        }
+        $(this).addClass("form-submitted");
+    });
 
     // Improve scrolling to invalid inputs
     var form = $("#launch-form");

@@ -88,25 +88,33 @@ return function (App $app) {
         }
         $reservation = $container->session->reservation;
 
-        \Stripe\Stripe::setApiKey(getenv('STRIPE_PRIVATE_KEY'));
-        $customer = \Stripe\Customer::create([
-            'source' => $_POST['stripeToken'],
-            'email' => $reservation['reservationEmail'],
-        ]);
+        $i = 1;
+        do {
+            $reservationNumber = count($container->get('redis')->zRevRangeByScore("$currentMission:reservations", '+inf', '-inf')) + 1000 + $i++;
+            $reservationID     = $container->get('hashids')->encode($reservationNumber);
+            $idCreated         = $container->get('redis')->hSetNx("$currentMission:reservation-ids", $reservationID, $reservationNumber);
+        } while(!$idCreated);
 
-        $charge = \Stripe\Charge::create([
-            'amount' => $reservation['totalPaymentDue'] * 100,
-            'currency' => 'usd',
-            'description' => "Star Fleet Tours " . strtoupper($currentMission) . " Mission",
-            'statement_descriptor' => "SFT " . strtoupper($currentMission),
-            'customer' => $customer->id,
-        ]);
+        if (!$reservation['skipStripe']) {
+            \Stripe\Stripe::setApiKey(getenv('STRIPE_PRIVATE_KEY'));
+            $customer = \Stripe\Customer::create([
+                'source'          => $_POST['stripeToken'],
+                'email'           => $reservation['reservationEmail'],
+                'idempotency_key' => "create-customer-$reservationID",
+            ]);
 
-        $reservation['stripeCustomerID'] = $customer->id;
+            $charge = \Stripe\Charge::create([
+                'amount'               => $reservation['totalPaymentDue'] * 100,
+                'currency'             => 'usd',
+                'description'          => "Star Fleet Tours " . strtoupper($currentMission) . " Mission - $reservationID",
+                'statement_descriptor' => "SFT " . strtoupper($currentMission) . " $reservationID",
+                'customer'             => $customer->id,
+                'idempotency_key'      => "create-charge-$reservationID",
+            ]);
 
-        $reservationID = $container->get('hashids')->encode(
-            count($container->get('redis')->zRevRangeByScore("$currentMission:reservations", '+inf', '-inf')) + 1001
-        );
+            $reservation['stripeCustomerID'] = $customer->id;
+        }
+
         $container->get('redis')->hMSet("$currentMission:reservation:$reservationID", $reservation);
         $container->get('redis')->zAdd("$currentMission:reservations", microtime(true), "$currentMission:reservation:$reservationID");
 
