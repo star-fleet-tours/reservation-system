@@ -1,11 +1,17 @@
-<div class="container">
+<style>
+#qrcodeCanvas {
+    background-color: #FFF;
+}
+
+</style>
+<div class="container mt-5 text-center">
     <h1>Your confirmation code is: <?= $id ?></h1>
-    <div id="qrcodeCanvas"></div>
+    <div class="p-2 mx-auto mt-5 w-auto d-inline-block rounded" id="qrcodeCanvas"></div>
 </div>
 <script type="text/javascript">
 afterJQ.push(function() {
     $('#qrcodeCanvas').qrcode({
-        render: "div",
+        render: "image",
         text: "https://book.star-fleet.tours/admin/checkin/<?= $id ?>"
     });
 });
