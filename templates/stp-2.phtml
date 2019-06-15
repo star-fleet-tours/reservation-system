@@ -8,6 +8,11 @@
         <b>Sorry!</b> Someone already reserved those tickets while you were ordering. Please try again.
     </div>
 <? endif ?>
+<? if (isset($_GET['paymentError'])): ?>
+    <div class="alert alert-danger text-center" role="alert">
+        <b>Sorry!</b> There was a problem processing your payment. Please try again.
+    </div>
+<? endif ?>
 <? if (isset($discountCode)): ?>
     <div class="alert alert-success text-center" role="alert">
     <b>Discount code "<?= $discountCode ?>" activated!</b> You will see your $<?= $discount['amount'] ?> discount applied on the next page.

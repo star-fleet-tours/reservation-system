@@ -146,23 +146,27 @@ return function (App $app) {
         } while(!$idCreated);
 
         if (!$reservation['skipStripe']) {
+            try {
             \Stripe\Stripe::setApiKey(getenv('STRIPE_PRIVATE_KEY'));
-            $customer = \Stripe\Customer::create([
-                'source'          => $_POST['stripeToken'],
-                'email'           => $reservation['reservationEmail'],
-            ],[
-                'idempotency_key' => "create-customer-$reservationID",
-            ]);
+                $customer = \Stripe\Customer::create([
+                    'source'          => $_POST['stripeToken'],
+                    'email'           => $reservation['reservationEmail'],
+                ],[
+                    'idempotency_key' => "create-customer-$reservationID",
+                ]);
 
-            $charge = \Stripe\Charge::create([
-                'amount'               => $reservation['totalPaymentDue'] * 100,
-                'currency'             => 'usd',
-                'description'          => "Star Fleet Tours " . strtoupper($currentMission) . " Mission - $reservationID",
-                'statement_descriptor' => "SFT " . strtoupper($currentMission) . " $reservationID",
-                'customer'             => $customer->id,
-            ],[
-                'idempotency_key'      => "create-charge-$reservationID",
-            ]);
+                $charge = \Stripe\Charge::create([
+                    'amount'               => $reservation['totalPaymentDue'] * 100,
+                    'currency'             => 'usd',
+                    'description'          => "Star Fleet Tours " . strtoupper($currentMission) . " Mission - $reservationID",
+                    'statement_descriptor' => "SFT " . strtoupper($currentMission) . " $reservationID",
+                    'customer'             => $customer->id,
+                ],[
+                    'idempotency_key'      => "create-charge-$reservationID",
+                ]);
+            } catch(\Exception $e) {
+                return $response->withRedirect('/?paymentError=true');
+            }
 
             $reservation['stripeCustomerID'] = $customer->id;
         }
