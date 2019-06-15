@@ -16,6 +16,8 @@ $dotenv->load();
 $dotenv->required('DISPLAY_ERRORS')->isBoolean();
 $dotenv->required('STRIPE_PUBLIC_KEY');
 $dotenv->required('STRIPE_PRIVATE_KEY');
+$dotenv->required('TICKET_SALE_TIME');
+$dotenv->required('EARLY_ACCESS_URL');
 $dotenv->required('HASHIDS_SALT');
 
 // Instantiate the app

@@ -31,6 +31,24 @@ return function (App $app) {
     };
 
     $app->get('/', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        if (time() < strtotime(getenv("TICKET_SALE_TIME"))) {
+            $args['ticketTime'] = strtotime(getenv("TICKET_SALE_TIME"));
+            return $container->get('renderer')->render($response, $currentMission . '-countdown.phtml', $args);
+        }
+        $args['totalInTopBar'] = true;
+        if (isset($_GET['discountCode'])) {
+            $discount = $container->get('redis')->hGetAll("$currentMission:discount:" . $_GET['discountCode']);
+            if ($discount) {
+                $args['discountCode'] = $_GET['discountCode'];
+                $args['discount'] = $discount;
+            }
+        }
+        $args['inventory'] = $container->get('redis')->hGetAll("$currentMission:inventory");
+        $args['prices'] = $container->get('redis')->hGetAll("$currentMission:prices");
+        return $container->get('renderer')->render($response, $currentMission . '.phtml', $args);
+    });
+
+    $app->get(getenv('EARLY_ACCESS_URL'), function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         $args['totalInTopBar'] = true;
         if (isset($_GET['discountCode'])) {
             $discount = $container->get('redis')->hGetAll("$currentMission:discount:" . $_GET['discountCode']);
