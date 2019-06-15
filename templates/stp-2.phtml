@@ -3,6 +3,11 @@
 
 <form action="/review" method="post" class="container justify-content-center" id="launch-form">
 
+<? if (isset($_GET['soldOut'])): ?>
+    <div class="alert alert-danger text-center" role="alert">
+        <b>Sorry!</b> Someone already reserved those tickets while you were ordering. Please try again.
+    </div>
+<? endif ?>
 <? if (isset($discountCode)): ?>
     <div class="alert alert-success text-center" role="alert">
     <b>Discount code "<?= $discountCode ?>" activated!</b> You will see your $<?= $discount['amount'] ?> discount applied on the next page.

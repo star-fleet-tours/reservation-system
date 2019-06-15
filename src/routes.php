@@ -8,6 +8,28 @@ return function (App $app) {
     $currentMission = 'stp-2';
     $container = $app->getContainer();
 
+    $inventoryCheck = new class($container, $currentMission) {
+        private $container;
+        private $currentMission;
+
+        public function __construct($container, $currentMission)
+        {
+            $this->container = $container;
+            $this->currentMission = $currentMission;
+        }
+
+        public function notEnoughTicketsForReservation($reservation)
+        {
+             $inventory = $this->container->get('redis')->hGetAll("{$this->currentMission}:inventory");
+             return (
+                 $reservation['upperQty'] > $inventory['upper'] ||
+                 $reservation['standardQty'] > $inventory['standard'] ||
+                 $reservation['privateQty'] > $inventory['private'] ||
+                 $reservation['tourQty'] > $inventory['tour']
+             );
+        }
+    };
+
     $app->get('/', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         $args['totalInTopBar'] = true;
         if (isset($_GET['discountCode'])) {
@@ -22,10 +44,13 @@ return function (App $app) {
         return $container->get('renderer')->render($response, $currentMission . '.phtml', $args);
     });
 
-    $app->post('/review', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+    $app->post('/review', function (Request $request, Response $response, array $args) use ($container, $currentMission, $inventoryCheck) {
+        $reservation = $_POST;
+        if ($inventoryCheck->notEnoughTicketsForReservation($reservation)) {
+            return $response->withRedirect('/?soldOut=true');
+        }
         // TODO: Server-side validation... Someday.
         $prices = $container->get('redis')->hGetAll("$currentMission:prices");
-        $reservation = $_POST;
         $reservation['upperPrice']         = $prices['upper'];
         $reservation['standardPrice']      = $prices['standard'];
         $reservation['privatePrice']       = $prices['private'];
@@ -74,20 +99,26 @@ return function (App $app) {
         return $response->withRedirect('/review');
     });
 
-    $app->get('/review', function (Request $request, Response $response, array $args) use ($container) {
+    $app->get('/review', function (Request $request, Response $response, array $args) use ($container, $inventoryCheck) {
         if (!$container->session->exists('reservation')) {
             return $response->withRedirect('/');
+        }
+        if ($inventoryCheck->notEnoughTicketsForReservation($container->session->reservation)) {
+            return $response->withRedirect('/?soldOut=true');
         }
 
         $args['reservation'] = $container->session->reservation;
         return $container->get('renderer')->render($response, 'review.phtml', $args);
     });
 
-    $app->post('/complete', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+    $app->post('/complete', function (Request $request, Response $response, array $args) use ($container, $currentMission, $inventoryCheck) {
         if (!$container->session->exists('reservation')) {
             return $response->withRedirect('/');
         }
         $reservation = $container->session->reservation;
+        if ($inventoryCheck->notEnoughTicketsForReservation($reservation)) {
+            return $response->withRedirect('/?soldOut=true');
+        }
 
         $i = 1;
         do {
@@ -101,6 +132,7 @@ return function (App $app) {
             $customer = \Stripe\Customer::create([
                 'source'          => $_POST['stripeToken'],
                 'email'           => $reservation['reservationEmail'],
+            ],[
                 'idempotency_key' => "create-customer-$reservationID",
             ]);
 
@@ -110,6 +142,7 @@ return function (App $app) {
                 'description'          => "Star Fleet Tours " . strtoupper($currentMission) . " Mission - $reservationID",
                 'statement_descriptor' => "SFT " . strtoupper($currentMission) . " $reservationID",
                 'customer'             => $customer->id,
+            ],[
                 'idempotency_key'      => "create-charge-$reservationID",
             ]);
 
