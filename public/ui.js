@@ -31,6 +31,10 @@ $(document).ready(function() {
         updateTotal();
     });
 
+    $("input#discount-code").on("propertychange change click keyup input paste", function(e) {
+        $(this).val($(this).val().toUpperCase());
+    });
+
     $("input#upper-qty, input#standard-qty, input#private-qty, input#tour-qty").on("propertychange change click keyup input paste", function(e) {
         var launchTicketQty = howManyLaunchTickets();
         var tourTicketQty = parseInt($("input#tour-qty").val());

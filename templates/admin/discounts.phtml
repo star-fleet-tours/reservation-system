@@ -1,0 +1,39 @@
+<form action="/admin/discounts" method="post" class="container justify-content-center" id="discount-form">
+    <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Create Discount Code</legend></fieldset>
+    <div class="form-group form-row justify-content-center">
+        <label for="small-qty" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Discount Code:</label>
+        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+            <input type="text" id="discount-code" name="discount-code" class="form-control form-control-lg" required>
+        </div>
+    </div>
+    <div class="form-group form-row justify-content-center">
+        <label for="donation" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Discount Amount:</label>
+        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+            <div class="input-group">
+                <div class="input-group-prepend"><span class="input-group-text">$</span></div>
+                <input type="number" id="donation" name="discount-amount" min="0.00" step="0.01" value="0.00" pattern="[0-9]*" class="form-control form-control-lg">
+            </div>
+        </div>
+    </div>
+    <div class="form-group form-row justify-content-center">
+        <div class="form-check col-9 col-sm-11 col-md-10 col-lg-8">
+            <button class="button btn btn-warning float-right btn-lg" type="submit">Create Discount Code &raquo;</button><br>
+        </div>
+    </div>
+
+    <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Existing Discount Codes</legend></fieldset>
+    <table class="table table-dark w-auto mx-auto">
+        <tr>
+            <th>Code</th>
+            <th class="text-right">Amount</th>
+            <th>Early Access</th>
+        </tr>
+        <?php foreach ($discounts as $code=>$discount): ?>
+        <tr>
+            <td><a href="https://book.star-fleet.tours/?discountCode=<?= $code ?>" target="_blank"><?= $code ?></a></td>
+            <td class="text-right">$<?= number_format($discount['amount'],2) ?></td>
+            <td><a href="https://book.star-fleet.tours<?= getenv('EARLY_ACCESS_URL') ?>?discountCode=<?= $code ?>" target="_blank"><?= $code ?></a></td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+</form>

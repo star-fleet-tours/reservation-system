@@ -202,6 +202,20 @@ return function (App $app) {
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
         return $container->get('renderer')->render($response, 'admin/index.phtml', $args);
     });
+    $app->get('/admin/discounts', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
+        $args['discounts'] = [];
+        foreach ($container->get('redis')->keys("$currentMission:discount:*") as $discountKey) {
+            $args['discounts'][str_replace("$currentMission:discount:", "", $discountKey)] = $container->get('redis')->hGetAll($discountKey);
+        }
+
+        return $container->get('renderer')->render($response, 'admin/discounts.phtml', $args);
+    });
+    $app->post('/admin/discounts', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
+        $container->get('redis')->hset("$currentMission:discount:{$_POST['discount-code']}", 'amount', $_POST['discount-amount']);
+        return $response->withRedirect('/admin/discounts');
+    });
     $app->get('/admin/checkin/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
         $args['reservation'] = $container->get('redis')->hGetAll("$currentMission:reservation:{$args['id']}");
