@@ -23,7 +23,7 @@ function updateTimer() {
     if (secondFloor <= 0 && minuteFloor <= 0) {
         clearInterval(countdownTimer);
         $('#countdown').html("TICKETS ARE NOW AVAILABLE!");
-        window.location.reload(true);
+        setTimeout(function() { location.reload(true); }, 1000);
     } else if (futureTime > currentTime) {
         $('#countdown').html("T-" + hourFloor.pad() + ":" + minuteFloor.pad() + ":" + secondFloor.pad());
     }
