@@ -27,12 +27,14 @@
             <th>Code</th>
             <th class="text-right">Amount</th>
             <th>Early Access</th>
+            <th>Delete</th>
         </tr>
         <?php foreach ($discounts as $code=>$discount): ?>
         <tr>
             <td><a href="https://book.star-fleet.tours/?discountCode=<?= $code ?>" target="_blank"><?= $code ?></a></td>
             <td class="text-right">$<?= number_format($discount['amount'],2) ?></td>
             <td><a href="https://book.star-fleet.tours<?= getenv('EARLY_ACCESS_URL') ?>?discountCode=<?= $code ?>" target="_blank"><?= $code ?></a></td>
+            <td><a href="/admin/discounts/delete/<?= $code ?>" onclick="return confirm('Are you sure?')">Delete</a></td>
         </tr>
         <?php endforeach; ?>
     </table>

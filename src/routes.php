@@ -216,6 +216,11 @@ return function (App $app) {
         $container->get('redis')->hset("$currentMission:discount:{$_POST['discount-code']}", 'amount', $_POST['discount-amount']);
         return $response->withRedirect('/admin/discounts');
     });
+    $app->get('/admin/discounts/delete/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
+        $container->get('redis')->del("$currentMission:discount:{$args['id']}");
+        return $response->withRedirect('/admin/discounts');
+    });
     $app->get('/admin/checkin/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
         $args['reservation'] = $container->get('redis')->hGetAll("$currentMission:reservation:{$args['id']}");
