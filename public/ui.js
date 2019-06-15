@@ -17,13 +17,13 @@ $(document).ready(function() {
         updateTotal();
     });
 
-    $("input#donation").on("focus", function(e) {
+    $("input.monetary").on("focus", function(e) {
         if ($(this).val() == "0.00") {
             $(this).val("");
         }
     });
 
-    $("input#donation").on("change blur", function(e) {
+    $("input.monetary").on("change blur", function(e) {
         if ($(this).val() == "") {
             $(this).val("0.00");
         }
@@ -31,7 +31,7 @@ $(document).ready(function() {
         updateTotal();
     });
 
-    $("input#discount-code").on("propertychange change click keyup input paste", function(e) {
+    $("input.uppercase").on("propertychange change click keyup input paste", function(e) {
         $(this).val($(this).val().toUpperCase());
     });
 

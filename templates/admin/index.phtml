@@ -5,3 +5,45 @@
 <a href="/admin/logout">[Logout]</a><br>
 </div>
 
+
+<div class="container">
+<form action="/admin/reservation" method="post" class="justify-content-center" id="jump-to-reservation-form">
+    <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">View Reservation</legend></fieldset>
+    <div class="form-group form-row justify-content-center">
+        <div class="form-check col-sm-6 col-md-5 col-lg-4">
+            <input type="text" id="confirmation-code" name="confirmation-code" class="form-control form-control-lg uppercase text-center" placeholder="Confirmation code" required>
+        </div>
+        <div class="form-check col-sm-6 col-md-4 col-lg-3">
+            <button class="button btn btn-warning float-right btn-lg" type="submit">View Reservation &raquo;</button>
+        </div>
+    </div>
+</form>
+
+<fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">All Reservations</legend></fieldset>
+
+<?php $i=1 ?>
+<table class="table table-dark">
+    <tr>
+        <th>#</th>
+        <th>Code</th>
+        <th>Reservation Name</th>
+        <th>Upper Deck Tickets</th>
+        <th>Standard Tickets</th>
+        <th>Private Tickets</th>
+        <th>Tour Tickets</th>
+    </tr>
+    <?php foreach ($reservations as $confirmationCode => $reservation): ?>
+        <tr>
+            <td><?= $i ?></td>
+            <td><a href="/admin/checkin/<?= $confirmationCode ?>"><?= $confirmationCode ?></a></td>
+            <td><?= $reservation['reservationName'] ?></td>
+            <td><?= $reservation['upperQty'] ?></td>
+            <td><?= $reservation['standardQty'] ?></td>
+            <td><?= $reservation['privateQty'] ?></td>
+            <td><?= $reservation['tourQty'] ?></td>
+        </tr>
+        <?php $i++ ?>
+    <?php endforeach; ?>
+</table>
+
+</div>
