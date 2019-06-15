@@ -42,7 +42,7 @@ card.addEventListener('change', function(event) {
     displayError.textContent = '';
   }
 });
-var form = document.getElementById('launch-form');
+var form = document.getElementById('review-form');
 form.addEventListener('submit', function(event) {
   event.preventDefault();
   stripe.createToken(card).then(function(result) {
@@ -55,7 +55,7 @@ form.addEventListener('submit', function(event) {
   });
 });
 function stripeTokenHandler(token) {
-  var form = document.getElementById('launch-form');
+  var form = document.getElementById('review-form');
   var hiddenInput = document.createElement('input');
   hiddenInput.setAttribute('type', 'hidden');
   hiddenInput.setAttribute('name', 'stripeToken');
