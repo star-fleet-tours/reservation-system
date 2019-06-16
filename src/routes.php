@@ -215,7 +215,8 @@ email;
         return $response->withRedirect('/reservation/'.$reservationID);
     });
 
-    $app->get('/reservation/{id}', function (Request $request, Response $response, array $args) use ($container) {
+    $app->get('/reservation/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        $args['reservation'] = $container->get('redis')->hGetAll("$currentMission:reservation:{$args['id']}");
         return $container->get('renderer')->render($response, 'reservation.phtml', $args);
     });
 

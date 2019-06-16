@@ -3,9 +3,153 @@
         <h1>Check-In: <?= $id ?></h1>
 
 <div class="text-center">
-<a href="/admin/resend-confirmation/<?= $id ?>">Resend Confirmation</a><br>
+<a href="/admin/resend-confirmation/<?= $id ?>" onclick="return confirm('Are you sure?')">Resend Confirmation</a><br>
 <a href="/admin">[Admin Home]</a><br>
 </div>
+
+    <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Reservation Details</legend></fieldset>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <table class="table table-dark">
+              <thead>
+                <tr>
+                  <th scope="col">Description</th>
+                  <th scope="col" class="text-right">Price</th>
+                  <th scope="col" class="text-right">Qty</th>
+                  <th scope="col" class="text-right">Total</th>
+                </tr>
+              <thead>
+              <tbody>
+                <?php if ($reservation['upperQty'] > 0): ?>
+                <tr>
+                  <td>Upper Deck Launch Ticket</td>
+                  <td class="text-right">$<?= number_format($reservation['upperPrice'],2) ?>/ea</td>
+                  <td class="text-right"><?= $reservation['upperQty'] ?></td>
+                  <td class="text-right">$<?= number_format($reservation['upperPrice'] * $reservation['upperQty'],2) ?></td>
+                </tr>
+                <?php endif; ?>
+                <?php if ($reservation['standardQty'] > 0): ?>
+                <tr>
+                  <!-- TODO: Show boat preferences -->
+                  <td>Standard Launch Ticket (Boat preference: <?= strtoupper($reservation['boatPref1']); ?>)</td>
+                  <td class="text-right">$<?= number_format($reservation['standardPrice'],2) ?>/ea</td>
+                  <td class="text-right"><?= $reservation['standardQty'] ?></td>
+                  <td class="text-right">$<?= number_format($reservation['standardPrice'] * $reservation['standardQty'],2) ?></td>
+                </tr>
+                <?php endif; ?>
+                <?php if ($reservation['privateQty'] > 0): ?>
+                <tr>
+                  <td>Private Boat Launch Ticket</td>
+                  <td class="text-right">$<?= number_format($reservation['privatePrice'],2) ?>/ea</td>
+                  <td class="text-right"><?= $reservation['privateQty'] ?></td>
+                  <td class="text-right">$<?= number_format($reservation['privatePrice'] * $reservation['privateQty'],2) ?></td>
+                </tr>
+                <?php endif; ?>
+
+                <?php if ($reservation['tourQty'] > 0): ?>
+                <tr>
+                  <!-- TODO: Show time preferences -->
+                  <td>Pre-Launch Tour</td>
+                  <td class="text-right">$<?= number_format($reservation['tourPrice'],2) ?>/ea</td>
+                  <td class="text-right"><?= $reservation['tourQty'] ?></td>
+                  <td class="text-right">$<?= number_format($reservation['tourPrice'] * $reservation['tourQty'],2) ?></td>
+                </tr>
+                <?php endif; ?>
+                <?php if ($reservation['shirtQtySm'] > 0): ?>
+                <tr>
+                  <td>Mission T-Shirt (Small)</td>
+                  <td class="text-right">$<?= number_format($reservation['shirtPrice'],2) ?>/ea</td>
+                  <td class="text-right"><?= $reservation['shirtQtySm'] ?></td>
+                  <td class="text-right">$<?= number_format($reservation['shirtPrice'] * $reservation['shirtQtySm'],2) ?></td>
+                </tr>
+                <?php endif; ?>
+                <?php if ($reservation['shirtQtyMd'] > 0): ?>
+                <tr>
+                  <td>Mission T-Shirt (Medium)</td>
+                  <td class="text-right">$<?= number_format($reservation['shirtPrice'],2) ?>/ea</td>
+                  <td class="text-right"><?= $reservation['shirtQtyMd'] ?></td>
+                  <td class="text-right">$<?= number_format($reservation['shirtPrice'] * $reservation['shirtQtyMd'],2) ?></td>
+                </tr>
+                <?php endif; ?>
+                <?php if ($reservation['shirtQtyLg'] > 0): ?>
+                <tr>
+                  <td>Mission T-Shirt (Large)</td>
+                  <td class="text-right">$<?= number_format($reservation['shirtPrice'],2) ?>/ea</td>
+                  <td class="text-right"><?= $reservation['shirtQtyLg'] ?></td>
+                  <td class="text-right">$<?= number_format($reservation['shirtPrice'] * $reservation['shirtQtyLg'],2) ?></td>
+                </tr>
+                <?php endif; ?>
+                <?php if ($reservation['shirtQtyXl'] > 0): ?>
+                <tr>
+                  <td>Mission T-Shirt (XL)</td>
+                  <td class="text-right">$<?= number_format($reservation['shirtPrice'],2) ?>/ea</td>
+                  <td class="text-right"><?= $reservation['shirtQtyXl'] ?></td>
+                  <td class="text-right">$<?= number_format($reservation['shirtPrice'] * $reservation['shirtQtyXl'],2) ?></td>
+                </tr>
+                <?php endif; ?>
+                <?php if ($reservation['shirtQty2xl'] > 0): ?>
+                <tr>
+                  <td>Mission T-Shirt (2XL)</td>
+                  <td class="text-right">$<?= number_format($reservation['shirtPrice'],2) ?>/ea</td>
+                  <td class="text-right"><?= $reservation['shirtQty2xl'] ?></td>
+                  <td class="text-right">$<?= number_format($reservation['shirtPrice'] * $reservation['shirtQty2xl'],2) ?></td>
+                </tr>
+                <?php endif; ?>
+                <?php if ($reservation['shirtQty3xl'] > 0): ?>
+                <tr>
+                  <td>Mission T-Shirt (3XL)</td>
+                  <td class="text-right">$<?= number_format($reservation['shirtPrice'],2) ?>/ea</td>
+                  <td class="text-right"><?= $reservation['shirtQty3xl'] ?></td>
+                  <td class="text-right">$<?= number_format($reservation['shirtPrice'] * $reservation['shirtQty3xl'],2) ?></td>
+                </tr>
+                <?php endif; ?>
+                <?php if ($reservation['cookieQty'] > 0): ?>
+                <tr>
+                  <td>Traditional Launch Day Cookie</td>
+                  <td class="text-right">$<?= number_format($reservation['cookiePrice'],2) ?>/ea</td>
+                  <td class="text-right"><?= $reservation['cookieQty'] ?></td>
+                  <td class="text-right">$<?= number_format($reservation['cookiePrice'] * $reservation['cookieQty'],2) ?></td>
+                </tr>
+                <?php endif; ?>
+              </tbody>
+            </table>
+        </div><!--/col-->
+        <div class="col-lg-4">
+            <table class="table table-dark table-borderless">
+              <thead>
+                <tr>
+                  <th scope="col">Subtotal</th>
+                  <td scope="col" class="text-right">$<?= number_format($reservation['subTotal'],2) ?></td>
+                </tr>
+              <thead>
+              <tbody>
+                <?php if ($reservation['tourDiscountQty'] > 0): ?>
+                <tr>
+                  <td>Tour + Launch Discount</td>
+                  <td class="text-right">-$<?= number_format($reservation['tourDiscountValue'] * $reservation['tourDiscountQty'],2) ?></td>
+                </tr>
+                <?php endif; ?>
+                <?php if (isset($reservation['discountCode'])): ?>
+                <tr>
+                  <td>Discount Code "<?= $reservation['discountCode'] ?>"</td>
+                  <td class="text-right">-$<?= number_format($reservation['discountCodeAmount'],2) ?></td>
+                </tr>
+                <?php endif; ?>
+                <?php if ($reservation['donation'] > 0): ?>
+                <tr>
+                  <td>Donation</td>
+                  <td class="text-right">$<?= number_format($reservation['donation'],2) ?></td>
+                </tr>
+                <?php endif; ?>
+                <tr class="border-top border-secondary">
+                  <th scope="col">Total Paid</th>
+                  <td class="text-right">$<?= number_format($reservation['totalPaymentDue'],2) ?></td>
+                </tr>
+              </tbody>
+            </table>
+        </div> <!--/col-->
+    </div> <!--/row-->
         <?php var_dump($reservation); ?>
     </div>
 </div>
