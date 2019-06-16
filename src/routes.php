@@ -38,8 +38,10 @@ return function (App $app) {
         $mail->addReplyTo('fleetcommand@star-fleet.tours', 'Star-Fleet.tours');
 
         $mail->isHTML(true);
-        $mail->Subject = 'Star-Fleet.tours Falcon Heavy STP-2 Launch Confirmation: ' . $reservationID;
-        $mail->Body    = <<<email
+        $mail->CharSet  = 'UTF-8';
+        $mail->Encoding = 'base64';
+        $mail->Subject  = 'Star-Fleet.tours Falcon Heavy STP-2 Launch Confirmation: ' . $reservationID;
+        $mail->Body     = <<<email
 <p>Thanks for your reservation to join Star✦Fleet Tours for the Falcon Heavy STP-2 launch. We look forward to seeing you there! We will scan the QR code on the confirmation page below (printed or on your phone) to check you in on launch day, so you don't need to do anything with it now. If you are unable to pull up the reservation page on your phone and don't have it printed, don't worry. We can also check you in with your confirmation code: <strong>$reservationID</strong>.</p>
 
 <p>If you ordered standard ticket(s) your estimated boat assignment will show up on your confirmation page in the coming days.</p>
