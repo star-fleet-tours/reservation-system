@@ -259,7 +259,7 @@ email;
         $container->get('redis')->del("$currentMission:discount:{$args['id']}");
         return $response->withRedirect('/admin/discounts');
     });
-    $app->post('/admin/resend-confirmation/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission, $sendConfirmationEmail) {
+    $app->get('/admin/resend-confirmation/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission, $sendConfirmationEmail) {
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
         $sendConfirmationEmail($args['id'], $container->get('redis')->hGetAll("$currentMission:reservation:{$args['id']}"));
         return $response->withRedirect('/admin?resent='.$args['id']);
