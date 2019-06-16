@@ -27,10 +27,11 @@
         <th>#</th>
         <th>Code</th>
         <th>Reservation Name</th>
-        <th>Upper Deck Tickets</th>
-        <th>Standard Tickets</th>
-        <th>Private Tickets</th>
-        <th>Tour Tickets</th>
+        <th>U</th>
+        <th>S</th>
+        <th>P</th>
+        <th>T</th>
+        <th>C</th>
     </tr>
     <?php foreach ($reservations as $confirmationCode => $reservation): ?>
         <tr>
@@ -41,6 +42,7 @@
             <td><?= $reservation['standardQty'] ?></td>
             <td><?= $reservation['privateQty'] ?></td>
             <td><?= $reservation['tourQty'] ?></td>
+            <td><?= $reservation['cookieQty'] ?></td>
         </tr>
         <?php $i++ ?>
     <?php endforeach; ?>
