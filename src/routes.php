@@ -181,6 +181,28 @@ return function (App $app) {
         $container->get('redis')->hIncrBy("$currentMission:inventory", 'private', $reservation['privateQty'] * -1);
         $container->get('redis')->hIncrBy("$currentMission:inventory", 'tour', $reservation['tourQty'] * -1);
 
+        $mail = new PHPMailer();
+        $mail->setFrom('fleetcommand@star-fleet.tours', 'Star✦Fleet Tours');
+        $mail->addAddress($reservation['reservationEmail'], $reservation['reservationName']);
+        $mail->addReplyTo('fleetcommand@star-fleet.tours', 'Star✦Fleet Tours');
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Star✦Fleet Tours Falcon Heavy STP-2 Launch Confirmation: ' . $reservationID;
+        $mail->Body    = <<<email
+<p>Thanks for your reservation to join Star✦Fleet Tours for the Falcon Heavy STP-2 launch. We look forward to seeing you there! We will scan the QR code on the confirmation page below (printed or on your phone) to check you in on launch day, so you don't need to do anything with it now. If you are unable to pull up the reservation page on your phone and don't have it printed, don't worry. We can also check you in with your confirmation code: <strong>$reservationID</strong>.</p>
+
+<p>If you ordered standard ticket(s) your estimated boat assignment will show up on your confirmation page in the coming days.</p>
+
+<p><strong>Your reservation confirmation:</strong><br><a href="https://book.star-fleet.tours/reservation/$reservationID">https://book.star-fleet.tours/reservation/$reservationID</a></p>
+
+<p>Please carefully review our details page for important info and tips on making the most of your launch experience. We'll post status updates and any changes to the launch date and our own plans on our current launch page, as well as on our Twitter feed, Facebook page, and Slack group. As the launch approaches, please check those frequently to stay up to date.</p>
+
+<p>If you have questions, concerns, or would otherwise like to get in touch with us, you can reach us on the aforementioned Slack or our Gitter, and we can also be reached by email at FleetCommand@Star-Fleet.Tours (by responding to this email).</p>
+
+<p>Thanks, and we can't wait for you to join us for the launch!</p>
+email;
+        $mail->send();
+
         $container->session->delete('reservation');
 
         return $response->withRedirect('/reservation/'.$reservationID);
