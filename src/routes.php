@@ -183,9 +183,9 @@ return function (App $app) {
         $container->get('redis')->hIncrBy("$currentMission:inventory", 'tour', $reservation['tourQty'] * -1);
 
         $mail = new PHPMailer();
-        $mail->setFrom('fleetcommand@star-fleet.tours', 'Star✦Fleet Tours');
+        $mail->setFrom('fleetcommand@star-fleet.tours', 'Star Fleet Tours');
         $mail->addAddress($reservation['reservationEmail'], $reservation['reservationName']);
-        $mail->addReplyTo('fleetcommand@star-fleet.tours', 'Star✦Fleet Tours');
+        $mail->addReplyTo('fleetcommand@star-fleet.tours', 'Star Fleet Tours');
 
         $mail->isHTML(true);
         $mail->Subject = 'Star✦Fleet Tours Falcon Heavy STP-2 Launch Confirmation: ' . $reservationID;
