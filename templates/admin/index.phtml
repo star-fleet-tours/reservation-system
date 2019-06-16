@@ -1,5 +1,14 @@
 <h2 class="text-center starfleet-font mx-3">Hello Admin!</h2>
 
+<?php if(isset($_GET['resent'])): ?>
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+  Confirmation email resent for reservation <strong><?= $_GET['resent'] ?></strong>.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<?php endif ?>
+
 <div class="text-center">
 <a href="/admin/discounts">Manage Discounts</a><br>
 <a href="/admin/logout">[Logout]</a><br>

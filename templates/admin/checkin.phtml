@@ -1,6 +1,11 @@
 <div class="alt-bg-section">
     <div class="container">
         <h1>Check-In: <?= $id ?></h1>
+
+<div class="text-center">
+<a href="/admin/resend-confirmation/<?= $id ?>">Resend Confirmation</a><br>
+<a href="/admin">[Admin Home]</a><br>
+</div>
         <?php var_dump($reservation); ?>
     </div>
 </div>
