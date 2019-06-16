@@ -31,7 +31,15 @@
 
 <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">All Reservations</legend></fieldset>
 
-<?php $i=1 ?>
+<?php
+$i         = 1;
+$upper     = 0;
+$standard  = 0;
+$private   = 0;
+$tours     = 0;
+$cookies   = 0;
+$donations = 0;
+?>
 <table class="table table-dark">
     <tr>
         <th>#</th>
@@ -42,6 +50,7 @@
         <th>P</th>
         <th>T</th>
         <th>C</th>
+        <th>D</th>
     </tr>
     <?php foreach ($reservations as $confirmationCode => $reservation): ?>
         <tr>
@@ -53,9 +62,29 @@
             <td><?= $reservation['privateQty'] ?></td>
             <td><?= $reservation['tourQty'] ?></td>
             <td><?= $reservation['cookieQty'] ?></td>
+            <td><?= $reservation['donation'] ?></td>
         </tr>
-        <?php $i++ ?>
+        <?php
+            $i++;
+            $upper += $reservation['upperQty'];
+            $standard += $reservation['standardQty'];
+            $private += $reservation['privateQty'];
+            $tours += $reservation['tourQty'];
+            $cookies += $reservation['cookieQty'];
+            $donations += $reservation['donation'];
+        ?>
     <?php endforeach; ?>
+    <tr>
+        <th></th>
+        <th></th>
+        <th>Totals</th>
+        <th><?= $upper ?></th>
+        <th><?= $standard ?></th>
+        <th><?= $private ?></th>
+        <th><?= $tours ?></th>
+        <th><?= $cookies ?></th>
+        <th>$<?= number_format($donations,2) ?></th>
+    </tr>
 </table>
 
 </div>
