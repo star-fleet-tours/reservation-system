@@ -1,7 +1,9 @@
 <h2 class="text-center starfleet-font mx-3">Hello Admin!</h2>
 
+<div class="container">
+
 <?php if(isset($_GET['resent'])): ?>
-<div class="alert alert-info alert-dismissible fade show" role="alert">
+<div class="alert alert-info alert-dismissible fade show text-center" role="alert">
   Confirmation email resent for reservation <strong><?= $_GET['resent'] ?></strong>.
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -15,7 +17,6 @@
 </div>
 
 
-<div class="container">
 <form action="/admin/reservation" method="post" class="justify-content-center" id="jump-to-reservation-form">
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">View Reservation</legend></fieldset>
     <div class="form-group form-row justify-content-center">
