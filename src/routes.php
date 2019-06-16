@@ -3,6 +3,7 @@
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use PHPMailer\PHPMailer\PHPMailer;
 
 return function (App $app) {
     $currentMission = 'stp-2';
