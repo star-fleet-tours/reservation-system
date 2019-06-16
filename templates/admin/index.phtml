@@ -39,6 +39,12 @@ $private   = 0;
 $tours     = 0;
 $cookies   = 0;
 $donations = 0;
+$shirtSm   = 0;
+$shirtMd   = 0;
+$shirtLg   = 0;
+$shirtXl   = 0;
+$shirt2xl  = 0;
+$shirt3xl  = 0;
 ?>
 <table class="table table-dark">
     <tr>
@@ -51,6 +57,12 @@ $donations = 0;
         <th>T</th>
         <th>C</th>
         <th>D</th>
+        <th>SM</th>
+        <th>MD</th>
+        <th>LG</th>
+        <th>XL</th>
+        <th>2XL</th>
+        <th>3XL</th>
     </tr>
     <?php foreach ($reservations as $confirmationCode => $reservation): ?>
         <tr>
@@ -63,6 +75,12 @@ $donations = 0;
             <td><?= $reservation['tourQty'] ?></td>
             <td><?= $reservation['cookieQty'] ?></td>
             <td><?= $reservation['donation'] ?></td>
+            <td><?= $reservation['shirtQtySm'] ?></td>
+            <td><?= $reservation['shirtQtyMd'] ?></td>
+            <td><?= $reservation['shirtQtyLg'] ?></td>
+            <td><?= $reservation['shirtQtyXl'] ?></td>
+            <td><?= $reservation['shirtQty2xl'] ?></td>
+            <td><?= $reservation['shirtQty3xl'] ?></td>
         </tr>
         <?php
             $i++;
@@ -72,6 +90,12 @@ $donations = 0;
             $tours += $reservation['tourQty'];
             $cookies += $reservation['cookieQty'];
             $donations += $reservation['donation'];
+            $shirtSm += $reservation['shirtQtySm'];
+            $shirtMd += $reservation['shirtQtyMd'];
+            $shirtLg += $reservation['shirtQtyLg'];
+            $shirtXl += $reservation['shirtQtyXl'];
+            $shirt2xl += $reservation['shirtQty2xl'];
+            $shirt3xl += $reservation['shirtQty3xl'];
         ?>
     <?php endforeach; ?>
     <tr>
@@ -84,6 +108,12 @@ $donations = 0;
         <th><?= $tours ?></th>
         <th><?= $cookies ?></th>
         <th>$<?= number_format($donations,2) ?></th>
+        <th><?= $shirtSm ?></th>
+        <th><?= $shirtMd ?></th>
+        <th><?= $shirtLg ?></th>
+        <th><?= $shirtXl ?></th>
+        <th><?= $shirt2xl ?></th>
+        <th><?= $shirt3xl ?></th>
     </tr>
 </table>
 
