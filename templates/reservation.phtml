@@ -19,17 +19,6 @@
     <h1 class="text-center">Your confirmation code is: <?= $id ?></h1>
     <div class="text-center"><div class="p-2 mx-auto mt-4 mb-5 w-auto d-inline-block rounded" id="qrcodeCanvas"></div></div>
 
-    <div class="reservation-info px-5">
-
-        <p>Thanks for your reservation to join Star<span class="themed-text">✦</span>Fleet Tours for the Falcon Heavy STP-2 launch. We look forward to seeing you there! We will scan the above QR code (printed or on your phone) to check you in on launch day, so you don't need to do anything with it now. We've sent you a confirmation email with this same information; please check your spam or junk folder to make sure it didn't end up in there.</p>
-
-        <p>Please carefully review our <a href="https://www.star-fleet.tours/details/" target="_blank">details</a> page for important info and tips on making the most of your launch experience. We'll post status updates and any changes to the launch date and our own plans on our <a href="https://www.star-fleet.tours/current/" target="_blank">current launch page</a>, as well as on our <a href="https://twitter.com/StarFleetTours" target="_blank">Twitter feed</a>, <a href="https://www.facebook.com/starfleettours/" target="_blank">Facebook page</a>, and <a href="https://join.slack.com/t/spacexmeetups/shared_invite/enQtMzE0MjY1MTY0Mzc1LTFlMGE4MjY1ZTI4ZjZlNWQ4ZWQzZjEwMGFhNDU3NGRhZjBmNThhNTMwNzc0OWZhZGZhNzQ0YjJjNTY1Y2Q2ZWY" target="_blank">Slack group</a>. As the launch approaches, please check those frequently to stay up to date.</p>
-
-        <p>If you have questions, concerns, or would otherwise like to get in touch with us, you can reach us on the aforementioned Slack or our <a href="https://gitter.im/star-fleet-tours/public" target="_blank">Gitter</a>, and we can also be reached by email at <a href="mailto:fleetcommand@star-fleet.tours" target="_blank">FleetCommand@Star-Fleet.Tours</a>.</p>
-
-        <p>Thanks, and we can't wait for you to join us for the launch!</p>
-
-    </div>
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Your Reservation</legend></fieldset>
 
     <div class="row">
@@ -171,8 +160,20 @@
             </table>
         </div> <!--/col-->
     </div> <!--/row-->
-    <div class="row">
-        <p class="mx-auto">If you'd like to add items to your reservation, you may do so <strong><a href="/?update=<?= $id ?>">here</a></strong>.</p>
+    <div class="row my-3">
+        <p class="mx-auto"><a class="btn btn-warning btn-lg" href="/?update=<?= $id ?>">Add Items to Order &raquo;</a></p>
+    </div>
+
+    <div class="reservation-info px-5">
+
+        <p>Thanks for your reservation to join Star<span class="themed-text">✦</span>Fleet Tours for the Falcon Heavy STP-2 launch. We look forward to seeing you there! We will scan the above QR code (printed or on your phone) to check you in on launch day, so you don't need to do anything with it now. We've sent you a confirmation email with this same information; please check your spam or junk folder to make sure it didn't end up in there.</p>
+
+        <p>Please carefully review our <a href="https://www.star-fleet.tours/details/" target="_blank">details</a> page for important info and tips on making the most of your launch experience. We'll post status updates and any changes to the launch date and our own plans on our <a href="https://www.star-fleet.tours/current/" target="_blank">current launch page</a>, as well as on our <a href="https://twitter.com/StarFleetTours" target="_blank">Twitter feed</a>, <a href="https://www.facebook.com/starfleettours/" target="_blank">Facebook page</a>, and <a href="https://join.slack.com/t/spacexmeetups/shared_invite/enQtMzE0MjY1MTY0Mzc1LTFlMGE4MjY1ZTI4ZjZlNWQ4ZWQzZjEwMGFhNDU3NGRhZjBmNThhNTMwNzc0OWZhZGZhNzQ0YjJjNTY1Y2Q2ZWY" target="_blank">Slack group</a>. As the launch approaches, please check those frequently to stay up to date.</p>
+
+        <p>If you have questions, concerns, or would otherwise like to get in touch with us, you can reach us on the aforementioned Slack or our <a href="https://gitter.im/star-fleet-tours/public" target="_blank">Gitter</a>, and we can also be reached by email at <a href="mailto:fleetcommand@star-fleet.tours" target="_blank">FleetCommand@Star-Fleet.Tours</a>.</p>
+
+        <p>Thanks, and we can't wait for you to join us for the launch!</p>
+
     </div>
 
 </div>
