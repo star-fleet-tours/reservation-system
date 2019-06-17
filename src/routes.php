@@ -334,6 +334,16 @@ email;
         }
         return $container->get('renderer')->render($response, 'admin/index.phtml', $args);
     });
+    $app->get('/admin/stp-2-emails', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
+        $reservationKeys = $container->get('redis')->zRangeByScore("$currentMission:reservations", '-inf', '+inf');
+        header('Content-Type:text/plain');
+        foreach ($reservationKeys as $reservationKey) {
+            $reservation = $container->get('redis')->hGetAll($reservationKey);
+            echo "{$reservation['reservationName']},{$reservation['reservationEmail']}\n";
+        }
+        die();
+    });
     $app->get('/admin/discounts', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
         $args['discounts'] = [];
