@@ -278,6 +278,7 @@ email;
     $app->get('/admin/checkin/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
         $args['reservation'] = $container->get('redis')->hGetAll("$currentMission:reservation:{$args['id']}");
+        $args['reservationTime'] = date("Y-m-d H:i:s", $container->get('redis')->zscore("$currentMission:reservations", "$currentMission:reservation:{$args['id']}"));
         return $container->get('renderer')->render($response, 'admin/checkin.phtml', $args);
     });
 };
