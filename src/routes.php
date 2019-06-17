@@ -217,6 +217,9 @@ email;
 
     $app->get('/reservation/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         $args['reservation'] = $container->get('redis')->hGetAll("$currentMission:reservation:{$args['id']}");
+        if (!$args['reservation']) {
+            return $container->get('renderer')->render($response, 'reservation-not-found.phtml', $args);
+        }
         return $container->get('renderer')->render($response, 'reservation.phtml', $args);
     });
 

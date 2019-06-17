@@ -31,8 +31,7 @@
                 <?php endif; ?>
                 <?php if ($reservation['standardQty'] > 0): ?>
                 <tr>
-                  <!-- TODO: Show boat preferences -->
-                  <td>Standard Launch Ticket (Boat preference: <?= strtoupper($reservation['boatPref1']); ?>)</td>
+                  <td>Standard Launch Ticket<br><small>(Boat preference: <?= strtoupper($reservation['boatPref1']); ?>)</small></td>
                   <td class="text-right">$<?= number_format($reservation['standardPrice'],2) ?>/ea</td>
                   <td class="text-right"><?= $reservation['standardQty'] ?></td>
                   <td class="text-right">$<?= number_format($reservation['standardPrice'] * $reservation['standardQty'],2) ?></td>
@@ -49,8 +48,7 @@
 
                 <?php if ($reservation['tourQty'] > 0): ?>
                 <tr>
-                  <!-- TODO: Show time preferences -->
-                  <td>Pre-Launch Tour</td>
+                  <td>Pre-Launch Tour<br><small>(9am - <?= $reservation['tourPref1'] == 'none' ? 'n/a' : $reservation['tourPref1'] . ' choice' ?>; 12pm - <?= $reservation['tourPref2'] == 'none' ? 'N/A' : $reservation['tourPref2'] . ' choice' ?>; 5pm - <?= $reservation['tourPref3'] == 'none' ? 'N/A' : $reservation['tourPref3'] . ' choice' ?>)</small></td>
                   <td class="text-right">$<?= number_format($reservation['tourPrice'],2) ?>/ea</td>
                   <td class="text-right"><?= $reservation['tourQty'] ?></td>
                   <td class="text-right">$<?= number_format($reservation['tourPrice'] * $reservation['tourQty'],2) ?></td>
