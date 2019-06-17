@@ -3,6 +3,12 @@
 
 <form action="/review" method="post" class="container justify-content-center" id="launch-form">
 
+<? if (isset($_GET['update'])): ?>
+<div class="alert alert-info text-center" role="alert">
+    You are adding items to your existing reservation, <strong><a href="/reservation/<?= $id ?>"><?= $id ?></a></strong>.
+</div>
+<input type="hidden" name="updateReservation" value="<?= $id ?>">
+<? endif ?>
 <? if (isset($_GET['soldOut'])): ?>
     <div class="alert alert-danger text-center" role="alert">
         <b>Sorry!</b> Someone already reserved those tickets while you were ordering. Please try again.
@@ -13,7 +19,7 @@
         <b>Sorry!</b> There was a problem processing your payment. Please try again.
     </div>
 <? endif ?>
-<? if (isset($discountCode)): ?>
+<? if (isset($discountCode) && !isset($_GET['update'])): ?>
     <div class="alert alert-success text-center" role="alert">
     <b>Discount code "<?= $discountCode ?>" activated!</b> You will see your $<?= $discount['amount'] ?> discount applied on the next page.
     </div>
@@ -21,6 +27,7 @@
 <? endif ?>
 
 
+<?php if (!isset($_GET['update'])): ?>
 <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Launch</legend>
     <div class="form-group form-row justify-content-center">
         <label for="upper-qty" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Upper Deck Launch Tickets:</label>
@@ -180,6 +187,7 @@
     </div>
 </fieldset>
 
+<?php endif ?>
 
 
 <fieldset class="border-top border-warning rounded p-2 my-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Swag</legend>
@@ -278,6 +286,7 @@
     </div>
 </fieldset>
 
+
 <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Donate</legend>
     <div class="form-group form-row justify-content-center">
         <label for="small-qty" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Donation (Optional):</label>
@@ -299,8 +308,7 @@
 </fieldset>
 
 
-</fieldset>
-
+<?php if (!isset($_GET['update'])): ?>
 <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Details</legend>
     <div class="form-group form-row justify-content-center">
         <label for="reservation-name" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Name for Reservation:</label>
@@ -340,6 +348,7 @@
             </div>
         </div>
     </div>
+<?php endif ?>
 
 
     <div class="form-group form-row justify-content-center">

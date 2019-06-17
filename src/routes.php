@@ -70,6 +70,9 @@ email;
                 $args['discount'] = $discount;
             }
         }
+        if (isset($_GET['update'])) {
+            $args['id'] = $_GET['update'];
+        }
         $args['inventory'] = $container->get('redis')->hGetAll("$currentMission:inventory");
         $args['prices'] = $container->get('redis')->hGetAll("$currentMission:prices");
         return $container->get('renderer')->render($response, $currentMission . '.phtml', $args);
@@ -91,10 +94,6 @@ email;
 
     $app->post('/review', function (Request $request, Response $response, array $args) use ($container, $currentMission, $inventoryCheck) {
         $reservation = $_POST;
-        if ($inventoryCheck->notEnoughTicketsForReservation($reservation)) {
-            return $response->withRedirect('/?soldOut=true');
-        }
-        // TODO: Server-side validation... Someday.
         $prices = $container->get('redis')->hGetAll("$currentMission:prices");
         $reservation['upperPrice']         = $prices['upper'];
         $reservation['standardPrice']      = $prices['standard'];
@@ -104,6 +103,39 @@ email;
         $reservation['cookiePrice']        = $prices['cookie'];
         $reservation['tourDiscountValue']  = 10;
 
+        if (isset($_POST['updateReservation'])) {
+
+            $totalPrice = 0;
+            $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQtySm'];
+            $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQtyMd'];
+            $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQtyLg'];
+            $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQtyXl'];
+            $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQty2xl'];
+            $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQty3xl'];
+            $totalPrice += $reservation['cookiePrice']   * $reservation['cookieQty'];
+
+            $reservation['upperQty'] = $reservation['standardQty'] = $reservation['privateQty'] = $reservation['tourQty'] = $reservation['tourDiscountQty'] = 0;
+            $reservation['subTotal'] = $totalPrice;
+            if ($totalPrice == 0) {
+                return $response->withRedirect($_SERVER['HTTP_REFERER']);
+            }
+
+            $totalPrice = $totalPrice < 0 ? 0 : $totalPrice;
+
+            $reservation['skipStripe'] = ($totalPrice == 0 && $reservation['donation'] == 0);
+
+            $totalPrice += $reservation['donation'];
+
+            $reservation['totalPaymentDue'] = $totalPrice;
+            $container->get('session')->reservation = $reservation;
+            return $response->withRedirect('/review');
+        }
+
+
+        if ($inventoryCheck->notEnoughTicketsForReservation($reservation)) {
+            return $response->withRedirect('/?soldOut=true');
+        }
+        // TODO: Server-side validation... Someday.
         $totalPrice = 0;
         $totalPrice += $reservation['upperPrice']    * $reservation['upperQty'];
         $totalPrice += $reservation['standardPrice'] * $reservation['standardQty'];
@@ -140,27 +172,86 @@ email;
 
         $reservation['totalPaymentDue'] = $totalPrice;
 
-        $this->session->reservation = $reservation;
+        $container->get('session')->reservation = $reservation;
         return $response->withRedirect('/review');
     });
 
     $app->get('/review', function (Request $request, Response $response, array $args) use ($container, $inventoryCheck) {
-        if (!$container->session->exists('reservation')) {
+        if (!$container->get('session')->exists('reservation')) {
             return $response->withRedirect('/');
         }
-        if ($inventoryCheck->notEnoughTicketsForReservation($container->session->reservation)) {
+        if ($inventoryCheck->notEnoughTicketsForReservation($container->get('session')->reservation)) {
             return $response->withRedirect('/?soldOut=true');
         }
 
-        $args['reservation'] = $container->session->reservation;
+        $args['reservation'] = $container->get('session')->reservation;
         return $container->get('renderer')->render($response, 'review.phtml', $args);
     });
 
     $app->post('/complete', function (Request $request, Response $response, array $args) use ($container, $currentMission, $inventoryCheck, $sendConfirmationEmail) {
-        if (!$container->session->exists('reservation')) {
+        \Stripe\Stripe::setApiKey(getenv('STRIPE_PRIVATE_KEY'));
+
+        if (!$container->get('session')->exists('reservation')) {
             return $response->withRedirect('/');
         }
-        $reservation = $container->session->reservation;
+        $reservation = $container->get('session')->reservation;
+
+        if (isset($reservation['updateReservation'])) {
+            $reservationID = $reservation['updateReservation'];
+            $originalReservation = $container->get('redis')->hGetAll("$currentMission:reservation:{$reservation['updateReservation']}");
+            $originalReservation['shirtQtySm']      += $reservation['shirtQtySm'];
+            $originalReservation['shirtQtyMd']      += $reservation['shirtQtyMd'];
+            $originalReservation['shirtQtyLg']      += $reservation['shirtQtyLg'];
+            $originalReservation['shirtQtyXl']      += $reservation['shirtQtyXl'];
+            $originalReservation['shirtQty2xl']     += $reservation['shirtQty2xl'];
+            $originalReservation['shirtQty3xl']     += $reservation['shirtQty3xl'];
+            $originalReservation['cookieQty']       += $reservation['cookieQty'];
+            $originalReservation['donation']        += $reservation['donation'];
+            $originalReservation['subTotal']        += $reservation['subTotal'];
+            $originalReservation['totalPaymentDue'] += $reservation['totalPaymentDue'];
+
+            try {
+                $chargeParams = [
+                    'amount'               => $reservation['totalPaymentDue'] * 100,
+                    'currency'             => 'usd',
+                    'description'          => "Star Fleet Tours " . strtoupper($currentMission) . " Swag - $reservationID",
+                    'statement_descriptor' => strtoupper($currentMission) . " Swag",
+                ];
+                if (isset($originalReservation['stripeCustomerID'])) {
+                    $card = \Stripe\Customer::createSource(
+                        $originalReservation['stripeCustomerID'],
+                        [
+                            'source' => $_POST['stripeToken'],
+                        ]
+                    );
+                    $chargeParams['customer'] = $originalReservation['stripeCustomerID'];
+                    $chargeParams['source'] = $card->id;
+                } else {
+                    $customer = \Stripe\Customer::create([
+                        'source'          => $_POST['stripeToken'],
+                        'email'           => $originalReservation['reservationEmail'],
+                    ]);
+                    $chargeParams['customer'] = $customer->id;
+                }
+                $charge = \Stripe\Charge::create($chargeParams);
+
+                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQtySm', $originalReservation['shirtQtySm']);
+                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQtyMd', $originalReservation['shirtQtyMd']);
+                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQtyLg', $originalReservation['shirtQtyLg']);
+                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQtyXl', $originalReservation['shirtQtyXl']);
+                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQty2xl', $originalReservation['shirtQty2xl']);
+                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQty3xl', $originalReservation['shirtQty3xl']);
+                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'cookieQty', $originalReservation['cookieQty']);
+                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'donation', $originalReservation['donation']);
+                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'subTotal', $originalReservation['subTotal']);
+                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'totalPaymentDue', $originalReservation['totalPaymentDue']);
+            } catch(\Exception $e) {
+                return $response->withRedirect($_SERVER['HTTP_REFERER']);
+            }
+            $container->get('session')->delete('reservation');
+            return $response->withRedirect('/reservation/'.$reservationID);
+        }
+
         if ($inventoryCheck->notEnoughTicketsForReservation($reservation)) {
             return $response->withRedirect('/?soldOut=true');
         }
@@ -174,7 +265,6 @@ email;
 
         if (!$reservation['skipStripe']) {
             try {
-            \Stripe\Stripe::setApiKey(getenv('STRIPE_PRIVATE_KEY'));
                 $customer = \Stripe\Customer::create([
                     'source'          => $_POST['stripeToken'],
                     'email'           => $reservation['reservationEmail'],
@@ -186,7 +276,7 @@ email;
                     'amount'               => $reservation['totalPaymentDue'] * 100,
                     'currency'             => 'usd',
                     'description'          => "Star Fleet Tours " . strtoupper($currentMission) . " Mission - $reservationID",
-                    'statement_descriptor' => "SFT " . strtoupper($currentMission) . " $reservationID",
+                    'statement_descriptor' => strtoupper($currentMission) . " $reservationID",
                     'customer'             => $customer->id,
                 ],[
                     'idempotency_key'      => "create-charge-$reservationID",
@@ -210,7 +300,7 @@ email;
 
         $sendConfirmationEmail($reservationID, $reservation);
 
-        $container->session->delete('reservation');
+        $container->get('session')->delete('reservation');
 
         return $response->withRedirect('/reservation/'.$reservationID);
     });
@@ -232,7 +322,7 @@ email;
         return $response->withRedirect('/admin');
     });
     $app->get('/admin/logout', function (Request $request, Response $response, array $args) use ($container) {
-        $container->session->delete('admin');
+        $container->get('session')->delete('admin');
         return $response->withRedirect('/admin/login');
     });
     $app->get('/admin', function (Request $request, Response $response, array $args) use ($container, $currentMission) {

@@ -45,10 +45,15 @@ card.addEventListener('change', function(event) {
 var form = document.getElementById('review-form');
 form.addEventListener('submit', function(event) {
   event.preventDefault();
+  if ($(this).hasClass('form-submitted')) {
+    return false;
+  }
+  $(this).addClass('form-submitted');
   stripe.createToken(card).then(function(result) {
     if (result.error) {
       var errorElement = document.getElementById('card-errors');
       errorElement.textContent = result.error.message;
+      $(this).removeClass('form-submitted');
     } else {
       stripeTokenHandler(result.token);
     }
