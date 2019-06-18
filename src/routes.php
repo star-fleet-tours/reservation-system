@@ -346,7 +346,27 @@ email;
                 continue;
             }
             $tnt1Passengers += $reservation['standardQty'];
-            echo "- {$reservation['reservationName']}, party of {$reservation['standardQty']} ($tnt1Passengers)\n";
+            echo "- {$reservation['reservationName']}, party of {$reservation['standardQty']}, TNT1 preferred ($tnt1Passengers)\n";
+        }
+        echo "Second pass, starting from last reservation, assign all parties with no preference:\n";
+        foreach (array_reverse($reservationKeys) as $reservationKey) {
+            $tnt1SpotsRemaining = 18 - $tnt1Passengers;
+            $reservation = $container->get('redis')->hGetAll($reservationKey);
+            if ($reservation['standardQty'] == 0 || $reservation['standardQty'] > $tnt1SpotsRemaining || $reservation['boatPref1'] != 'none') {
+                continue;
+            }
+            $tnt1Passengers += $reservation['standardQty'];
+            echo "- {$reservation['reservationName']}, party of {$reservation['standardQty']}, no boat preference ($tnt1Passengers)\n";
+        }
+        echo "Thirtd pass, starting from last reservation, reassign parties with OO2 preference:\n";
+        foreach (array_reverse($reservationKeys) as $reservationKey) {
+            $tnt1SpotsRemaining = 18 - $tnt1Passengers;
+            $reservation = $container->get('redis')->hGetAll($reservationKey);
+            if ($reservation['standardQty'] == 0 || $reservation['standardQty'] > $tnt1SpotsRemaining || $reservation['boatPref1'] != 'none') {
+                continue;
+            }
+            $tnt1Passengers += $reservation['standardQty'];
+            echo "- {$reservation['reservationName']}, party of {$reservation['standardQty']}, OO2 preferred ($tnt1Passengers)\n";
         }
         die();
 
