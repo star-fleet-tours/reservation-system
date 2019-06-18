@@ -2,6 +2,9 @@
     <div class="container">
         <h1>Check-In: <?= $id ?></h1>
         <strong>Reservation time (UTC):</strong> <?= $reservationTime ?>
+        <?php if (isset($reservation['assignedBoat'])): ?>
+            <br><strong>Boat assignment:</strong> <?= $reservation['assignedBoat'] ?>
+        <?php endif ?>
 
 <div class="text-center">
 <a href="/admin/resend-confirmation/<?= $id ?>" onclick="return confirm('Are you sure?')">Resend Confirmation</a><br>
