@@ -334,6 +334,22 @@ email;
         }
         return $container->get('renderer')->render($response, 'admin/index.phtml', $args);
     });
+    $app->get('/admin/assign-boats', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
+        $reservationKeys = $container->get('redis')->zRangeByScore("$currentMission:reservations", '-inf', '+inf');
+        header('Content-Type:text/plain');
+        $tnt1Passengers = 0;
+        echo "First pass, finding all parties who selected TNT1:\n";
+        foreach ($reservationKeys as $reservationKey) {
+            $reservation = $container->get('redis')->hGetAll($reservationKey);
+            if ($reservation['standardQty'] == 0 || $reservation['boatPref1'] != 'tnt1') {
+                continue;
+            }
+            $tnt1Passengers += $reservation['standardQty'];
+            echo "- {$reservation['reservationName']}, party of {$reservation['standardQty']} ($tnt1Passengers)\n";
+        }
+
+    });
     $app->get('/admin/stp-2-emails', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
         $reservationKeys = $container->get('redis')->zRangeByScore("$currentMission:reservations", '-inf', '+inf');
