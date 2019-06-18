@@ -327,6 +327,7 @@ email;
     });
     $app->get('/admin', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
+        header('Content-Type:text/plain');
         $args['reservations'] = [];
         $reservationKeys = $container->get('redis')->zRangeByScore("$currentMission:reservations", '-inf', '+inf');
         foreach ($reservationKeys as $reservationKey) {
