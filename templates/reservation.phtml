@@ -13,7 +13,10 @@
 <div class="container mt-3">
 
     <div class="alert alert-info text-center" role="alert">
-        <strong>Your reservation is confirmed!</strong><br>If you've purchased standard ticket(s), this page will be updated with your estimated boat assignment soon.
+        <strong>Your reservation is confirmed!</strong><br>
+        <?php if(isset($reservation['assignedBoat'])): ?>
+            Your party's boat assignment is <?= $reservation['assignedBoat'] ?>.
+        <?php endif ?>
     </div>
 
     <h1 class="text-center">Your confirmation code is: <?= $id ?></h1>
