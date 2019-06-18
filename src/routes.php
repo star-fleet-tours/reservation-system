@@ -334,6 +334,26 @@ email;
         }
         return $container->get('renderer')->render($response, 'admin/index.phtml', $args);
     });
+    $app->get('/admin/boat-inventory', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
+        $reservationKeys = $container->get('redis')->zRangeByScore("$currentMission:reservations", '-inf', '+inf');
+        $passengerCounts = [
+            'TNT1' => 0,
+            'OO2'  => 0,
+            'OO2Upper' => 0,
+        ];
+        foreach ($reservationKeys as $reservationKey) {
+            $reservation = $container->get('redis')->hGetAll($reservationKey);
+            if ($reservation['upperQty'] > 0) {
+                $passengerCounts['OO2Upper'] += $reservation['upperQty'];
+            }
+            if ($reservation['standardQty'] == 0) {
+                continue;
+            }
+            $passengerCounts[$reservation['assignedBoat']] += $reservation['standardQty'];
+        }
+        var_dump($passengerCounts);
+    });
     $app->get('/admin/assign-boats', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
         $reservationKeys = $container->get('redis')->zRangeByScore("$currentMission:reservations", '-inf', '+inf');
