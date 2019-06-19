@@ -341,11 +341,15 @@ email;
             'TNT1' => 0,
             'OO2'  => 0,
             'OO2Upper' => 0,
+            'Private' => 0,
         ];
         foreach ($reservationKeys as $reservationKey) {
             $reservation = $container->get('redis')->hGetAll($reservationKey);
             if ($reservation['upperQty'] > 0) {
                 $passengerCounts['OO2Upper'] += $reservation['upperQty'];
+            }
+            if ($reservation['privateQty'] > 0) {
+                $passengerCounts['Private'] += $reservation['privateQty'];
             }
             if ($reservation['standardQty'] == 0) {
                 continue;
