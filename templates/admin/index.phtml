@@ -11,11 +11,7 @@
 </div>
 <?php endif ?>
 
-<div class="text-center">
-<a href="/admin/discounts">Manage Discounts</a><br>
-<a href="/admin/logout">[Logout]</a><br>
-</div>
-
+<?php include __DIR__ . '/menu.phtml' ?>
 
 <form action="/admin/reservation" method="post" class="justify-content-center" id="jump-to-reservation-form">
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">View Reservation</legend></fieldset>

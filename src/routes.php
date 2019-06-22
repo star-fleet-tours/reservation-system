@@ -419,6 +419,19 @@ email;
         }
         die();
     });
+    $app->get('/admin/inventory', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
+        $args['inventory'] = $container->get('redis')->hgetall("$currentMission:inventory");
+        return $container->get('renderer')->render($response, 'admin/inventory.phtml', $args);
+    });
+    $app->post('/admin/inventory', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
+        $container->get('redis')->hset("$currentMission:inventory", 'upper', $_POST['upperQty']);
+        $container->get('redis')->hset("$currentMission:inventory", 'standard', $_POST['standardQty']);
+        $container->get('redis')->hset("$currentMission:inventory", 'private', $_POST['privateQty']);
+        $container->get('redis')->hset("$currentMission:inventory", 'tour', $_POST['tourQty']);
+        return $response->withRedirect('/admin/inventory');
+    });
     $app->get('/admin/discounts', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
         $args['discounts'] = [];
