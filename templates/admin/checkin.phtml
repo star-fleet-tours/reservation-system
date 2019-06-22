@@ -1,4 +1,5 @@
 <div class="alt-bg-section">
+    <?php include __DIR__ . '/menu.phtml' ?>
     <div class="container">
         <h1>Check-In: <?= $id ?></h1>
         <strong>Reservation time (UTC):</strong> <?= $reservationTime ?>
@@ -8,7 +9,7 @@
 
 <div class="text-center">
 <a href="/admin/resend-confirmation/<?= $id ?>" onclick="return confirm('Are you sure?')">Resend Confirmation</a><br>
-<a href="/admin">[Admin Home]</a><br>
+<a href="/reservation/<?= $id ?>">Reservation Link</a><br>
 </div>
 
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Reservation Details</legend></fieldset>
@@ -152,6 +153,58 @@
             </table>
         </div> <!--/col-->
     </div> <!--/row-->
+
+
+    <?php if ($reservation['tourQty'] > 0): ?>
+    <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Update Tour Prefs</legend></fieldset>
+    <form action="/admin/tour-prefs/<?= $id ?>" method="post" class="container justify-content-center" id="tour-pref-form">
+    <div class="form-group form-row justify-content-center">
+        <label for="standard-qtyss" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Tour Preference:</label>
+        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+            <div class="form-group input-group input-group-sm">
+                <div class="input-group-prepend">
+                    <div class="input-group-text text-monospace">8am-11:30pm</div>
+                </div>
+                <select id="tour-pref-1" name="tourPref1" class="form-control">
+                    <option value="first" <?php if(isset($reservation['tourPref1']) && $reservation['tourPref1'] == 'first'): ?>selected<?php endif ?>>1st choice</option>
+                    <option value="second" <?php if(isset($reservation['tourPref1']) && $reservation['tourPref1'] == 'second'): ?>selected<?php endif ?>>2nd choice</option>
+                    <option value="third" <?php if(isset($reservation['tourPref1']) && $reservation['tourPref1'] == 'third'): ?>selected<?php endif ?>>3rd choice</option>
+                    <option value="none" <?php if(isset($reservation['tourPref1']) && $reservation['tourPref1'] == 'none'): ?>selected<?php endif ?>>Unavailable</option>
+                </select>
+            </div>
+            <div class="form-group input-group input-group-sm">
+                <div class="input-group-prepend">
+                    <div class="input-group-text text-monospace">11:30am-3pm</div>
+                </div>
+                <select id="tour-pref-2" name="tourPref2" class="form-control">
+                    <option value="first" <?php if(isset($reservation['tourPref2']) && $reservation['tourPref2'] == 'first'): ?>selected<?php endif ?>>1st choice</option>
+                    <option value="second" <?php if(isset($reservation['tourPref2']) && $reservation['tourPref2'] == 'second'): ?>selected<?php endif ?>>2nd choice</option>
+                    <option value="third" <?php if(isset($reservation['tourPref2']) && $reservation['tourPref2'] == 'third'): ?>selected<?php endif ?>>3rd choice</option>
+                    <option value="none" <?php if(isset($reservation['tourPref2']) && $reservation['tourPref2'] == 'none'): ?>selected<?php endif ?>>Unavailable</option>
+                </select>
+            </div>
+            <div class="form-group input-group input-group-sm">
+                <div class="input-group-prepend">
+                    <div class="input-group-text text-monospace">&nbsp;3pm-6:30pm</div>
+                </div>
+                <select id="tour-pref-3" name="tourPref3" class="form-control">
+                    <option value="first" <?php if(isset($reservation['tourPref3']) && $reservation['tourPref3'] == 'first'): ?>selected<?php endif ?>>1st choice</option>
+                    <option value="second" <?php if(isset($reservation['tourPref3']) && $reservation['tourPref3'] == 'second'): ?>selected<?php endif ?>>2nd choice</option>
+                    <option value="third" <?php if(isset($reservation['tourPref3']) && $reservation['tourPref3'] == 'third'): ?>selected<?php endif ?>>3rd choice</option>
+                    <option value="none" <?php if(isset($reservation['tourPref3']) && $reservation['tourPref3'] == 'none'): ?>selected<?php endif ?>>Unavailable</option>
+                </select>
+            </div>
+            <!--<span id="standard-qty-hint" class="form-text">We'll do our best to get your party on the preferred boat.</span>-->
+        </div>
+    </div>
+    <div class="form-group form-row justify-content-center">
+        <div class="form-check col-9 col-sm-11 col-md-10 col-lg-8">
+            <button class="button btn btn-warning float-right btn-lg" type="submit">Update Tour Preferences &raquo;</button><br>
+        </div>
+    </div>
+    </form>
+    <?php endif ?>
+        <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Raw Reservation Data</legend></fieldset>
         <?php var_dump($reservation); ?>
     </div>
 </div>
