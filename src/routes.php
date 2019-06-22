@@ -344,18 +344,21 @@ email;
                 'second' => 0,
                 'third' => 0,
                 'none' => 0,
+                'only' => 0,
             ],
             [
                 'first' => 0,
                 'second' => 0,
                 'third' => 0,
                 'none' => 0,
+                'only' => 0,
             ],
             [
                 'first' => 0,
                 'second' => 0,
                 'third' => 0,
                 'none' => 0,
+                'only' => 0,
             ],
         ];
         foreach ($reservationKeys as $reservationKey) {
@@ -364,6 +367,9 @@ email;
             $tours[0][$reservation['tourPref1']] += $reservation['tourQty'];
             $tours[1][$reservation['tourPref2']] += $reservation['tourQty'];
             $tours[2][$reservation['tourPref3']] += $reservation['tourQty'];
+            if ($reservation['tourPref2'] == 'none' && $reservation['tourPref3'] == 'none') $tours[0]['only'] += $reservation['tourQty'];
+            if ($reservation['tourPref1'] == 'none' && $reservation['tourPref3'] == 'none') $tours[1]['only'] += $reservation['tourQty'];
+            if ($reservation['tourPref1'] == 'none' && $reservation['tourPref2'] == 'none') $tours[2]['only'] += $reservation['tourQty'];
         }
         $args['tours'] = $tours;
         return $container->get('renderer')->render($response, 'admin/tours.phtml', $args);
