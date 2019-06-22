@@ -1,0 +1,33 @@
+
+<?php include __DIR__ . '/menu.phtml' ?>
+
+<table class="table table-dark container mt-4">
+    <tr>
+        <th>Tour Time</th>
+        <th>1st Choice</th>
+        <th>2nd Choice</th>
+        <th>3rd Choice</th>
+        <th>Unavailable</th>
+    </tr>
+    <tr>
+        <th>8am</th>
+        <td><?= $tours[0]['first'] ?></td>
+        <td><?= $tours[0]['second'] ?></td>
+        <td><?= $tours[0]['third'] ?></td>
+        <td><?= $tours[0]['none'] ?></td>
+    </tr>
+    <tr>
+        <th>11:30am</th>
+        <td><?= $tours[1]['first'] ?></td>
+        <td><?= $tours[1]['second'] ?></td>
+        <td><?= $tours[1]['third'] ?></td>
+        <td><?= $tours[1]['none'] ?></td>
+    </tr>
+    <tr>
+        <th>3pm</th>
+        <td><?= $tours[2]['first'] ?></td>
+        <td><?= $tours[2]['second'] ?></td>
+        <td><?= $tours[2]['third'] ?></td>
+        <td><?= $tours[2]['none'] ?></td>
+    </tr>
+</table>

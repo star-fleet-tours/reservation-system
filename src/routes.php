@@ -334,6 +334,40 @@ email;
         }
         return $container->get('renderer')->render($response, 'admin/index.phtml', $args);
     });
+    $app->get('/admin/tours', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
+        $args['reservations'] = [];
+        $reservationKeys = $container->get('redis')->zRangeByScore("$currentMission:reservations", '-inf', '+inf');
+        $tours = [
+            [
+                'first' => 0,
+                'second' => 0,
+                'third' => 0,
+                'none' => 0,
+            ],
+            [
+                'first' => 0,
+                'second' => 0,
+                'third' => 0,
+                'none' => 0,
+            ],
+            [
+                'first' => 0,
+                'second' => 0,
+                'third' => 0,
+                'none' => 0,
+            ],
+        ];
+        foreach ($reservationKeys as $reservationKey) {
+            $reservation = $container->get('redis')->hGetAll($reservationKey);
+            if ($reservation['tourQty'] == 0) continue;
+            $tours[0][$reservation['tourPref1']] += $reservation['tourQty'];
+            $tours[1][$reservation['tourPref2']] += $reservation['tourQty'];
+            $tours[2][$reservation['tourPref3']] += $reservation['tourQty'];
+        }
+        $args['tours'] = $tours;
+        return $container->get('renderer')->render($response, 'admin/tours.phtml', $args);
+    });
     $app->get('/admin/boat-inventory', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
         $reservationKeys = $container->get('redis')->zRangeByScore("$currentMission:reservations", '-inf', '+inf');
