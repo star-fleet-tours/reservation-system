@@ -15,7 +15,10 @@
     <div class="alert alert-info text-center" role="alert">
         <strong>Your reservation is confirmed!</strong><br>
         <?php if(isset($reservation['assignedBoat'])): ?>
-            Your party's boat assignment is <?= $reservation['assignedBoat'] ?>.
+            Your party's boat assignment is <?= $reservation['assignedBoat'] ?>.<br>
+        <?php endif ?>
+        <?php if (isset($reservation['assignedTour'])): ?>
+            Your party's tour assignment is <strong><?= $reservation['assignedTour'] ?></strong>.
         <?php endif ?>
     </div>
 

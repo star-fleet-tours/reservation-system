@@ -6,6 +6,9 @@
         <?php if (isset($reservation['assignedBoat'])): ?>
             <br><strong>Boat assignment:</strong> <?= $reservation['assignedBoat'] ?>
         <?php endif ?>
+        <?php if (isset($reservation['assignedTour'])): ?>
+            <br><strong>Tour assignment:</strong> <?= $reservation['assignedTour'] ?>
+        <?php endif ?>
 
 <div class="text-center">
 <a href="/admin/resend-confirmation/<?= $id ?>" onclick="return confirm('Are you sure?')">Resend Confirmation</a><br>
