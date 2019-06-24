@@ -7,6 +7,11 @@
         Party is checked in for the <strong><?= $reservation['assignedTour'] ?></strong> tour.
     </div>
     <? endif ?>
+    <?php if (isset($reservation['launchCheckInTime'])): ?>
+    <div class="alert alert-info text-center mt-3" role="alert">
+        Party is checked in for launch!
+    </div>
+    <? endif ?>
 
         <h1>Check-In: <?= $id ?></h1>
         <strong>Reservation time (UTC):</strong> <?= $reservationTime ?>
