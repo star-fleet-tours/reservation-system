@@ -76,7 +76,7 @@ $shirt3xl  = 0;
             <td><?= $reservation['upperQty'] ?></td>
             <td><?= $reservation['standardQty'] ?></td>
             <td><?= $reservation['privateQty'] ?></td>
-            <td><?php if (isset($reservation['assignedBoat'])): ?><?= $reservation['assignedBoat'] ?><?php elseif ($reservation['upperQty'] > 0): ?>OO2^<?php elseif ($reservation['privateQty'] > 0): ?>SL<?php endif ?></td>
+            <td <?php if(isset($reservation['launchCheckInTime'])): ?>class="alert-success"<?php endif ?>><?php if (isset($reservation['assignedBoat'])): ?><?= $reservation['assignedBoat'] ?><?php elseif ($reservation['upperQty'] > 0): ?>OO2^<?php elseif ($reservation['privateQty'] > 0): ?>SL<?php endif ?></td>
             <td><?= $reservation['cookieQty'] ?></td>
             <td><?= $reservation['donation'] ?></td>
             <td><?= $reservation['shirtQtySm'] ?></td>

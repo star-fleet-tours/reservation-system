@@ -164,6 +164,21 @@
         </div> <!--/col-->
     </div> <!--/row-->
 
+    <?php if ($reservation['stadardQty'] > 0 || $reservation['privateQty'] > 0 || $reservation['upperQty']): ?>
+    <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Launch Check-In</legend></fieldset>
+    <form action="/admin/launch-checkin/<?= $id ?>" method="post" class="container justify-content-center" id="launch-checkin-form">
+    <div class="form-group form-row justify-content-center">
+        <div class="col-9 col-sm-12 col-md-10 col-lg-8">
+            <label for="tour-check-in-notes" class="form-label font-weight-bold">Launch Check-In Notes:</label>
+            <textarea class="form-control" id="launch-check-in-notes" name="launchCheckInNotes"><?php if (isset($reservation['launchCheckInNotes'])): ?><?= $reservation['tourCheckInNotes'] ?><?php endif ?></textarea>
+        </div>
+    </div>
+    <div class="form-group form-row justify-content-center">
+        <div class="form-check col-9 col-sm-11 col-md-10 col-lg-8">
+            <button class="button btn btn-warning float-right btn-lg" type="submit">Check Party In &raquo;</button><br>
+        </div>
+    </div>
+    <?php endif ?>
 
     <?php if ($reservation['tourQty'] > 0): ?>
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Tour Check-In</legend></fieldset>
