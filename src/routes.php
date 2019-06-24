@@ -481,7 +481,7 @@ email;
     $app->post('/admin/launch-checkin/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
         $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", 'launchCheckInTime', time());
-        $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", 'launchCheckInNotes', $_POST['lauchCheckInNotes']);
+        $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", 'launchCheckInNotes', $_POST['launchCheckInNotes']);
         return $response->withRedirect("/admin/checkin/{$args['id']}");
     });
     $app->get('/admin/inventory', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
