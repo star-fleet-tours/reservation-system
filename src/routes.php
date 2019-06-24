@@ -400,14 +400,14 @@ email;
             $reservation = $container->get('redis')->hGetAll($reservationKey);
             if ($reservation['upperQty'] > 0) {
                 $passengerCounts['OO2Upper'] += $reservation['upperQty'];
-            }
-            if ($reservation['privateQty'] > 0) {
+            } elseif ($reservation['privateQty'] > 0) {
                 $passengerCounts['Private'] += $reservation['privateQty'];
+            } elseif ($reservation['standardQty'] > 0) {
+                if (!isset($reservation['assignedBoat'])) {
+                    echo $reservationKey;
+                }
+                $passengerCounts[$reservation['assignedBoat']] += $reservation['standardQty'];
             }
-            if ($reservation['standardQty'] == 0) {
-                continue;
-            }
-            $passengerCounts[$reservation['assignedBoat']] += $reservation['standardQty'];
         }
         var_dump($passengerCounts);
     });

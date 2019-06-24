@@ -52,6 +52,7 @@ $shirt3xl  = 0;
         <th>U</th>
         <th>S</th>
         <th>P</th>
+        <th>B</th>
         <th>C</th>
         <th>D</th>
         <th>SM</th>
@@ -75,6 +76,7 @@ $shirt3xl  = 0;
             <td><?= $reservation['upperQty'] ?></td>
             <td><?= $reservation['standardQty'] ?></td>
             <td><?= $reservation['privateQty'] ?></td>
+            <td><?php if (isset($reservation['assignedBoat'])): ?><?= $reservation['assignedBoat'] ?><?php elseif ($reservation['upperQty'] > 0): ?>OO2^<?php elseif ($reservation['privateQty'] > 0): ?>SL<?php endif ?></td>
             <td><?= $reservation['cookieQty'] ?></td>
             <td><?= $reservation['donation'] ?></td>
             <td><?= $reservation['shirtQtySm'] ?></td>
@@ -104,10 +106,12 @@ $shirt3xl  = 0;
         <th></th>
         <th></th>
         <th>Totals</th>
+        <th><?= $tours ?></th>
+        <th></th>
         <th><?= $upper ?></th>
         <th><?= $standard ?></th>
         <th><?= $private ?></th>
-        <th><?= $tours ?></th>
+        <th></th>
         <th><?= $cookies ?></th>
         <th>$<?= number_format($donations,2) ?></th>
         <th><?= $shirtSm ?></th>
