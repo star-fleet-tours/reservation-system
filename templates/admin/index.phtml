@@ -47,10 +47,11 @@ $shirt3xl  = 0;
         <th>#</th>
         <th>Code</th>
         <th>Reservation Name</th>
+        <th>T</th>
+        <th>TT</th>
         <th>U</th>
         <th>S</th>
         <th>P</th>
-        <th>T</th>
         <th>C</th>
         <th>D</th>
         <th>SM</th>
@@ -65,10 +66,15 @@ $shirt3xl  = 0;
             <td><?= $i ?></td>
             <td><a href="/admin/checkin/<?= $confirmationCode ?>"><?= $confirmationCode ?></a></td>
             <td><?= $reservation['reservationName'] ?></td>
+            <td><?= $reservation['tourQty'] ?></td>
+            <?php if(isset($reservation['assignedTour'])): ?>
+            <td <?php if(isset($reservation['tourCheckInTime'])): ?>class="alert-success"<?php endif ?>><?= $reservation['assignedTour'] ?></td>
+            <?php else: ?>
+            <td></td>
+            <?php endif ?>
             <td><?= $reservation['upperQty'] ?></td>
             <td><?= $reservation['standardQty'] ?></td>
             <td><?= $reservation['privateQty'] ?></td>
-            <td><?= $reservation['tourQty'] ?></td>
             <td><?= $reservation['cookieQty'] ?></td>
             <td><?= $reservation['donation'] ?></td>
             <td><?= $reservation['shirtQtySm'] ?></td>

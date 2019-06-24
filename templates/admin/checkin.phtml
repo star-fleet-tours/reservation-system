@@ -1,6 +1,13 @@
 <div class="alt-bg-section">
     <?php include __DIR__ . '/menu.phtml' ?>
     <div class="container">
+
+    <?php if (isset($reservation['tourCheckInTime'])): ?>
+    <div class="alert alert-info text-center mt-3" role="alert">
+        Party is checked in for the <strong><?= $reservation['assignedTour'] ?></strong> tour.
+    </div>
+    <? endif ?>
+
         <h1>Check-In: <?= $id ?></h1>
         <strong>Reservation time (UTC):</strong> <?= $reservationTime ?>
         <?php if (isset($reservation['assignedBoat'])): ?>
@@ -159,6 +166,21 @@
 
 
     <?php if ($reservation['tourQty'] > 0): ?>
+    <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Tour Check-In</legend></fieldset>
+    <form action="/admin/tour-checkin/<?= $id ?>" method="post" class="container justify-content-center" id="tour-checkin-form">
+    <div class="form-group form-row justify-content-center">
+        <div class="col-9 col-sm-12 col-md-10 col-lg-8">
+            <label for="tour-check-in-notes" class="form-label font-weight-bold">Tour Check-In Notes:</label>
+            <textarea class="form-control" id="tour-check-in-notes" name="tourCheckInNotes"><?php if (isset($reservation['tourCheckInNotes'])): ?><?= $reservation['tourCheckInNotes'] ?><?php endif ?></textarea>
+        </div>
+    </div>
+    <div class="form-group form-row justify-content-center">
+        <div class="form-check col-9 col-sm-11 col-md-10 col-lg-8">
+            <button class="button btn btn-warning float-right btn-lg" type="submit">Check Party In &raquo;</button><br>
+        </div>
+    </div>
+
+    </form>
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Update Tour Prefs</legend></fieldset>
     <form action="/admin/tour-prefs/<?= $id ?>" method="post" class="container justify-content-center" id="tour-pref-form">
     <div class="form-group form-row justify-content-center">
