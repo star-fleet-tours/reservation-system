@@ -169,7 +169,7 @@
         </div> <!--/col-->
     </div> <!--/row-->
 
-    <?php if ($reservation['stadardQty'] > 0 || $reservation['privateQty'] > 0 || $reservation['upperQty']): ?>
+    <?php if ($reservation['standardQty'] > 0 || $reservation['privateQty'] > 0 || $reservation['upperQty']): ?>
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Launch Check-In</legend></fieldset>
     <form action="/admin/launch-checkin/<?= $id ?>" method="post" class="container justify-content-center" id="launch-checkin-form">
     <div class="form-group form-row justify-content-center">
