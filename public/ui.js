@@ -98,7 +98,7 @@ $(document).ready(function() {
             });
         });
     }
-    //linkPrioritySelects($("select.boat-preferences"));
+    linkPrioritySelects($("select.boat-preferences"));
     linkPrioritySelects($("select.tour-preferences"));
 
     function moreThanOneTicket() {
