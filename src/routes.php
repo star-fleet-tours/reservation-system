@@ -100,6 +100,7 @@ email;
         $reservation['privatePrice']       = $prices['private'];
         $reservation['tourPrice']          = $prices['tour'];
         $reservation['shirtPrice']         = $prices['shirt'];
+        $reservation['hatPrice']           = $prices['hat'];
         $reservation['cookiePrice']        = $prices['cookie'];
         $reservation['tourDiscountValue']  = 10;
 
@@ -112,6 +113,7 @@ email;
             $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQtyXl'];
             $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQty2xl'];
             $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQty3xl'];
+            $totalPrice += $reservation['hatPrice']      * $reservation['hatQty'];
             $totalPrice += $reservation['cookiePrice']   * $reservation['cookieQty'];
 
             $reservation['upperQty'] = $reservation['standardQty'] = $reservation['privateQty'] = $reservation['tourQty'] = $reservation['tourDiscountQty'] = 0;
@@ -147,6 +149,7 @@ email;
         $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQtyXl'];
         $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQty2xl'];
         $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQty3xl'];
+        $totalPrice += $reservation['hatPrice']      * $reservation['hatQty'];
         $totalPrice += $reservation['cookiePrice']   * $reservation['cookieQty'];
 
         $reservation['subTotal'] = $totalPrice;
@@ -205,6 +208,7 @@ email;
             $originalReservation['shirtQtyXl']      += $reservation['shirtQtyXl'];
             $originalReservation['shirtQty2xl']     += $reservation['shirtQty2xl'];
             $originalReservation['shirtQty3xl']     += $reservation['shirtQty3xl'];
+            $originalReservation['hatQty']          += $reservation['hatQty'];
             $originalReservation['cookieQty']       += $reservation['cookieQty'];
             $originalReservation['donation']        += $reservation['donation'];
             $originalReservation['subTotal']        += $reservation['subTotal'];

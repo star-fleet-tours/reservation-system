@@ -104,6 +104,14 @@
                   <td class="text-right">$<?= number_format($reservation['shirtPrice'] * $reservation['shirtQty3xl'],2) ?></td>
                 </tr>
                 <?php endif; ?>
+                <?php if ($reservation['hatQty'] > 0): ?>
+                <tr>
+                  <td>Star<span class="themed-text">✦</span>Fleet Hat</td>
+                  <td class="text-right">$<?= number_format($reservation['hatPrice'],2) ?>/ea</td>
+                  <td class="text-right"><?= $reservation['hatQty'] ?></td>
+                  <td class="text-right">$<?= number_format($reservation['hatPrice'] * $reservation['hatQty'],2) ?></td>
+                </tr>
+                <?php endif; ?>
                 <?php if ($reservation['cookieQty'] > 0): ?>
                 <tr>
                   <td>Traditional Launch Day Cookie</td>

@@ -29,6 +29,8 @@
 
 <?php if (!isset($_GET['update'])): ?>
 <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Launch</legend>
+    <input type="hidden" id="upper-qty" name="upperQty" value="0">
+    <input type="hidden" id="private-qty" name="privateQty" value="0">
     <div class="form-group form-row justify-content-center">
         <label for="standard-qty" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Standard Launch Tickets:</label>
         <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
