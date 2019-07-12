@@ -79,7 +79,7 @@
 
                 <?php if ($reservation['tourQty'] > 0): ?>
                 <tr>
-                  <td>Pre-Launch Tour<br><small>(8am - <?= $reservation['tourPref1'] == 'none' ? 'n/a' : $reservation['tourPref1'] . ' choice' ?>; 11:30am - <?= $reservation['tourPref2'] == 'none' ? 'N/A' : $reservation['tourPref2'] . ' choice' ?>; 3pm - <?= $reservation['tourPref3'] == 'none' ? 'N/A' : $reservation['tourPref3'] . ' choice' ?>)</small></td>
+                  <td>Pre-Launch Tour<br><small>(8:30am - <?= $reservation['tourPref1'] == 'none' ? 'n/a' : $reservation['tourPref1'] . ' choice' ?>; 12:30pm - <?= $reservation['tourPref2'] == 'none' ? 'N/A' : $reservation['tourPref2'] . ' choice' ?>)</small></td>
                   <td class="text-right">$<?= number_format($reservation['tourPrice'],2) ?>/ea</td>
                   <td class="text-right"><?= $reservation['tourQty'] ?></td>
                   <td class="text-right">$<?= number_format($reservation['tourPrice'] * $reservation['tourQty'],2) ?></td>

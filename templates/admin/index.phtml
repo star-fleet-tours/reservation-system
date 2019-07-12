@@ -34,6 +34,7 @@ $standard  = 0;
 $private   = 0;
 $tours     = 0;
 $cookies   = 0;
+$hats      = 0;
 $donations = 0;
 $shirtSm   = 0;
 $shirtMd   = 0;
@@ -55,6 +56,7 @@ $shirt3xl  = 0;
         <th>B</th>
         <th>C</th>
         <th>D</th>
+        <th>H</th>
         <th>SM</th>
         <th>MD</th>
         <th>LG</th>
@@ -79,6 +81,7 @@ $shirt3xl  = 0;
             <td <?php if(isset($reservation['launchCheckInTime'])): ?>class="alert-success"<?php endif ?>><?php if (isset($reservation['assignedBoat'])): ?><?= $reservation['assignedBoat'] ?><?php elseif ($reservation['upperQty'] > 0): ?>OO2^<?php elseif ($reservation['privateQty'] > 0): ?>SL<?php endif ?></td>
             <td><?= $reservation['cookieQty'] ?></td>
             <td><?= $reservation['donation'] ?></td>
+            <td><?= $reservation['hatQty'] ?></td>
             <td><?= $reservation['shirtQtySm'] ?></td>
             <td><?= $reservation['shirtQtyMd'] ?></td>
             <td><?= $reservation['shirtQtyLg'] ?></td>
@@ -93,6 +96,7 @@ $shirt3xl  = 0;
             $private += $reservation['privateQty'];
             $tours += $reservation['tourQty'];
             $cookies += $reservation['cookieQty'];
+            $hats += $reservation['hatQty'];
             $donations += $reservation['donation'];
             $shirtSm += $reservation['shirtQtySm'];
             $shirtMd += $reservation['shirtQtyMd'];
@@ -114,6 +118,7 @@ $shirt3xl  = 0;
         <th></th>
         <th><?= $cookies ?></th>
         <th>$<?= number_format($donations,2) ?></th>
+        <th><?= $hats ?></th>
         <th><?= $shirtSm ?></th>
         <th><?= $shirtMd ?></th>
         <th><?= $shirtLg ?></th>
