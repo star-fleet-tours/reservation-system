@@ -508,6 +508,13 @@ email;
         $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", 'tourPref3', $_POST['tourPref3']);
         return $response->withRedirect('/admin/checkin/'.$args['id']);
     });
+    $app->post('/admin/boat-prefs/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
+        $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", 'boatPref1', $_POST['boatPref1']);
+        $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", 'boatPref2', $_POST['boatPref2']);
+        $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", 'boatPref3', $_POST['boatPref3']);
+        return $response->withRedirect('/admin/checkin/'.$args['id']);
+    });
     $app->get('/admin/discounts', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
         $args['discounts'] = [];

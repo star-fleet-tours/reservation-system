@@ -252,6 +252,59 @@
     </div>
     </form>
     <?php endif ?>
+
+    <?php if ($reservation['standardQty'] > 0 || $reservation['privateQty'] > 0 || $reservation['upperQty']): ?>
+    <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Update Boat Prefs</legend></fieldset>
+    <form action="/admin/boat-prefs/<?= $id ?>" method="post" class="container justify-content-center" id="tour-pref-form">
+
+    <div class="form-group form-row justify-content-center">
+        <label for="boat-pref-1" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Boat Preference:</label>
+        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+            <div class="form-group input-group input-group-sm">
+                <div class="input-group-prepend">
+                    <div class="input-group-text text-monospace font-weight-bold">1st </div>
+                </div>
+                <select id="boat-pref-1" name="boatPref1" class="form-control admin-boat-preferences">
+                    <option value="none" <?php if(isset($reservation['boatPref1']) && $reservation['boatPref1'] == 'none'): ?>selected<?php endif ?>>No preference</option>
+                    <option value="oo2-upper" <?php if(isset($reservation['boatPref1']) && $reservation['boatPref1'] == 'oo2-upper'): ?>selected<?php endif ?>>OO2 Upper Deck (Ocean)</option>
+                    <option value="oo2" <?php if(isset($reservation['boatPref1']) && $reservation['boatPref1'] == 'oo2'): ?>selected<?php endif ?>>OO2 Lower Deck (Ocean)</option>
+                    <option value="tnt1" <?php if(isset($reservation['boatPref1']) && $reservation['boatPref1'] == 'tnt1'): ?>selected<?php endif ?>>TNT1 (Ocean)</option>
+                    <option value="tnt2" <?php if(isset($reservation['boatPref1']) && $reservation['boatPref1'] == 'tnt2'): ?>selected<?php endif ?>>TNT2 (River)</option>
+                </select>
+            </div>
+            <div class="form-group input-group input-group-sm">
+                <div class="input-group-prepend">
+                    <div class="input-group-text text-monospace font-weight-bold">2nd </div>
+                </div>
+                <select id="boat-pref-2" name="boatPref2" class="form-control admin-boat-preferences">
+                    <option value="none" <?php if(isset($reservation['boatPref2']) && $reservation['boatPref2'] == 'none'): ?>selected<?php endif ?>>No preference</option>
+                    <option value="oo2-upper" <?php if(isset($reservation['boatPref2']) && $reservation['boatPref2'] == 'oo2-upper'): ?>selected<?php endif ?>>OO2 Upper Deck (Ocean)</option>
+                    <option value="oo2" <?php if(isset($reservation['boatPref2']) && $reservation['boatPref2'] == 'oo2'): ?>selected<?php endif ?>>OO2 Lower Deck (Ocean)</option>
+                    <option value="tnt1" <?php if(isset($reservation['boatPref2']) && $reservation['boatPref2'] == 'tnt1'): ?>selected<?php endif ?>>TNT1 (Ocean)</option>
+                    <option value="tnt2" <?php if(isset($reservation['boatPref2']) && $reservation['boatPref2'] == 'tnt2'): ?>selected<?php endif ?>>TNT2 (River)</option>
+                </select>
+            </div>
+            <div class="form-group input-group input-group-sm">
+                <div class="input-group-prepend">
+                    <div class="input-group-text text-monospace font-weight-bold">3rd </div>
+                </div>
+                <select id="boat-pref-3" name="boatPref3" class="form-control admin-boat-preferences">
+                    <option value="none" <?php if(isset($reservation['boatPref3']) && $reservation['boatPref3'] == 'none'): ?>selected<?php endif ?>>No preference</option>
+                    <option value="oo2-upper" <?php if(isset($reservation['boatPref3']) && $reservation['boatPref3'] == 'oo2-upper'): ?>selected<?php endif ?>>OO2 Upper Deck (Ocean)</option>
+                    <option value="oo2" <?php if(isset($reservation['boatPref3']) && $reservation['boatPref3'] == 'oo2'): ?>selected<?php endif ?>>OO2 Lower Deck (Ocean)</option>
+                    <option value="tnt1" <?php if(isset($reservation['boatPref3']) && $reservation['boatPref3'] == 'tnt1'): ?>selected<?php endif ?>>TNT1 (Ocean)</option>
+                    <option value="tnt2" <?php if(isset($reservation['boatPref3']) && $reservation['boatPref3'] == 'tnt2'): ?>selected<?php endif ?>>TNT2 (River)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="form-group form-row justify-content-center">
+        <div class="form-check col-9 col-sm-11 col-md-10 col-lg-8">
+            <button class="button btn btn-warning float-right btn-lg" type="submit">Update Boat Preferences &raquo;</button><br>
+        </div>
+    </div>
+    <?php endif ?>
+    </form>
         <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Raw Reservation Data</legend></fieldset>
         <?php var_dump($reservation); ?>
     </div>
