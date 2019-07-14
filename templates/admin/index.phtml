@@ -64,7 +64,6 @@ $checkinCounts = [
         <th>S</th>
         <th class="hidden">P</th>
         <th class="pr-4 text-nowrap">Preferences</th>
-        <th>D</th>
         <th>C</th>
         <th>H</th>
         <th>SM</th>
@@ -73,6 +72,7 @@ $checkinCounts = [
         <th>XL</th>
         <th>2XL</th>
         <th>3XL</th>
+        <th>D</th>
     </tr>
     <?php foreach ($reservations as $confirmationCode => $reservation): ?>
         <tr>
@@ -106,7 +106,6 @@ $checkinCounts = [
                 <small><?= $reservation['boatPref1'] ?> &gt; <?= $reservation['boatPref2'] ?> &gt; <?= $reservation['boatPref3'] ?></small>
                 <?php endif ?>
             </td>
-            <td><?= number_format($reservation['donation'],2) ?></td>
             <td class="text-nowrap"><small>🍪</small> <?= $reservation['cookieQty'] ?></td>
             <td class="text-nowrap"><small>🧢</small> <?= $reservation['hatQty'] ?></td>
             <td class="text-nowrap"><small><small><small><small><small>👕</small></small></small></small></small> <?= $reservation['shirtQtySm'] ?></td>
@@ -115,6 +114,7 @@ $checkinCounts = [
             <td class="text-nowrap"><small><small>👕</small></small> <?= $reservation['shirtQtyXl'] ?></td>
             <td class="text-nowrap"><small>👕</small> <?= $reservation['shirtQty2xl'] ?></td>
             <td class="text-nowrap">👕 <?= $reservation['shirtQty3xl'] ?></td>
+            <td class="text-nowrap"><?php if ($reservation['donation'] > 0): ?><small>💸</small> <?= number_format($reservation['donation'],2) ?><?php endif ?></td>
         </tr>
         <?php
             $i++;
@@ -149,7 +149,6 @@ $checkinCounts = [
         <th>S</th>
         <th class="hidden">P</th>
         <th class="pr-4">Boat&nbsp;Preferences</th>
-        <th>D</th>
         <th>C</th>
         <th>H</th>
         <th>SM</th>
@@ -158,6 +157,7 @@ $checkinCounts = [
         <th>XL</th>
         <th>2XL</th>
         <th>3XL</th>
+        <th>D</th>
     </tr>
 </table>
 
