@@ -71,7 +71,7 @@ $checkinCounts = [
             <td></td>
             <?php endif ?>
             <td <?php if(isset($reservation['launchCheckInTime'])): ?>class="alert-success"<?php endif ?>><?php if (isset($reservation['assignedBoat'])): ?><?= $reservation['assignedBoat'] ?><?php elseif ($reservation['upperQty'] > 0): ?>OO2^<?php elseif ($reservation['privateQty'] > 0): ?>SL<?php endif ?></td>
-            <td class="text-right">
+            <td>
             <?php if ($reservation['specialRequests']): ?>
             <button type="button" class="btn btn-secondary" data-toggle="popover" data-placement="left" data-content="<?= htmlentities($reservation['specialRequests']) ?>">
             💬
