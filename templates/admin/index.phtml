@@ -96,7 +96,16 @@ $checkinCounts = [
             <td class="hidden"><?= $reservation['upperQty'] ?></td>
             <td class="text-nowrap"><small>🚀</small> <?= $reservation['standardQty'] ?></td>
             <td class="hidden"><?= $reservation['privateQty'] ?></td>
-            <td class="text-nowrap"><small><?= $reservation['boatPref1'] ?> &gt; <?= $reservation['boatPref2'] ?> &gt; <?= $reservation['boatPref3'] ?></small></td>
+            <td class="text-nowrap">
+                <?php if ($reservation['tourQty'] > 0): ?>
+                <small>
+                <?= str_replace(['first','second'],['8:30am','12:30pm'], "{$reservation['tourPref1']} &gt; {$reservation['tourPref2']}") ?><br>
+                </small>
+                <?php endif ?>
+                <?php if ($reservation['standardQty'] > 0): ?>
+                <small><?= $reservation['boatPref1'] ?> &gt; <?= $reservation['boatPref2'] ?> &gt; <?= $reservation['boatPref3'] ?></small>
+                <?php endif ?>
+            </td>
             <td><?= number_format($reservation['donation'],2) ?></td>
             <td class="text-nowrap"><small>🍪</small> <?= $reservation['cookieQty'] ?></td>
             <td class="text-nowrap"><small>🧢</small> <?= $reservation['hatQty'] ?></td>
