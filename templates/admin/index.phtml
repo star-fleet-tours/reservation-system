@@ -42,52 +42,34 @@ $shirtLg   = 0;
 $shirtXl   = 0;
 $shirt2xl  = 0;
 $shirt3xl  = 0;
+$tourDiscounts = 0;
+$checkinCounts = [
+    'oo2-upper' => 0,
+    'oo2' => 0,
+    'tnt1' => 0,
+    'tnt2' => 0,
+    'sl' => 0,
+]
 ?>
 <table class="table table-dark">
     <tr>
         <th>#</th>
         <th>Code</th>
         <th>Reservation Name</th>
-        <th>T</th>
-        <th>TT</th>
-        <th>U</th>
-        <th>S</th>
-        <th>P</th>
-        <th>B</th>
-        <th>C</th>
-        <th>D</th>
-        <th>H</th>
-        <th>SM</th>
-        <th>MD</th>
-        <th>LG</th>
-        <th>XL</th>
-        <th>2XL</th>
-        <th>3XL</th>
+        <th>Assigned Tour</th>
+        <th>Assigned Boat</th>
     </tr>
     <?php foreach ($reservations as $confirmationCode => $reservation): ?>
         <tr>
             <td><?= $i ?></td>
             <td><a href="/admin/checkin/<?= $confirmationCode ?>"><?= $confirmationCode ?></a></td>
             <td><?= $reservation['reservationName'] ?></td>
-            <td><?= $reservation['tourQty'] ?></td>
             <?php if(isset($reservation['assignedTour'])): ?>
             <td <?php if(isset($reservation['tourCheckInTime'])): ?>class="alert-success"<?php endif ?>><?= $reservation['assignedTour'] ?></td>
             <?php else: ?>
             <td></td>
             <?php endif ?>
-            <td><?= $reservation['upperQty'] ?></td>
-            <td><?= $reservation['standardQty'] ?></td>
-            <td><?= $reservation['privateQty'] ?></td>
             <td <?php if(isset($reservation['launchCheckInTime'])): ?>class="alert-success"<?php endif ?>><?php if (isset($reservation['assignedBoat'])): ?><?= $reservation['assignedBoat'] ?><?php elseif ($reservation['upperQty'] > 0): ?>OO2^<?php elseif ($reservation['privateQty'] > 0): ?>SL<?php endif ?></td>
-            <td><?= $reservation['cookieQty'] ?></td>
-            <td><?= $reservation['donation'] ?></td>
-            <td><?= $reservation['hatQty'] ?></td>
-            <td><?= $reservation['shirtQtySm'] ?></td>
-            <td><?= $reservation['shirtQtyMd'] ?></td>
-            <td><?= $reservation['shirtQtyLg'] ?></td>
-            <td><?= $reservation['shirtQtyXl'] ?></td>
-            <td><?= $reservation['shirtQty2xl'] ?></td>
-            <td><?= $reservation['shirtQty3xl'] ?></td>
         </tr>
         <?php
             $i++;
@@ -104,28 +86,91 @@ $shirt3xl  = 0;
             $shirtXl += $reservation['shirtQtyXl'];
             $shirt2xl += $reservation['shirtQty2xl'];
             $shirt3xl += $reservation['shirtQty3xl'];
+            $tourDiscounts += $reservation['tourDiscountQty'];
+            if (isset($reservation['launchCheckInTime']) && isset($reservation['assignedBoat'])) {
+                $checkinCounts[$reservation['assignedBoat']]++;
+            }
         ?>
     <?php endforeach; ?>
-    <tr>
-        <th></th>
-        <th></th>
-        <th>Totals</th>
-        <th><?= $tours ?></th>
-        <th></th>
-        <th><?= $upper ?></th>
-        <th><?= $standard ?></th>
-        <th><?= $private ?></th>
-        <th></th>
-        <th><?= $cookies ?></th>
-        <th>$<?= number_format($donations,2) ?></th>
-        <th><?= $hats ?></th>
-        <th><?= $shirtSm ?></th>
-        <th><?= $shirtMd ?></th>
-        <th><?= $shirtLg ?></th>
-        <th><?= $shirtXl ?></th>
-        <th><?= $shirt2xl ?></th>
-        <th><?= $shirt3xl ?></th>
-    </tr>
 </table>
 
+<fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Totals</legend></fieldset>
+<table class="table table-dark w-auto mx-auto">
+    <tr>
+        <th>Upper Tickets</th>
+        <td><?= $upper ?></td>
+    </tr>
+    <tr>
+        <th>Standard Tickets</th>
+        <td><?= $standard ?></td>
+    </tr>
+    <tr>
+        <th>Private Tickets</th>
+        <td><?= $private ?></td>
+    </tr>
+    <tr>
+        <th>Tour Tickets</th>
+        <td><?= $tours ?></td>
+    </tr>
+    <tr>
+        <th>Tour+Launch Discounts</th>
+        <td><?= $tourDiscounts ?></td>
+    </tr>
+    <tr>
+        <th>Donations</th>
+        <td>$<?= number_format($donations,2) ?></td>
+    </tr>
+    <tr>
+        <th>Cookies</th>
+        <td><?= $cookies ?></td>
+    </tr>
+    <tr>
+        <th>Hats</th>
+        <td><?= $hats ?></td>
+    </tr>
+    <tr>
+        <th>SM Shirts</th>
+        <td><?= $shirtSm ?></td>
+    </tr>
+    <tr>
+        <th>MD Shirts</th>
+        <td><?= $shirtMd ?></td>
+    </tr>
+    <tr>
+        <th>LG Shirts</th>
+        <td><?= $shirtLg ?></td>
+    </tr>
+    <tr>
+        <th>XL Shirts</th>
+        <td><?= $shirtXl ?></td>
+    </tr>
+    <tr>
+        <th>XXL Shirts</th>
+        <td><?= $shirt2xl ?></td>
+    </tr>
+    <tr>
+        <th>XXXL Shirts</th>
+        <td><?= $shirt3xl ?></td>
+    </tr>
+    <tr>
+        <th>OO2 Upper Checked In</th>
+        <td><?= $checkinCounts['oo2-upper'] ?></td>
+    </tr>
+    <tr>
+        <th>OO2 Lower Checked In</th>
+        <td><?= $checkinCounts['oo2'] ?></td>
+    </tr>
+    <tr>
+        <th>TNT1 Checked In</th>
+        <td><?= $checkinCounts['tnt1'] ?></td>
+    </tr>
+    <tr>
+        <th>TNT2 Checked In</th>
+        <td><?= $checkinCounts['tnt2'] ?></td>
+    </tr>
+    <tr>
+        <th>SL Checked In</th>
+        <td><?= $checkinCounts['sl'] ?></td>
+    </tr>
+    </table>
 </div>
