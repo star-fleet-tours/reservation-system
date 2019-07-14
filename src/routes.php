@@ -342,7 +342,7 @@ email;
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
         $reservationKeys = $container->get('redis')->zRangeByScore("$currentMission:reservations", '-inf', '+inf');
         header('Content-Type:text/plain');
-        echo "conf code,party size,8:30am,12:30am\n";
+        echo "conf code,party size,8:30am,12:30pm\n";
         foreach ($reservationKeys as $reservationKey) {
             $reservation = $container->get('redis')->hGetAll($reservationKey);
             $confCode = str_replace("$currentMission:reservation:", "", $reservationKey);
