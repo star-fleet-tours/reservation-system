@@ -58,7 +58,7 @@ $checkinCounts = [
         <th>Reservation Name</th>
         <th>Assigned Tour</th>
         <th>Assigned Boat</th>
-        <th>Comments / Requests</th>
+        <th>Comments</th>
     </tr>
     <?php foreach ($reservations as $confirmationCode => $reservation): ?>
         <tr>
@@ -71,9 +71,9 @@ $checkinCounts = [
             <td></td>
             <?php endif ?>
             <td <?php if(isset($reservation['launchCheckInTime'])): ?>class="alert-success"<?php endif ?>><?php if (isset($reservation['assignedBoat'])): ?><?= $reservation['assignedBoat'] ?><?php elseif ($reservation['upperQty'] > 0): ?>OO2^<?php elseif ($reservation['privateQty'] > 0): ?>SL<?php endif ?></td>
-            <td>
+            <td class="text-right">
             <?php if ($reservation['specialRequests']): ?>
-            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="<?= htmlentities($reservation['specialRequests']) ?>">
+            <button type="button" class="btn btn-secondary" data-toggle="popover" data-placement="left" data-content="<?= htmlentities($reservation['specialRequests']) ?>">
             💬
             </button>
             <?php endif ?>
@@ -184,6 +184,6 @@ $checkinCounts = [
 </div>
 <script type="text/javascript">
 afterJQ.push(function() {
-    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').popover();
 });
 </script>
