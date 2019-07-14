@@ -71,7 +71,13 @@ $checkinCounts = [
             <td></td>
             <?php endif ?>
             <td <?php if(isset($reservation['launchCheckInTime'])): ?>class="alert-success"<?php endif ?>><?php if (isset($reservation['assignedBoat'])): ?><?= $reservation['assignedBoat'] ?><?php elseif ($reservation['upperQty'] > 0): ?>OO2^<?php elseif ($reservation['privateQty'] > 0): ?>SL<?php endif ?></td>
-            <td><?= $reservation['specialRequests'] ?></td>
+            <td>
+            <?php if ($reservation['specialRequests']): ?>
+            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="<?= htmlentities($reservation['specialRequests']) ?>">
+            💬
+            </button>
+            <?php endif ?>
+            </td>
         </tr>
         <?php
             $i++;
@@ -176,3 +182,8 @@ $checkinCounts = [
     </tr>
     </table>
 </div>
+<script type="text/javascript">
+afterJQ.push(function() {
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
