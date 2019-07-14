@@ -342,12 +342,12 @@ email;
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
         $reservationKeys = $container->get('redis')->zRangeByScore("$currentMission:reservations", '-inf', '+inf');
         header('Content-Type:text/plain');
-        echo "conf code,party size,8am,11:30am,3pm\n";
+        echo "conf code,party size,8:30am,12:30am\n";
         foreach ($reservationKeys as $reservationKey) {
             $reservation = $container->get('redis')->hGetAll($reservationKey);
             $confCode = str_replace("$currentMission:reservation:", "", $reservationKey);
             if ($reservation['tourQty'] == 0) continue;
-            echo "$confCode,{$reservation['tourQty']},{$reservation['tourPref1']},{$reservation['tourPref2']},{$reservation['tourPref3']}\n";
+            echo "$confCode,{$reservation['tourQty']},{$reservation['tourPref1']},{$reservation['tourPref2']}\n";
         }
         die();
     });
@@ -359,21 +359,18 @@ email;
             [
                 'first' => 0,
                 'second' => 0,
-                'third' => 0,
                 'none' => 0,
                 'only' => 0,
             ],
             [
                 'first' => 0,
                 'second' => 0,
-                'third' => 0,
                 'none' => 0,
                 'only' => 0,
             ],
             [
                 'first' => 0,
                 'second' => 0,
-                'third' => 0,
                 'none' => 0,
                 'only' => 0,
             ],
@@ -383,10 +380,8 @@ email;
             if ($reservation['tourQty'] == 0) continue;
             $tours[0][$reservation['tourPref1']] += $reservation['tourQty'];
             $tours[1][$reservation['tourPref2']] += $reservation['tourQty'];
-            $tours[2][$reservation['tourPref3']] += $reservation['tourQty'];
-            if ($reservation['tourPref2'] == 'none' && $reservation['tourPref3'] == 'none') $tours[0]['only'] += $reservation['tourQty'];
-            if ($reservation['tourPref1'] == 'none' && $reservation['tourPref3'] == 'none') $tours[1]['only'] += $reservation['tourQty'];
-            if ($reservation['tourPref1'] == 'none' && $reservation['tourPref2'] == 'none') $tours[2]['only'] += $reservation['tourQty'];
+            if ($reservation['tourPref2'] == 'none') $tours[0]['only'] += $reservation['tourQty'];
+            if ($reservation['tourPref1'] == 'none') $tours[1]['only'] += $reservation['tourQty'];
         }
         $args['tours'] = $tours;
         return $container->get('renderer')->render($response, 'admin/tours.phtml', $args);
