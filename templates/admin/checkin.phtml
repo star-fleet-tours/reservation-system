@@ -183,6 +183,7 @@
             <button class="button btn btn-warning float-right btn-lg" type="submit">Check Party In &raquo;</button><br>
         </div>
     </div>
+    </form>
     <?php endif ?>
 
     <?php if ($reservation['tourQty'] > 0): ?>
@@ -199,8 +200,8 @@
             <button class="button btn btn-warning float-right btn-lg" type="submit">Check Party In &raquo;</button><br>
         </div>
     </div>
-
     </form>
+
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Update Tour Prefs</legend></fieldset>
     <form action="/admin/tour-prefs/<?= $id ?>" method="post" class="container justify-content-center" id="tour-pref-form">
     <div class="form-group form-row justify-content-center">
