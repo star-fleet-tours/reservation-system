@@ -55,7 +55,7 @@ $checkinCounts = [
     <tr>
         <th>#</th>
         <th>Code</th>
-        <th>Reservation&nbsp;Name</th>
+        <th class="text-nowrap">Reservation Name</th>
         <th class="hidden">Assigned Tour</th>
         <th class="hidden">Assigned Boat</th>
         <th><!-- Comment Column --></th>
@@ -63,7 +63,7 @@ $checkinCounts = [
         <th class="hidden">U</th>
         <th>S</th>
         <th class="hidden">P</th>
-        <th class="pr-4">Boat&nbsp;Preferences</th>
+        <th class="pr-4 text-nowrap">Boat Preferences</th>
         <th>D</th>
         <th>C</th>
         <th>H</th>
@@ -78,7 +78,7 @@ $checkinCounts = [
         <tr>
             <td><?= $i ?></td>
             <td><a href="/admin/checkin/<?= $confirmationCode ?>"><?= $confirmationCode ?></a></td>
-            <td><?= $reservation['reservationName'] ?></td>
+            <td class="text-nowrap"><?= $reservation['reservationName'] ?></td>
             <?php if(isset($reservation['assignedTour'])): ?>
             <td class="hidden" <?php if(isset($reservation['tourCheckInTime'])): ?>class="alert-success"<?php endif ?>><?= $reservation['assignedTour'] ?></td>
             <?php else: ?>
@@ -92,20 +92,20 @@ $checkinCounts = [
             </button>
             <?php endif ?>
             </td>
-            <td><?= $reservation['tourQty'] ?></td>
+            <td class="text-nowrap"><small>🛥️</small> <?= $reservation['tourQty'] ?></td>
             <td class="hidden"><?= $reservation['upperQty'] ?></td>
-            <td><?= $reservation['standardQty'] ?></td>
+            <td class="text-nowrap"><small>🚀</small> <?= $reservation['standardQty'] ?></td>
             <td class="hidden"><?= $reservation['privateQty'] ?></td>
-            <td><small><?= $reservation['boatPref1'] ?>&gt;<?= $reservation['boatPref2'] ?>&gt;<?= $reservation['boatPref3'] ?></small></td>
-            <td><?= $reservation['donation'] ?></td>
-            <td><?= $reservation['cookieQty'] ?></td>
-            <td><?= $reservation['hatQty'] ?></td>
-            <td><?= $reservation['shirtQtySm'] ?></td>
-            <td><?= $reservation['shirtQtyMd'] ?></td>
-            <td><?= $reservation['shirtQtyLg'] ?></td>
-            <td><?= $reservation['shirtQtyXl'] ?></td>
-            <td><?= $reservation['shirtQty2xl'] ?></td>
-            <td><?= $reservation['shirtQty3xl'] ?></td>
+            <td class="text-nowrap"><small><?= $reservation['boatPref1'] ?> &gt; <?= $reservation['boatPref2'] ?> &gt; <?= $reservation['boatPref3'] ?></small></td>
+            <td><?= number_format($reservation['donation'],2) ?></td>
+            <td class="text-nowrap"><small>🍪</small> <?= $reservation['cookieQty'] ?></td>
+            <td class="text-nowrap"><small>🧢</small> <?= $reservation['hatQty'] ?></td>
+            <td class="text-nowrap"><small><small><small><small><small>👕</small></small></small></small></small> <?= $reservation['shirtQtySm'] ?></td>
+            <td class="text-nowrap"><small><small><small><small>👕</small></small></small></small> <?= $reservation['shirtQtyMd'] ?></td>
+            <td class="text-nowrap"><small><small><small>👕</small></small></small> <?= $reservation['shirtQtyLg'] ?></td>
+            <td class="text-nowrap"><small><small>👕</small></small> <?= $reservation['shirtQtyXl'] ?></td>
+            <td class="text-nowrap"><small>👕</small> <?= $reservation['shirtQty2xl'] ?></td>
+            <td class="text-nowrap">👕 <?= $reservation['shirtQty3xl'] ?></td>
         </tr>
         <?php
             $i++;
