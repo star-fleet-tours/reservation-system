@@ -118,7 +118,6 @@ $checkinCounts = [
                     <?php elseif ($reservation['tourPref1'] == 'none'): ?>
                     wtf???
                     <?php endif ?>
-                <?= str_replace(['none'],['unavailable'], "8:30am: {$reservation['tourPref1']} 12:30pm: {$reservation['tourPref2']}") ?><br>
                 </small>
                 <?php endif ?>
                 <?php if ($reservation['standardQty'] > 0): ?>
