@@ -107,6 +107,17 @@ $checkinCounts = [
             <td class="text-nowrap">
                 <?php if ($reservation['tourQty'] > 0): ?>
                 <small>
+                    <?php if ($reservation['tourPref1'] == 'first' && $reservation['tourPref2'] == 'second'): ?>
+                    8:30am &gt; 12:30pm
+                    <?php elseif ($reservation['tourPref1'] == 'second' && $reservation['tourPref2'] == 'first'): ?>
+                    12:30pm &gt; 8:30am
+                    <?php elseif ($reservation['tourPref1'] == 'none' && $reservation['tourPref2'] !='none'): ?>
+                    12:30pm only
+                    <?php elseif ($reservation['tourPref2'] == 'none' && $reservation['tourPref1'] !='none'): ?>
+                    8:30am only
+                    <?php elseif ($reservation['tourPref1'] == 'none'): ?>
+                    wtf???
+                    <?php endif ?>
                 <?= str_replace(['none'],['unavailable'], "8:30am: {$reservation['tourPref1']} 12:30pm: {$reservation['tourPref2']}") ?><br>
                 </small>
                 <?php endif ?>
