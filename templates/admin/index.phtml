@@ -64,7 +64,7 @@ $checkinCounts = [
         <th>S</th>
         <th class="hidden">P</th>
         <th>C</th>
-        <th>H</th>
+        <th class="hidden">H</th>
         <th>SM</th>
         <th>MD</th>
         <th>LG</th>
@@ -97,7 +97,7 @@ $checkinCounts = [
             <td class="text-nowrap"><small>🚀</small> <?= $reservation['standardQty'] ?></td>
             <td class="hidden"><?= $reservation['privateQty'] ?></td>
             <td class="text-nowrap"><small>🍪</small> <?= $reservation['cookieQty'] ?></td>
-            <td class="text-nowrap"><small>🧢</small> <?= $reservation['hatQty'] ?></td>
+            <td class="text-nowrap hidden"><small>🧢</small> <?= $reservation['hatQty'] ?></td>
             <td class="text-nowrap"><small><small><small><small><small>👕</small></small></small></small></small> <?= $reservation['shirtQtySm'] ?></td>
             <td class="text-nowrap"><small><small><small><small>👕</small></small></small></small> <?= $reservation['shirtQtyMd'] ?></td>
             <td class="text-nowrap"><small><small><small>👕</small></small></small> <?= $reservation['shirtQtyLg'] ?></td>
@@ -201,7 +201,7 @@ $checkinCounts = [
         <th>Cookies</th>
         <td><?= $cookies ?></td>
     </tr>
-    <tr>
+    <tr class="hidden">
         <th>Hats</th>
         <td><?= $hats ?></td>
     </tr>
