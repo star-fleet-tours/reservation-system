@@ -118,6 +118,17 @@ $(document).ready(function() {
         );
     }
 
+    function howManyShirts() {
+        return (
+            parseInt($("input#shirt-qty-sm").val()) +
+            parseInt($("input#shirt-qty-md").val()) +
+            parseInt($("input#shirt-qty-lg").val()) +
+            parseInt($("input#shirt-qty-xl").val()) +
+            parseInt($("input#shirt-qty-xxl").val()) +
+            parseInt($("input#shirt-qty-xxxl").val())
+        );
+    }
+
     $("form#launch-form").submit(function(e) {
 
         if (!moreThanOneTicket() && $("#cookie-qty").val() != "0") {
@@ -126,10 +137,15 @@ $(document).ready(function() {
             return false;
         }
 
-        if (!moreThanOneTicket() && $("#special-requests").val() == "") {
+        if (!moreThanOneTicket() && howManyShirts() == 0) {
             e.preventDefault();
-            alert("If you are just ordering t-shirts without attending the launch or tours, please enter your shipping address in the comments field.");
-            $("#special-requests").focus();
+            alert("Please choose at least one launch ticket, tour ticket, or t-shirt to continue.");
+        }
+
+        if (!moreThanOneTicket() && howManyShirts() > 0) {
+            if(!confirm("NOTE: You are ordering one or more shirts without any launch or tour tickets. Star-Fleet Tours does not ship shirts at this time, so continue only if you are able to pick up your shirt(s) with everyone else the day of the tours/launch or you have made arrangements with a Star-Fleet crewmember.")) {
+                e.preventDefault();
+            }
         }
     })
 
