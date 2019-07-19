@@ -119,9 +119,17 @@ $(document).ready(function() {
     }
 
     $("form#launch-form").submit(function(e) {
-        if (!moreThanOneTicket()) {
+
+        if (!moreThanOneTicket() && $("#cookie-qty").val() != "0") {
             e.preventDefault();
-            alert("You must purchase at least one launch or tour ticket.");
+            alert("Cookies are only available with purchase of at least one launch or tour ticket.");
+            return false;
+        }
+
+        if (!moreThanOneTicket() && $("#special-requests").val() == "") {
+            e.preventDefault();
+            alert("If you are just ordering t-shirts without attending the launch or tours, please enter your shipping address in the comments field.");
+            $("#special-requests").focus();
         }
     })
 
