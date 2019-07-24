@@ -417,6 +417,11 @@ email;
         error_reporting(E_ALL & ~E_NOTICE);
         $reservationKeys = $container->get('redis')->zRangeByScore("$currentMission:reservations", '-inf', '+inf');
         header('Content-Type:text/plain');
+        echo "PASS ZERO: DELETE ALL BOAT ASSIGNMENTS:\n";
+        foreach ($reservationKeys as $reservationKey) {
+            $container->get('redis')->hDel($reservationKey, 'assignedBoat');
+            echo "- HDEL {$reservationKey} assignedBoat\n";
+        }
         $tnt1Passengers = 0;
         echo "FILLING TNT1: First pass, finding all parties who selected TNT1:\n";
         foreach ($reservationKeys as $reservationKey) {
@@ -442,7 +447,7 @@ email;
             echo "- {$reservation['reservationName']}, party of {$reservation['standardQty']}, no boat preference ($tnt1Passengers)\n";
             $container->get('redis')->hSet($reservationKey, 'assignedBoat', 'TNT1');
         }
-        echo "FILLING TNT1: Third pass, starting from last reservation, reassign parties with OO2 preference:\n";
+        echo "FILLING TNT1: Third pass, starting from last reservation, reassign any OO2/Upper reservations until TNT1 is full:\n";
         foreach (array_reverse($reservationKeys) as $reservationKey) {
             $tnt1SpotsRemaining = 18 - $tnt1Passengers;
             if ($tnt1SpotsRemaining == 0) continue;
@@ -451,15 +456,15 @@ email;
                 continue;
             }
             $tnt1Passengers += $reservation['standardQty'];
-            echo "- {$reservation['reservationName']}, party of {$reservation['standardQty']}, {$reservation['boatPref1']} preferred ($tnt1Passengers)\n";
+            echo "- {$reservation['reservationName']}, party of {$reservation['standardQty']} assigned to TNT1, {$reservation['boatPref1']} preferred ($tnt1Passengers)\n";
             $container->get('redis')->hSet($reservationKey, 'assignedBoat', 'TNT1');
         }
-        echo "FILLING OO2-UPPER: One pass, first 20 that fit.";
+        echo "FILLING OO2-UPPER: One pass, first 20 that fit.\n";
         $oo2UpperPassengers = 0;
-        $oo2UpperSpotsRemaining = 20;
         foreach ($reservationKeys as $reservationKey) {
+            $oo2UpperSpotsRemaining = 20 - $oo2UpperPassengers;
+            if ($oo2UpperSpotsRemaining == 0) continue;
             $reservation = $container->get('redis')->hGetAll($reservationKey);
-            if ($oo2UpperSpotsReamining == 0) continue;
             if (isset($reservation['assignedBoat']) || $reservation['standardQty'] == 0 || $reservation['standardQty'] > $oo2UpperSpotsRemaining || $reservation['boatPref1'] != 'oo2-upper') {
                 continue;
             }

@@ -91,7 +91,6 @@ $assignedCounts = [
             <?php else: ?>
             <td class="hidden"></td>
             <?php endif ?>
-            <td <?php if(isset($reservation['launchCheckInTime'])): ?>class="alert-success"<?php endif ?>><?php if (isset($reservation['assignedBoat'])): ?><?= $reservation['assignedBoat'] ?><?php elseif ($reservation['upperQty'] > 0): ?>OO2^<?php elseif ($reservation['privateQty'] > 0): ?>SL<?php endif ?></td>
             <td>
             <?php if ($reservation['specialRequests']): ?>
             <button type="button" class="btn btn-secondary" data-toggle="popover" data-placement="left" data-content="<?= htmlentities($reservation['specialRequests']) ?>">
@@ -99,6 +98,7 @@ $assignedCounts = [
             </button>
             <?php endif ?>
             </td>
+            <td <?php if(isset($reservation['launchCheckInTime'])): ?>class="alert-success"<?php endif ?>><?php if (isset($reservation['assignedBoat'])): ?><?= $reservation['assignedBoat'] ?><?php elseif ($reservation['upperQty'] > 0): ?>OO2^<?php elseif ($reservation['privateQty'] > 0): ?>SL<?php endif ?></td>
             <td class="hidden"><?= $reservation['upperQty'] ?></td>
             <td class="text-nowrap"><small>🚀</small> <?= $reservation['standardQty'] ?></td>
             <td class="hidden"><?= $reservation['privateQty'] ?></td>
@@ -150,10 +150,10 @@ $assignedCounts = [
             $shirt3xl += $reservation['shirtQty3xl'];
             $tourDiscounts += $reservation['tourDiscountQty'];
             if (isset($reservation['assignedBoat'])) {
-                $assignedCounts[$reservation['assignedBoat']]++;
+                $assignedCounts[$reservation['assignedBoat']]+=$reservation['standardQty'];
             }
             if (isset($reservation['launchCheckInTime']) && isset($reservation['assignedBoat'])) {
-                $checkinCounts[$reservation['assignedBoat']]++;
+                $checkinCounts[$reservation['assignedBoat']]+=$reservation['standardQty'];
             }
         ?>
     <?php endforeach; ?>
