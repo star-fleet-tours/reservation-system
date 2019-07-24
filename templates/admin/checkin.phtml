@@ -1,5 +1,4 @@
 <div class="alt-bg-section">
-    <?php include __DIR__ . '/menu.phtml' ?>
     <div class="container">
 
     <?php if(isset($reservation['cancelled'])): ?>
@@ -19,59 +18,22 @@
     </div>
     <? endif ?>
 
-        <h1>Check-In: <?= $id ?></h1>
-        <strong>Reservation time (UTC):</strong> <?= $reservationTime ?>
+    <div style="width: 30rem;" class="card mx-auto my-4 p-4 text-white bg-dark">
+        <h3>
+            🎫 <span class="themed-text"><?= $reservation['reservationName'] ?> (<?= $id ?>)</span>
         <?php if (isset($reservation['assignedBoat'])): ?>
-            <br><strong>Boat assignment:</strong> <?= $reservation['assignedBoat'] ?>
+            <small><br>🚀 × <?= $reservation['standardQty'] ?> aboard <span class="themed-text"><?= $reservation['assignedBoat'] ?></small>
         <?php endif ?>
+        <?php if ($reservation['cookieQty'] > 0): ?><small><br>🍪 × <?= $reservation['cookieQty'] ?></small><?php endif ?>
+        <?php if ($reservation['donation'] > 0): ?><small><br>💸 $<?= number_format($reservation['donation'],2) ?></small> <sup style="font-size: 0.4em">THANK <sup>THEM!</sup></sup><?php endif ?>
+        </h3>
         <?php if (isset($reservation['assignedTour'])): ?>
             <br><strong>Tour assignment:</strong> <?= $reservation['assignedTour'] ?>
         <?php endif ?>
-
-<div class="text-center">
-<a href="/admin/resend-confirmation/<?= $id ?>" onclick="return confirm('Are you sure?')">Resend Confirmation</a><br>
-<a href="/reservation/<?= $id ?>">Reservation Link</a><br>
-</div>
-
-    <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Party &amp; Contact</legend></fieldset>
-    <form action="/admin/reservation/<?= $id ?>?checkCancelled" method="post" class="container justify-content-center" id="party-contact-form">
-
-    <div class="form-group form-row justify-content-center">
-        <label for="reservation-name" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Name for Reservation:</label>
-        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
-            <input value="<?= $reservation['reservationName'] ?>" type="text" id="reservation-name" name="reservationName" class="form-control form-control-lg" aria-describedby="reservation-name-hint" required>
-            <span id="reservation-name-hint" class="form-text text-center">First, full, or group/party name.</span>
-        </div>
+        <strong>Reservation time (UTC):</strong> <?= $reservationTime ?>
     </div>
 
-    <div class="form-group form-row justify-content-center">
-        <label for="reservation-email" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Email Address:</label>
-        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
-        <input value="<?= $reservation['reservationEmail'] ?>" type="email" id="reservation-email" name="reservationEmail" class="form-control form-control-lg" aria-describedby="reservation-email-hint" required>
-            <span id="reservation-email-hint" class="form-text text-center">Confirmation will be sent here.</span>
-        </div>
-    </div>
 
-    <div class="form-group form-row justify-content-center">
-        <div class="col-9 col-sm-12 col-md-10 col-lg-8">
-            <label for="sft-notes" class="form-label font-weight-bold">SFT Notes:</label>
-            <textarea class="form-control" id="sft-notes" name="sftNotes"><?php if (isset($reservation['sftNotes'])): ?><?= $reservation['sftNotes'] ?><?php endif ?></textarea>
-        </div>
-    </div>
-
-    <div class="form-group form-row justify-content-center">
-        <label for="reservation-cancel" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Cancel:</label>
-        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
-        <input value="<?= time() ?>" type="checkbox" id="reservation-cancel" name="cancelled" class="form-control form-control-lg" aria-describedby="reservation-cancell-hint" <?php if (isset($reservation['cancelled'])) echo 'checked' ?>>
-            <span id="reservation-cancel-hint" class="form-text text-center">Marking a reservation as cancelled excludes it from totals, boat assignments, csv's, etc.</span>
-        </div>
-    </div>
-    <div class="form-group form-row justify-content-center">
-        <div class="form-check col-9 col-sm-11 col-md-10 col-lg-8">
-            <button class="button btn btn-warning float-right btn-lg" type="submit">Update Information &raquo;</button><br>
-        </div>
-    </div>
-    </form>
 
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Reservation Details</legend></fieldset>
 
@@ -97,7 +59,7 @@
                 <?php endif; ?>
                 <?php if ($reservation['standardQty'] > 0): ?>
                 <tr>
-                  <td>Standard Launch Ticket<br><small>(Boat preference: <?= strtoupper($reservation['boatPref1']); ?>)</small></td>
+                  <td>Standard Launch Ticket<br><small>(Assigned boat: <?= strtoupper($reservation['assignedBoat']); ?>)</small></td>
                   <td class="text-right">$<?= number_format($reservation['standardPrice'],2) ?>/ea</td>
                   <td class="text-right"><?= $reservation['standardQty'] ?></td>
                   <td class="text-right">$<?= number_format($reservation['standardPrice'] * $reservation['standardQty'],2) ?></td>
@@ -215,6 +177,7 @@
         </div> <!--/col-->
     </div> <!--/row-->
 
+
     <?php if ($reservation['standardQty'] > 0 || $reservation['privateQty'] > 0 || $reservation['upperQty']): ?>
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Launch Check-In</legend></fieldset>
     <form action="/admin/reservation/<?= $id ?>" method="post" class="container justify-content-center" id="launch-checkin-form">
@@ -232,6 +195,53 @@
     </div>
     </form>
     <?php endif ?>
+
+
+<?php include __DIR__ . '/menu.phtml' ?>
+<div class="text-center">
+<a href="/admin/resend-confirmation/<?= $id ?>" onclick="return confirm('Are you sure?')">Resend Confirmation</a><br>
+<a href="/reservation/<?= $id ?>">Reservation Link</a><br>
+</div>
+
+    <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Party &amp; Contact</legend></fieldset>
+    <form action="/admin/reservation/<?= $id ?>?checkCancelled" method="post" class="container justify-content-center" id="party-contact-form">
+
+    <div class="form-group form-row justify-content-center">
+        <label for="reservation-name" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Name for Reservation:</label>
+        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+            <input value="<?= $reservation['reservationName'] ?>" type="text" id="reservation-name" name="reservationName" class="form-control form-control-lg" aria-describedby="reservation-name-hint" required>
+            <span id="reservation-name-hint" class="form-text text-center">First, full, or group/party name.</span>
+        </div>
+    </div>
+
+    <div class="form-group form-row justify-content-center">
+        <label for="reservation-email" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Email Address:</label>
+        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+        <input value="<?= $reservation['reservationEmail'] ?>" type="email" id="reservation-email" name="reservationEmail" class="form-control form-control-lg" aria-describedby="reservation-email-hint" required>
+            <span id="reservation-email-hint" class="form-text text-center">Confirmation will be sent here.</span>
+        </div>
+    </div>
+
+    <div class="form-group form-row justify-content-center">
+        <div class="col-9 col-sm-12 col-md-10 col-lg-8">
+            <label for="sft-notes" class="form-label font-weight-bold">SFT Notes:</label>
+            <textarea class="form-control" id="sft-notes" name="sftNotes"><?php if (isset($reservation['sftNotes'])): ?><?= $reservation['sftNotes'] ?><?php endif ?></textarea>
+        </div>
+    </div>
+
+    <div class="form-group form-row justify-content-center">
+        <label for="reservation-cancel" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Cancel:</label>
+        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+        <input value="<?= time() ?>" type="checkbox" id="reservation-cancel" name="cancelled" class="form-control form-control-lg" aria-describedby="reservation-cancell-hint" <?php if (isset($reservation['cancelled'])) echo 'checked' ?>>
+            <span id="reservation-cancel-hint" class="form-text text-center">Marking a reservation as cancelled excludes it from totals, boat assignments, csv's, etc.</span>
+        </div>
+    </div>
+    <div class="form-group form-row justify-content-center">
+        <div class="form-check col-9 col-sm-11 col-md-10 col-lg-8">
+            <button class="button btn btn-warning float-right btn-lg" type="submit">Update Information &raquo;</button><br>
+        </div>
+    </div>
+    </form>
 
     <?php if ($reservation['tourQty'] > 0): ?>
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Tour Check-In</legend></fieldset>
