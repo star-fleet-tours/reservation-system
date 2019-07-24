@@ -30,7 +30,10 @@
         <?php if (isset($reservation['assignedTour'])): ?>
             <br><strong>Tour assignment:</strong> <?= $reservation['assignedTour'] ?>
         <?php endif ?>
-        <strong>Reservation time (UTC):</strong> <?= $reservationTime ?>
+        <?php if ($reservation['specialRequests'] != ""): ?>
+        <div class="alert alert-dark" role="alert">💬 <?= $reservation['specialRequests'] ?></div>
+        <?php endif ?>
+        <small><strong>Reservation time (UTC):</strong> <?= $reservationTime ?></small>
     </div>
 
 
