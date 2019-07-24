@@ -12,6 +12,12 @@
 </style>
 <div class="container mt-3">
 
+
+    <?php if(isset($reservation['cancelled'])): ?>
+    <div class="alert alert-critical text-center" role="alert">
+        <strong>🚫 This reservation has been cancelled.</strong><br>
+    </div>
+    <?php else: ?>
     <div class="alert alert-info text-center" role="alert">
         <strong>Your reservation is confirmed!</strong><br>
         <?php if(isset($reservation['assignedBoat'])): ?>
@@ -21,6 +27,7 @@
             Your party's tour assignment is <strong><?= $reservation['assignedTour'] ?></strong>.
         <?php endif ?>
     </div>
+    <?php endif ?>
 
     <h1 class="text-center">Your confirmation code is: <span class="themed-text"><?= $id ?></span></h1>
     <div class="text-center"><div class="p-2 mx-auto mt-4 mb-4 w-auto d-inline-block rounded" id="qrcodeCanvas"></div></div>

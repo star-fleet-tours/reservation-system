@@ -43,6 +43,7 @@ $shirtXl   = 0;
 $shirt2xl  = 0;
 $shirt3xl  = 0;
 $tourDiscounts = 0;
+$cancelled = 0;
 $checkinCounts = [
     'OO2-UPPER' => 0,
     'OO2'       => 0,
@@ -85,7 +86,7 @@ $assignedCounts = [
         <tr>
             <td><?= $i ?></td>
             <td><a href="/admin/checkin/<?= $confirmationCode ?>"><?= $confirmationCode ?></a></td>
-            <td class="text-nowrap"><?= $reservation['reservationName'] ?></td>
+            <td class="text-nowrap">🚫 <?= $reservation['reservationName'] ?></td>
             <?php if(isset($reservation['assignedTour'])): ?>
             <td class="hidden" <?php if(isset($reservation['tourCheckInTime'])): ?>class="alert-success"<?php endif ?>><?= $reservation['assignedTour'] ?></td>
             <?php else: ?>
@@ -149,6 +150,7 @@ $assignedCounts = [
             $shirt2xl += $reservation['shirtQty2xl'];
             $shirt3xl += $reservation['shirtQty3xl'];
             $tourDiscounts += $reservation['tourDiscountQty'];
+            $cancelled += $reservation['standardQty'];
             if (isset($reservation['assignedBoat'])) {
                 $assignedCounts[$reservation['assignedBoat']]+=$reservation['standardQty'];
             }

@@ -346,6 +346,7 @@ email;
         header('Content-Type:text/plain');
         echo "conf code,party size,8:30am,12:30pm\n";
         foreach ($reservationKeys as $reservationKey) {
+            if (isset($reservation['cancelled'])) continue;
             $reservation = $container->get('redis')->hGetAll($reservationKey);
             $confCode = str_replace("$currentMission:reservation:", "", $reservationKey);
             if ($reservation['tourQty'] == 0) continue;
@@ -379,6 +380,7 @@ email;
         ];
         foreach ($reservationKeys as $reservationKey) {
             $reservation = $container->get('redis')->hGetAll($reservationKey);
+            if (isset($reservation['cancelled'])) continue;
             if ($reservation['tourQty'] == 0) continue;
             $tours[0][$reservation['tourPref1']] += $reservation['tourQty'];
             $tours[1][$reservation['tourPref2']] += $reservation['tourQty'];
@@ -387,30 +389,6 @@ email;
         }
         $args['tours'] = $tours;
         return $container->get('renderer')->render($response, 'admin/tours.phtml', $args);
-    });
-    $app->get('/admin/boat-inventory', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
-        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
-        $reservationKeys = $container->get('redis')->zRangeByScore("$currentMission:reservations", '-inf', '+inf');
-        $passengerCounts = [
-            'TNT1' => 0,
-            'OO2'  => 0,
-            'OO2Upper' => 0,
-            'Private' => 0,
-        ];
-        foreach ($reservationKeys as $reservationKey) {
-            $reservation = $container->get('redis')->hGetAll($reservationKey);
-            if ($reservation['upperQty'] > 0) {
-                $passengerCounts['OO2Upper'] += $reservation['upperQty'];
-            } elseif ($reservation['privateQty'] > 0) {
-                $passengerCounts['Private'] += $reservation['privateQty'];
-            } elseif ($reservation['standardQty'] > 0) {
-                if (!isset($reservation['assignedBoat'])) {
-                    echo $reservationKey;
-                }
-                $passengerCounts[$reservation['assignedBoat']] += $reservation['standardQty'];
-            }
-        }
-        var_dump($passengerCounts);
     });
     $app->get('/admin/assign-boats', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
@@ -426,6 +404,7 @@ email;
         echo "FILLING TNT1: First pass, finding all parties who selected TNT1:\n";
         foreach ($reservationKeys as $reservationKey) {
             $reservation = $container->get('redis')->hGetAll($reservationKey);
+            if (isset($reservation['cancelled'])) continue;
             if ($reservation['standardQty'] == 0 || $reservation['boatPref1'] != 'tnt1') {
                 continue;
             }
@@ -440,6 +419,7 @@ email;
             $tnt1SpotsRemaining = 18 - $tnt1Passengers;
             if ($tnt1SpotsRemaining == 0) continue;
             $reservation = $container->get('redis')->hGetAll($reservationKey);
+            if (isset($reservation['cancelled'])) continue;
             if ($reservation['standardQty'] == 0 || $reservation['standardQty'] > $tnt1SpotsRemaining || $reservation['boatPref1'] != 'none') {
                 continue;
             }
@@ -452,6 +432,7 @@ email;
             $tnt1SpotsRemaining = 18 - $tnt1Passengers;
             if ($tnt1SpotsRemaining == 0) continue;
             $reservation = $container->get('redis')->hGetAll($reservationKey);
+            if (isset($reservation['cancelled'])) continue;
             if ($reservation['standardQty'] == 0 || $reservation['standardQty'] > $tnt1SpotsRemaining) {
                 continue;
             }
@@ -465,6 +446,7 @@ email;
             $oo2UpperSpotsRemaining = 20 - $oo2UpperPassengers;
             if ($oo2UpperSpotsRemaining == 0) continue;
             $reservation = $container->get('redis')->hGetAll($reservationKey);
+            if (isset($reservation['cancelled'])) continue;
             if (isset($reservation['assignedBoat']) || $reservation['standardQty'] == 0 || $reservation['standardQty'] > $oo2UpperSpotsRemaining || $reservation['boatPref1'] != 'oo2-upper') {
                 continue;
             }
@@ -476,6 +458,7 @@ email;
         echo "FILLING OO2-LOWER: Final pass, assign all remaining standard passengers to OO2:\n";
         foreach ($reservationKeys as $reservationKey) {
             $reservation = $container->get('redis')->hGetAll($reservationKey);
+            if (isset($reservation['cancelled'])) continue;
             if ($reservation['standardQty'] == 0 || isset($reservation['assignedBoat'])) {
                 continue;
             }
@@ -491,6 +474,7 @@ email;
         header('Content-Type:text/plain');
         foreach ($reservationKeys as $reservationKey) {
             $reservation = $container->get('redis')->hGetAll($reservationKey);
+            if (isset($reservation['cancelled'])) continue;
             echo "{$reservation['reservationName']},{$reservation['reservationEmail']}\n";
         }
         die();
@@ -522,11 +506,16 @@ email;
             'tourCheckInNotes',
             'launchCheckInTime',
             'launchCheckInNotes',
+            'sftNotes',
+            'cancelled',
         ];
         foreach ($_POST as $key=>$val) {
             if (in_array($key, $fieldWhitelist)) {
-                $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", $key, $_POST[$key]);
+                $container->get('redis')->hSet("$currentMission:reservation:{$args['id']}", $key, $_POST[$key]);
             }
+        }
+        if (isset($_GET['checkCancelled']) && !isset($_POST['cancelled'])) {
+            $container->get('redis')->hDel("$currentMission:reservation:{$args['id']}", 'cancelled');
         }
         return $response->withRedirect('/admin/checkin/'.$args['id']);
     });
