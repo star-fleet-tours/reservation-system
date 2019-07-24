@@ -44,21 +44,28 @@ $shirt2xl  = 0;
 $shirt3xl  = 0;
 $tourDiscounts = 0;
 $checkinCounts = [
-    'oo2-upper' => 0,
-    'oo2' => 0,
-    'tnt1' => 0,
-    'tnt2' => 0,
-    'sl' => 0,
-]
+    'OO2-UPPER' => 0,
+    'OO2'       => 0,
+    'TNT1'      => 0,
+    'TNT2'      => 0,
+    'SL'        => 0,
+];
+$assignedCounts = [
+    'OO2-UPPER' => 0,
+    'OO2'       => 0,
+    'TNT1'      => 0,
+    'TNT2'      => 0,
+    'SL'        => 0,
+];
 ?>
 <table class="table table-dark w-auto mx-auto">
     <tr>
         <th>#</th>
         <th>Code</th>
         <th class="text-nowrap">Reservation Name</th>
-        <th class="hidden">Assigned Tour</th>
-        <th class="hidden">Assigned Boat</th>
         <th><!-- Comment Column --></th>
+        <th class="hidden">Assigned Tour</th>
+        <th>B</th>
         <th class="hidden">U</th>
         <th>S</th>
         <th class="hidden">P</th>
@@ -84,7 +91,7 @@ $checkinCounts = [
             <?php else: ?>
             <td class="hidden"></td>
             <?php endif ?>
-            <td class="hidden" <?php if(isset($reservation['launchCheckInTime'])): ?>class="alert-success"<?php endif ?>><?php if (isset($reservation['assignedBoat'])): ?><?= $reservation['assignedBoat'] ?><?php elseif ($reservation['upperQty'] > 0): ?>OO2^<?php elseif ($reservation['privateQty'] > 0): ?>SL<?php endif ?></td>
+            <td <?php if(isset($reservation['launchCheckInTime'])): ?>class="alert-success"<?php endif ?>><?php if (isset($reservation['assignedBoat'])): ?><?= $reservation['assignedBoat'] ?><?php elseif ($reservation['upperQty'] > 0): ?>OO2^<?php elseif ($reservation['privateQty'] > 0): ?>SL<?php endif ?></td>
             <td>
             <?php if ($reservation['specialRequests']): ?>
             <button type="button" class="btn btn-secondary" data-toggle="popover" data-placement="left" data-content="<?= htmlentities($reservation['specialRequests']) ?>">
@@ -142,6 +149,9 @@ $checkinCounts = [
             $shirt2xl += $reservation['shirtQty2xl'];
             $shirt3xl += $reservation['shirtQty3xl'];
             $tourDiscounts += $reservation['tourDiscountQty'];
+            if (isset($reservation['assignedBoat'])) {
+                $assignedCounts[$reservation['assignedBoat']]++;
+            }
             if (isset($reservation['launchCheckInTime']) && isset($reservation['assignedBoat'])) {
                 $checkinCounts[$reservation['assignedBoat']]++;
             }
@@ -151,9 +161,9 @@ $checkinCounts = [
         <th>#</th>
         <th>Code</th>
         <th>Reservation&nbsp;Name</th>
-        <th class="hidden">Assigned Tour</th>
-        <th class="hidden">Assigned Boat</th>
         <th><!-- Comment Column --></th>
+        <th class="hidden">Assigned Tour</th>
+        <th>B</th>
         <th class="hidden">U</th>
         <th>S</th>
         <th class="hidden">P</th>
@@ -231,17 +241,17 @@ $checkinCounts = [
     </tr>
     <tr>
         <th>OO2 Upper Checked In</th>
-        <td><?= $checkinCounts['oo2-upper'] ?></td>
+        <td><?= $checkinCounts['OO2-UPPER'] ?> of <?= $assignedCounts['OO2-UPPER'] ?></td>
     </tr>
     <tr>
         <th>OO2 Lower Checked In</th>
-        <td><?= $checkinCounts['oo2'] ?></td>
+        <td><?= $checkinCounts['OO2'] ?> of <?= $assignedCounts['OO2'] ?></td>
     </tr>
     <tr>
         <th>TNT1 Checked In</th>
-        <td><?= $checkinCounts['tnt1'] ?></td>
+        <td><?= $checkinCounts['TNT1'] ?> of <?= $assignedCounts['TNT1'] ?></td>
     </tr>
-    <tr>
+    <tr class="hidden">
         <th>TNT2 Checked In</th>
         <td><?= $checkinCounts['tnt2'] ?></td>
     </tr>
