@@ -427,7 +427,20 @@ email;
             echo "- {$reservation['reservationName']}, party of {$reservation['standardQty']}, no boat preference ($tnt1Passengers)\n";
             $container->get('redis')->hSet($reservationKey, 'assignedBoat', 'TNT1');
         }
-        echo "FILLING TNT1: Third pass, starting from last reservation, reassign any OO2/Upper reservations until TNT1 is full:\n";
+        echo "FILLING TNT1: Third pass, starting from last reservation, reassign any 2nd pref TNT1 reservations:\n";
+        foreach (array_reverse($reservationKeys) as $reservationKey) {
+            $tnt1SpotsRemaining = 18 - $tnt1Passengers;
+            if ($tnt1SpotsRemaining == 0) continue;
+            $reservation = $container->get('redis')->hGetAll($reservationKey);
+            if (isset($reservation['cancelled'])) continue;
+            if ($reservation['standardQty'] == 0 || $reservation['standardQty'] > $tnt1SpotsRemaining || $reservation['boatPref2'] != 'tnt1') {
+                continue;
+            }
+            $tnt1Passengers += $reservation['standardQty'];
+            echo "- {$reservation['reservationName']}, party of {$reservation['standardQty']} assigned to TNT1, their 2nd preference ($tnt1Passengers)\n";
+            $container->get('redis')->hSet($reservationKey, 'assignedBoat', 'TNT1');
+        }
+        echo "FILLING TNT1: Fourth pass, starting from last reservation, reassign any OO2/Upper reservations until TNT1 is full:\n";
         foreach (array_reverse($reservationKeys) as $reservationKey) {
             $tnt1SpotsRemaining = 18 - $tnt1Passengers;
             if ($tnt1SpotsRemaining == 0) continue;
