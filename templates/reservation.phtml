@@ -22,8 +22,10 @@
         <?php endif ?>
     </div>
 
-    <h1 class="text-center">Your confirmation code is: <?= $id ?></h1>
-    <div class="text-center"><div class="p-2 mx-auto mt-4 mb-5 w-auto d-inline-block rounded" id="qrcodeCanvas"></div></div>
+    <h1 class="text-center">Your confirmation code is: <span class="themed-text"><?= $id ?></span></h1>
+    <div class="text-center"><div class="p-2 mx-auto mt-4 mb-4 w-auto d-inline-block rounded" id="qrcodeCanvas"></div></div>
+    <h1 class="text-center mb-4"><span class="themed-text"><?= $reservation['reservationName'] ?></span></h1>
+    <h6 class="text-center mb-4"><a href="#reservation-details">⇣ Jump to Reservation Details ⇣</a></h6>
 
 
     <div class="reservation-info px-5">
@@ -38,7 +40,7 @@
 
     </div>
 
-    <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Your Reservation</legend></fieldset>
+    <fieldset id="reservation-details" class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Your Reservation</legend></fieldset>
 
     <div class="row">
         <div class="col-lg-8">

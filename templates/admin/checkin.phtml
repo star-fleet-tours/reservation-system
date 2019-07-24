@@ -27,6 +27,31 @@
 <a href="/reservation/<?= $id ?>">Reservation Link</a><br>
 </div>
 
+    <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Party &amp; Contact</legend></fieldset>
+    <form action="/admin/reservation/<?= $id ?>" method="post" class="container justify-content-center" id="party-contact-form">
+
+    <div class="form-group form-row justify-content-center">
+        <label for="reservation-name" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Name for Reservation:</label>
+        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+            <input value="<?= $reservation['reservationName'] ?>" type="text" id="reservation-name" name="reservationName" class="form-control form-control-lg" aria-describedby="reservation-name-hint" required>
+            <span id="reservation-name-hint" class="form-text text-center">First, full, or group/party name.</span>
+        </div>
+    </div>
+
+    <div class="form-group form-row justify-content-center">
+        <label for="reservation-email" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Email Address:</label>
+        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+        <input value="<?= $reservation['reservationEmail'] ?>" type="email" id="reservation-email" name="reservationEmail" class="form-control form-control-lg" aria-describedby="reservation-email-hint" required>
+            <span id="reservation-email-hint" class="form-text text-center">Confirmation will be sent here.</span>
+        </div>
+    </div>
+    <div class="form-group form-row justify-content-center">
+        <div class="form-check col-9 col-sm-11 col-md-10 col-lg-8">
+            <button class="button btn btn-warning float-right btn-lg" type="submit">Update Party Information &raquo;</button><br>
+        </div>
+    </div>
+    </form>
+
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Reservation Details</legend></fieldset>
 
     <div class="row">
@@ -171,7 +196,7 @@
 
     <?php if ($reservation['standardQty'] > 0 || $reservation['privateQty'] > 0 || $reservation['upperQty']): ?>
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Launch Check-In</legend></fieldset>
-    <form action="/admin/launch-checkin/<?= $id ?>" method="post" class="container justify-content-center" id="launch-checkin-form">
+    <form action="/admin/reservation/<?= $id ?>" method="post" class="container justify-content-center" id="launch-checkin-form">
     <div class="form-group form-row justify-content-center">
         <div class="col-9 col-sm-12 col-md-10 col-lg-8">
             <label for="tour-check-in-notes" class="form-label font-weight-bold">Launch Check-In Notes:</label>
@@ -180,6 +205,7 @@
     </div>
     <div class="form-group form-row justify-content-center">
         <div class="form-check col-9 col-sm-11 col-md-10 col-lg-8">
+            <input type="hidden" name="launchCheckInTime" value="<?= time() ?>">
             <button class="button btn btn-warning float-right btn-lg" type="submit">Check Party In &raquo;</button><br>
         </div>
     </div>
@@ -188,7 +214,7 @@
 
     <?php if ($reservation['tourQty'] > 0): ?>
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Tour Check-In</legend></fieldset>
-    <form action="/admin/tour-checkin/<?= $id ?>" method="post" class="container justify-content-center" id="tour-checkin-form">
+    <form action="/admin/reservation/<?= $id ?>" method="post" class="container justify-content-center" id="tour-checkin-form">
     <div class="form-group form-row justify-content-center">
         <div class="col-9 col-sm-12 col-md-10 col-lg-8">
             <label for="tour-check-in-notes" class="form-label font-weight-bold">Tour Check-In Notes:</label>
@@ -197,13 +223,14 @@
     </div>
     <div class="form-group form-row justify-content-center">
         <div class="form-check col-9 col-sm-11 col-md-10 col-lg-8">
+            <input type="hidden" name="launchCheckInTime" value="<?= time() ?>">
             <button class="button btn btn-warning float-right btn-lg" type="submit">Check Party In &raquo;</button><br>
         </div>
     </div>
     </form>
 
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Update Tour Prefs</legend></fieldset>
-    <form action="/admin/tour-prefs/<?= $id ?>" method="post" class="container justify-content-center" id="tour-pref-form">
+    <form action="/admin/reservation/<?= $id ?>" method="post" class="container justify-content-center" id="tour-pref-form">
     <div class="form-group form-row justify-content-center">
         <label for="standard-qtyss" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Tour Preference:</label>
         <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
@@ -256,7 +283,7 @@
 
     <?php if ($reservation['standardQty'] > 0 || $reservation['privateQty'] > 0 || $reservation['upperQty']): ?>
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Update Boat Prefs</legend></fieldset>
-    <form action="/admin/boat-prefs/<?= $id ?>" method="post" class="container justify-content-center" id="tour-pref-form">
+    <form action="/admin/reservation/<?= $id ?>" method="post" class="container justify-content-center" id="tour-pref-form">
 
     <div class="form-group form-row justify-content-center">
         <label for="boat-pref-1" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Boat Preference:</label>

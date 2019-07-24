@@ -472,18 +472,6 @@ email;
         }
         die();
     });
-    $app->post('/admin/tour-checkin/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
-        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
-        $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", 'tourCheckInTime', time());
-        $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", 'tourCheckInNotes', $_POST['tourCheckInNotes']);
-        return $response->withRedirect("/admin/checkin/{$args['id']}");
-    });
-    $app->post('/admin/launch-checkin/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
-        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
-        $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", 'launchCheckInTime', time());
-        $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", 'launchCheckInNotes', $_POST['launchCheckInNotes']);
-        return $response->withRedirect("/admin/checkin/{$args['id']}");
-    });
     $app->get('/admin/inventory', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
         $args['inventory'] = $container->get('redis')->hgetall("$currentMission:inventory");
@@ -497,18 +485,26 @@ email;
         $container->get('redis')->hset("$currentMission:inventory", 'tour', $_POST['tourQty']);
         return $response->withRedirect('/admin/inventory');
     });
-    $app->post('/admin/tour-prefs/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
-        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
-        $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", 'tourPref1', $_POST['tourPref1']);
-        $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", 'tourPref2', $_POST['tourPref2']);
-        $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", 'tourPref3', $_POST['tourPref3']);
-        return $response->withRedirect('/admin/checkin/'.$args['id']);
-    });
-    $app->post('/admin/boat-prefs/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
-        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
-        $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", 'boatPref1', $_POST['boatPref1']);
-        $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", 'boatPref2', $_POST['boatPref2']);
-        $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", 'boatPref3', $_POST['boatPref3']);
+    $app->post('/admin/reservation/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        $fieldWhitelist = [
+            'reservationName',
+            'reservationEmail',
+            'tourPref1',
+            'tourPref2',
+            'tourPref3',
+            'boatPref1',
+            'boatPref2',
+            'boatPref3',
+            'tourCheckInTime',
+            'tourCheckInNotes',
+            'launchCheckInTime',
+            'launchCheckInNotes',
+        ];
+        foreach ($_POST as $key=>$val) {
+            if (in_array($key, $fieldWhitelist)) {
+                $container->get('redis')->hset("$currentMission:reservation:{$args['id']}", $key, $_POST[$key]);
+            }
+        }
         return $response->withRedirect('/admin/checkin/'.$args['id']);
     });
     $app->get('/admin/discounts', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
@@ -539,7 +535,6 @@ email;
     });
     $app->post('/admin/reservation', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
-        $container->get('redis')->hset("$currentMission:discount:{$_POST['discount-code']}", 'amount', $_POST['discount-amount']);
         return $response->withRedirect('/admin/checkin/' . $_POST['confirmation-code']);
     });
     $app->get('/admin/checkin/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
