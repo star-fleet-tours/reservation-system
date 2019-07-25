@@ -72,6 +72,7 @@ email;
         }
         if (isset($_GET['update'])) {
             $args['id'] = $_GET['update'];
+            $args['reservation'] = $container->get('redis')->hGetAll("$currentMission:reservation:{$args['id']}");
         }
         $args['inventory'] = $container->get('redis')->hGetAll("$currentMission:inventory");
         $args['prices'] = $container->get('redis')->hGetAll("$currentMission:prices");
@@ -106,7 +107,10 @@ email;
 
         if (isset($_POST['updateReservation'])) {
 
+            $reservation['retry1Price'] = $prices['retry1'];
+
             $totalPrice = 0;
+            $totalPrice += $reservation['retry1Price']   * $reservation['retry1Qty'];
             $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQtySm'];
             $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQtyMd'];
             $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQtyLg'];
@@ -120,6 +124,14 @@ email;
             $reservation['subTotal'] = $totalPrice;
             if ($totalPrice == 0) {
                 return $response->withRedirect($_SERVER['HTTP_REFERER']);
+            }
+
+            if (isset($reservation['discountCode'])) {
+                $discount = $container->get('redis')->hGetAll("$currentMission:discount:" . $reservation['discountCode']);
+                if ($discount) {
+                    $reservation['discountCodeAmount'] = (float) $discount['amount'];
+                    $totalPrice -= $discount['amount'];
+                }
             }
 
             $totalPrice = $totalPrice < 0 ? 0 : $totalPrice;
@@ -180,6 +192,8 @@ email;
     });
 
     $app->get('/review', function (Request $request, Response $response, array $args) use ($container, $inventoryCheck) {
+        error_reporting(E_ALL & ~E_NOTICE);
+
         if (!$container->get('session')->exists('reservation')) {
             return $response->withRedirect('/');
         }
@@ -202,6 +216,7 @@ email;
         if (isset($reservation['updateReservation'])) {
             $reservationID = $reservation['updateReservation'];
             $originalReservation = $container->get('redis')->hGetAll("$currentMission:reservation:{$reservation['updateReservation']}");
+            $originalReservation['retry1Qty']       += $reservation['retry1Qty'];
             $originalReservation['shirtQtySm']      += $reservation['shirtQtySm'];
             $originalReservation['shirtQtyMd']      += $reservation['shirtQtyMd'];
             $originalReservation['shirtQtyLg']      += $reservation['shirtQtyLg'];
@@ -214,44 +229,49 @@ email;
             $originalReservation['subTotal']        += $reservation['subTotal'];
             $originalReservation['totalPaymentDue'] += $reservation['totalPaymentDue'];
 
-            try {
-                $chargeParams = [
-                    'amount'               => $reservation['totalPaymentDue'] * 100,
-                    'currency'             => 'usd',
-                    'description'          => "Star Fleet Tours " . strtoupper($currentMission) . " Swag - $reservationID",
-                    'statement_descriptor' => strtoupper($currentMission) . " Swag",
-                ];
-                if (isset($originalReservation['stripeCustomerID'])) {
-                    $card = \Stripe\Customer::createSource(
-                        $originalReservation['stripeCustomerID'],
-                        [
-                            'source' => $_POST['stripeToken'],
-                        ]
-                    );
-                    $chargeParams['customer'] = $originalReservation['stripeCustomerID'];
-                    $chargeParams['source'] = $card->id;
-                } else {
-                    $customer = \Stripe\Customer::create([
-                        'source'          => $_POST['stripeToken'],
-                        'email'           => $originalReservation['reservationEmail'],
-                    ]);
-                    $chargeParams['customer'] = $customer->id;
-                }
-                $charge = \Stripe\Charge::create($chargeParams);
+            if (!$reservation['skipStripe']) {
+                try {
+                    $chargeParams = [
+                        'amount'               => $reservation['totalPaymentDue'] * 100,
+                        'currency'             => 'usd',
+                        'description'          => "Star Fleet Tours " . strtoupper($currentMission) . " Retry - $reservationID",
+                        'statement_descriptor' => strtoupper($currentMission) . " Swag",
+                    ];
+                    if (isset($originalReservation['stripeCustomerID'])) {
+                        $card = \Stripe\Customer::createSource(
+                            $originalReservation['stripeCustomerID'],
+                            [
+                                'source' => $_POST['stripeToken'],
+                            ]
+                        );
+                        $chargeParams['customer'] = $originalReservation['stripeCustomerID'];
+                        $chargeParams['source'] = $card->id;
+                    } else {
+                        $customer = \Stripe\Customer::create([
+                            'source'          => $_POST['stripeToken'],
+                            'email'           => $originalReservation['reservationEmail'],
+                        ]);
+                        $chargeParams['customer'] = $customer->id;
+                    }
+                    $charge = \Stripe\Charge::create($chargeParams);
 
-                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQtySm', $originalReservation['shirtQtySm']);
-                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQtyMd', $originalReservation['shirtQtyMd']);
-                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQtyLg', $originalReservation['shirtQtyLg']);
-                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQtyXl', $originalReservation['shirtQtyXl']);
-                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQty2xl', $originalReservation['shirtQty2xl']);
-                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQty3xl', $originalReservation['shirtQty3xl']);
-                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'cookieQty', $originalReservation['cookieQty']);
-                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'donation', $originalReservation['donation']);
-                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'subTotal', $originalReservation['subTotal']);
-                $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'totalPaymentDue', $originalReservation['totalPaymentDue']);
-            } catch(\Exception $e) {
-                return $response->withRedirect($_SERVER['HTTP_REFERER']);
+                } catch(\Exception $e) {
+                    return $response->withRedirect('/?paymentError=true');
+                }
             }
+
+            $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'retry1Price', $reservation['retry1Price']);
+            $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'retry1Qty', $originalReservation['retry1Qty']);
+            $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQtySm', $originalReservation['shirtQtySm']);
+            $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQtyMd', $originalReservation['shirtQtyMd']);
+            $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQtyLg', $originalReservation['shirtQtyLg']);
+            $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQtyXl', $originalReservation['shirtQtyXl']);
+            $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQty2xl', $originalReservation['shirtQty2xl']);
+            $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQty3xl', $originalReservation['shirtQty3xl']);
+            $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'cookieQty', $originalReservation['cookieQty']);
+            $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'donation', $originalReservation['donation']);
+            $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'subTotal', $originalReservation['subTotal']);
+            $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'totalPaymentDue', $originalReservation['totalPaymentDue']);
             $container->get('session')->delete('reservation');
             return $response->withRedirect('/reservation/'.$reservationID);
         }
@@ -310,6 +330,7 @@ email;
     });
 
     $app->get('/reservation/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        error_reporting(E_ALL & ~E_NOTICE);
         $args['reservation'] = $container->get('redis')->hGetAll("$currentMission:reservation:{$args['id']}");
         if (!$args['reservation']) {
             return $container->get('renderer')->render($response, 'reservation-not-found.phtml', $args);

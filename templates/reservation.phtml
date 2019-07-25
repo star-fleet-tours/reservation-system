@@ -14,7 +14,7 @@
 
 
     <?php if(isset($reservation['cancelled'])): ?>
-    <div class="alert alert-critical text-center" role="alert">
+    <div class="alert alert-danger text-center" role="alert">
         <strong>🚫 This reservation has been cancelled.</strong><br>
     </div>
     <?php else: ?>
@@ -156,6 +156,14 @@
                   <td class="text-right">$<?= number_format($reservation['cookiePrice'],2) ?>/ea</td>
                   <td class="text-right"><?= $reservation['cookieQty'] ?></td>
                   <td class="text-right">$<?= number_format($reservation['cookiePrice'] * $reservation['cookieQty'],2) ?></td>
+                </tr>
+                <?php endif; ?>
+                <?php if ($reservation['retry1Qty'] > 0): ?>
+                <tr>
+                  <td>Launch Retry Ticket</td>
+                  <td class="text-right">$<?= number_format($reservation['retry1Price'],2) ?>/ea</td>
+                  <td class="text-right"><?= $reservation['retry1Qty'] ?></td>
+                  <td class="text-right">$<?= number_format($reservation['retry1Qty'] * $reservation['retry1Qty'],2) ?></td>
                 </tr>
                 <?php endif; ?>
               </tbody>

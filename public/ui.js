@@ -5,7 +5,7 @@ $(document).ready(function() {
         $("input.price-calc").each(function() {
             totalPrice += parseFloat($(this).data("price")) * parseInt($(this).val() || 0);
         });
-        totalPrice += parseFloat($("input#donation").val());
+        totalPrice += parseFloat($("input#donation").val()) || 0;
         var launchTicketQty = howManyLaunchTickets();
         var tourTicketQty = parseInt($("input#tour-qty").val());
         if (tourTicketQty > 0) {
@@ -13,6 +13,9 @@ $(document).ready(function() {
         }
         $("#cart-total").text(totalPrice.toFixed(2).toString());
     }
+
+    updateTotal();
+
     $("input.price-calc").on("propertychange change click keyup input paste", function(e) {
         updateTotal();
     });
