@@ -85,6 +85,14 @@
                   <td class="text-right">$<?= number_format($reservation['tourPrice'] * $reservation['tourQty'],2) ?></td>
                 </tr>
                 <?php endif; ?>
+                <?php if ($reservation['retry1Qty'] > 0): ?>
+                <tr>
+                  <td>Launch Retry Ticket</td>
+                  <td class="text-right">$<?= number_format($reservation['retry1Price'],2) ?>/ea</td>
+                  <td class="text-right"><?= $reservation['retry1Qty'] ?></td>
+                  <td class="text-right">$<?= number_format($reservation['retry1Qty'] * $reservation['retry1Qty'],2) ?></td>
+                </tr>
+                <?php endif; ?>
                 <?php if ($reservation['shirtQtySm'] > 0): ?>
                 <tr>
                   <td>Mission T-Shirt (Small)</td>

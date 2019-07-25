@@ -7,7 +7,7 @@
         <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
             <div class="input-group">
                 <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
-                <input type="number" id="upper-qty-update" name="upperQty" min="0" step="1" value="<?= $inventory['upper'] ?>" pattern="[0-9]*" class="ticket form-control form-control-lg text-center" aria-describedby="upper-qty-hint">
+                <input type="number" id="upper-qty-update" name="upperQty" min="0" step="1" value="<?= $inventory['upper'] ?>" pattern="[0-9]*" class="ticket form-control form-control-lg text-center">
                 <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
             </div>
         </div>
@@ -17,7 +17,7 @@
         <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
             <div class="input-group">
                 <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
-                <input type="number" id="standard-qty-update" name="standardQty" min="0" step="1" value="<?= $inventory['standard'] ?>" pattern="[0-9]*" class="ticket form-control form-control-lg text-center" aria-describedby="upper-qty-hint">
+                <input type="number" id="standard-qty-update" name="standardQty" min="0" step="1" value="<?= $inventory['standard'] ?>" pattern="[0-9]*" class="ticket form-control form-control-lg text-center">
                 <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
             </div>
         </div>
@@ -27,7 +27,7 @@
         <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
             <div class="input-group">
                 <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
-                <input type="number" id="private-qty-update" name="privateQty" min="0" step="1" value="<?= $inventory['private'] ?>" pattern="[0-9]*" class="ticket form-control form-control-lg text-center" aria-describedby="upper-qty-hint">
+                <input type="number" id="private-qty-update" name="privateQty" min="0" step="1" value="<?= $inventory['private'] ?>" pattern="[0-9]*" class="ticket form-control form-control-lg text-center">
                 <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
             </div>
         </div>
@@ -37,11 +37,22 @@
         <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
             <div class="input-group">
                 <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
-                <input type="number" id="tour-qty-update" name="tourQty" min="0" step="1" value="<?= $inventory['tour'] ?>" pattern="[0-9]*" class="ticket form-control form-control-lg text-center" aria-describedby="tour-qty-hint">
+                <input type="number" id="tour-qty-update" name="tourQty" min="0" step="1" value="<?= $inventory['tour'] ?>" pattern="[0-9]*" class="ticket form-control form-control-lg text-center">
                 <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
             </div>
         </div>
     </div>
+    <div class="form-group form-row justify-content-center">
+        <label for="retry1-study" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Standard Retry:</label>
+        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+            <div class="input-group">
+                <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
+                <input type="number" id="retry1-qty-update" name="retry1Qty" min="0" step="1" value="<?= $inventory['retry1'] ?>" pattern="[0-9]*" class="ticket form-control form-control-lg text-center">
+                <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
+            </div>
+        </div>
+    </div>
+
     <div class="form-group form-row justify-content-center">
         <div class="form-check col-9 col-sm-11 col-md-10 col-lg-8">
             <button class="button btn btn-warning float-right btn-lg" type="submit">Update Inventory &raquo;</button><br>
