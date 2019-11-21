@@ -9,7 +9,7 @@ return [
             'template_path' => __DIR__ . '/../templates/',
             'layout' => 'layout.phtml',
             'attributes' => [
-                'title' => 'Attend CRS-18 with Star✦Fleet Tours',
+                'title' => 'Attend CRS-19 with Star✦Fleet Tours',
                 'stripePubKey' => getenv('STRIPE_PUBLIC_KEY'),
             ],
         ],
