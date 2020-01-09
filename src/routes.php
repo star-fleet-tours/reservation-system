@@ -22,7 +22,6 @@ return function (App $app) {
         public function notEnoughTicketsForReservation($reservation)
         {
              $inventory = $this->container->get('redis')->hGetAll("{$this->currentMission}:inventory");
-             var_dump($reservation, $inventory);die();
              return (
                  $reservation['upperQty'] > $inventory['upper'] ||
                  $reservation['standardQty'] > $inventory['standard'] ||
