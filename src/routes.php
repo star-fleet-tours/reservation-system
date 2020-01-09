@@ -103,6 +103,7 @@ email;
         $reservation['shirtPrice']         = $prices['shirt'];
         $reservation['hatPrice']           = $prices['hat'];
         $reservation['cookiePrice']        = $prices['cookie'];
+        $reservation['stickerPrice']       = $prices['sticker'];
         $reservation['tourDiscountValue']  = 10;
 
         if (isset($_POST['updateReservation'])) {
@@ -119,6 +120,7 @@ email;
             $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQty3xl'];
             $totalPrice += $reservation['hatPrice']      * $reservation['hatQty'];
             $totalPrice += $reservation['cookiePrice']   * $reservation['cookieQty'];
+            $totalPrice += $reservation['stickerPrice']  * $reservation['stickerQty'];
 
             $reservation['upperQty'] = $reservation['standardQty'] = $reservation['privateQty'] = $reservation['tourQty'] = $reservation['tourDiscountQty'] = 0;
             $reservation['subTotal'] = $totalPrice;
@@ -163,6 +165,7 @@ email;
         $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQty3xl'];
         $totalPrice += $reservation['hatPrice']      * $reservation['hatQty'];
         $totalPrice += $reservation['cookiePrice']   * $reservation['cookieQty'];
+        $totalPrice += $reservation['stickerPrice']  * $reservation['stickerQty'];
 
         $reservation['subTotal'] = $totalPrice;
 
