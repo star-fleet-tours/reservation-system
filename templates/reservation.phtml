@@ -158,6 +158,14 @@
                   <td class="text-right">$<?= number_format($reservation['cookiePrice'] * $reservation['cookieQty'],2) ?></td>
                 </tr>
                 <?php endif; ?>
+                <?php if ($reservation['stickerQty'] > 0): ?>
+                <tr>
+                  <td>Star<span class="themed-text">✦</span>Fleet Decal</td>
+                  <td class="text-right">$<?= number_format($reservation['stickerPrice'],2) ?>/ea</td>
+                  <td class="text-right"><?= $reservation['stickerQty'] ?></td>
+                  <td class="text-right">$<?= number_format($reservation['stickerPrice'] * $reservation['stickerQty'],2) ?></td>
+                </tr>
+                <?php endif; ?>
                 <?php if ($reservation['retry1Qty'] > 0): ?>
                 <tr>
                   <td>Launch Retry Ticket</td>

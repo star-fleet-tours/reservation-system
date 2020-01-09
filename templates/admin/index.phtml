@@ -70,15 +70,15 @@ $assignedCounts = [
         <th class="hidden">U</th>
         <th>S</th>
         <th class="hidden">P</th>
-        <th>T</th>
+        <th class="hidden">T</th>
         <th>C</th>
         <th class="hidden">H</th>
-        <th>SM</th>
-        <th>MD</th>
-        <th>LG</th>
-        <th>XL</th>
-        <th>2XL</th>
-        <th>3XL</th>
+        <th class="hidden">SM</th>
+        <th class="hidden">MD</th>
+        <th class="hidden">LG</th>
+        <th class="hidden">XL</th>
+        <th class="hidden">2XL</th>
+        <th class="hidden">3XL</th>
         <th class="pr-4 text-nowrap">Preferences</th>
         <th>D</th>
     </tr>
@@ -114,15 +114,15 @@ $assignedCounts = [
             <td class="hidden"><?= $reservation['upperQty'] ?></td>
             <td class="text-nowrap"><small>🚀</small> <?= $reservation['standardQty'] ?></td>
             <td class="hidden"><?= $reservation['privateQty'] ?></td>
-            <td class="text-nowrap"><small>🛥️</small> <?= $reservation['tourQty'] ?></td>
+            <td class="text-nowrap hidden"><small>🛥️</small> <?= $reservation['tourQty'] ?></td>
             <td class="text-nowrap"><small>🍪</small> <?= $reservation['cookieQty'] ?></td>
             <td class="text-nowrap hidden"><small>🧢</small> <?= $reservation['hatQty'] ?></td>
-            <td class="text-nowrap"><small><small><small><small><small>👕</small></small></small></small></small> <?= $reservation['shirtQtySm'] ?></td>
-            <td class="text-nowrap"><small><small><small><small>👕</small></small></small></small> <?= $reservation['shirtQtyMd'] ?></td>
-            <td class="text-nowrap"><small><small><small>👕</small></small></small> <?= $reservation['shirtQtyLg'] ?></td>
-            <td class="text-nowrap"><small><small>👕</small></small> <?= $reservation['shirtQtyXl'] ?></td>
-            <td class="text-nowrap"><small>👕</small> <?= $reservation['shirtQty2xl'] ?></td>
-            <td class="text-nowrap">👕 <?= $reservation['shirtQty3xl'] ?></td>
+            <td class="text-nowrap hidden"><small><small><small><small><small>👕</small></small></small></small></small> <?= $reservation['shirtQtySm'] ?></td>
+            <td class="text-nowrap hidden"><small><small><small><small>👕</small></small></small></small> <?= $reservation['shirtQtyMd'] ?></td>
+            <td class="text-nowrap hidden"><small><small><small>👕</small></small></small> <?= $reservation['shirtQtyLg'] ?></td>
+            <td class="text-nowrap hidden"><small><small>👕</small></small> <?= $reservation['shirtQtyXl'] ?></td>
+            <td class="text-nowrap hidden"><small>👕</small> <?= $reservation['shirtQty2xl'] ?></td>
+            <td class="text-nowrap hidden">👕 <?= $reservation['shirtQty3xl'] ?></td>
             <td class="text-nowrap">
                 <?php if ($reservation['tourQty'] > 0): ?>
                 <small>
@@ -183,15 +183,15 @@ $assignedCounts = [
         <th class="hidden">U</th>
         <th>S</th>
         <th class="hidden">P</th>
-        <th>T</th>
+        <th class="hidden">T</th>
         <th>C</th>
         <th class="hidden">H</th>
-        <th>SM</th>
-        <th>MD</th>
-        <th>LG</th>
-        <th>XL</th>
-        <th>2XL</th>
-        <th>3XL</th>
+        <th class="hidden">SM</th>
+        <th class="hidden">MD</th>
+        <th class="hidden">LG</th>
+        <th class="hidden">XL</th>
+        <th class="hidden">2XL</th>
+        <th class="hidden">3XL</th>
         <th class="pr-4">Preferences</th>
         <th>D</th>
     </tr>
@@ -211,11 +211,11 @@ $assignedCounts = [
         <th>Private Tickets</th>
         <td><?= $private ?></td>
     </tr>
-    <tr>
+    <tr class="hidden">
         <th>Tour Tickets</th>
         <td><?= $tours ?> of <?= $tours + $inventory['tour'] ?></td>
     </tr>
-    <tr>
+    <tr class="hidden">
         <th>Tour+Launch Discounts</th>
         <td><?= $tourDiscounts ?></td>
     </tr>
@@ -231,35 +231,35 @@ $assignedCounts = [
         <th>Hats</th>
         <td><?= $hats ?></td>
     </tr>
-    <tr>
+    <tr class="hidden">
         <th>SM Shirts</th>
         <td><?= $shirtSm ?></td>
     </tr>
-    <tr>
+    <tr class="hidden">
         <th>MD Shirts</th>
         <td><?= $shirtMd ?></td>
     </tr>
-    <tr>
+    <tr class="hidden">
         <th>LG Shirts</th>
         <td><?= $shirtLg ?></td>
     </tr>
-    <tr>
+    <tr class="hidden">
         <th>XL Shirts</th>
         <td><?= $shirtXl ?></td>
     </tr>
-    <tr>
+    <tr class="hidden">
         <th>XXL Shirts</th>
         <td><?= $shirt2xl ?></td>
     </tr>
-    <tr>
+    <tr class="hidden">
         <th>XXXL Shirts</th>
         <td><?= $shirt3xl ?></td>
     </tr>
-    <tr>
+    <tr class="hidden">
         <th>OO2 Upper Checked In</th>
         <td><?= $checkinCounts['OO2-UPPER'] ?> of <?= $assignedCounts['OO2-UPPER'] ?></td>
     </tr>
-    <tr>
+    <tr class="hidden">
         <th>OO2 Lower Checked In</th>
         <td><?= $checkinCounts['OO2'] ?> of <?= $assignedCounts['OO2'] ?></td>
     </tr>
