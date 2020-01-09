@@ -62,6 +62,10 @@ email;
             $args['ticketTime'] = strtotime(getenv("TICKET_SALE_TIME"));
             return $container->get('renderer')->render($response, $currentMission . '-countdown.phtml', $args);
         }
+        if (time() < strtotime(getenv("ALT_PUBLIC_SALE_TIME"))) {
+            $args['ticketTime'] = strtotime(getenv("ALT_PUBLIC_SALE_TIME"));
+            return $container->get('renderer')->render($response, $currentMission . '-sold-out.phtml', $args);
+        }
         $args['totalInTopBar'] = true;
         if (isset($_GET['discountCode'])) {
             $discount = $container->get('redis')->hGetAll("$currentMission:discount:" . $_GET['discountCode']);
