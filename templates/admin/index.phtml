@@ -35,6 +35,7 @@ $private   = 0;
 $tours     = 0;
 $cookies   = 0;
 $hats      = 0;
+$stickers  = 0;
 $donations = 0;
 $shirtSm   = 0;
 $shirtMd   = 0;
@@ -71,6 +72,7 @@ $assignedCounts = [
         <th>S</th>
         <th class="hidden">P</th>
         <th class="hidden">T</th>
+        <th>DC</th>
         <th>C</th>
         <th class="hidden">H</th>
         <th class="hidden">SM</th>
@@ -115,6 +117,7 @@ $assignedCounts = [
             <td class="text-nowrap"><small>🚀</small> <?= $reservation['standardQty'] ?></td>
             <td class="hidden"><?= $reservation['privateQty'] ?></td>
             <td class="text-nowrap hidden"><small>🛥️</small> <?= $reservation['tourQty'] ?></td>
+            <td class="text-nowrap"><?= $reservation['stickerQty'] ?></td>
             <td class="text-nowrap"><small>🍪</small> <?= $reservation['cookieQty'] ?></td>
             <td class="text-nowrap hidden"><small>🧢</small> <?= $reservation['hatQty'] ?></td>
             <td class="text-nowrap hidden"><small><small><small><small><small>👕</small></small></small></small></small> <?= $reservation['shirtQtySm'] ?></td>
@@ -157,6 +160,7 @@ $assignedCounts = [
             $tours += $reservation['tourQty'];
             $cookies += $reservation['cookieQty'];
             $hats += $reservation['hatQty'];
+            $stickers += $reservation['stickerQty'];
             $donations += $reservation['donation'];
             $shirtSm += $reservation['shirtQtySm'];
             $shirtMd += $reservation['shirtQtyMd'];
@@ -184,6 +188,7 @@ $assignedCounts = [
         <th>S</th>
         <th class="hidden">P</th>
         <th class="hidden">T</th>
+        <th>DC</th>
         <th>C</th>
         <th class="hidden">H</th>
         <th class="hidden">SM</th>
@@ -222,6 +227,10 @@ $assignedCounts = [
     <tr>
         <th>Donations</th>
         <td>$<?= number_format($donations,2) ?></td>
+    </tr>
+    <tr>
+        <th>Decals</th>
+        <td><?= $stickers ?></td>
     </tr>
     <tr>
         <th>Cookies</th>
