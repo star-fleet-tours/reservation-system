@@ -27,23 +27,6 @@
 <? endif ?>
 
 
-<?php if (isset($_GET['update'])): ?>
-<fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Launch Scrubbed :(</legend>
-    <input type="hidden" id="upper-qty" name="upperQty" value="0">
-    <input type="hidden" id="private-qty" name="privateQty" value="0">
-    <input type="hidden" id="standard-qty" name="standardQty" value="0">
-    <div class="form-group form-row justify-content-center">
-        <label for="retry1-qty" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Launch Retry Tickets:</label>
-        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
-            <div class="input-group">
-                <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
-                <input type="number" id="retry1-qty" name="retry1Qty" value="<?= $reservation['standardQty'] ?>" data-price="<?= $prices['retry1'] ?>" min="0" max="<?= $inventory['retry1'] ?>" step="1" value="0" pattern="[0-9]*" class="ticket price-calc form-control form-control-lg text-center" aria-describedby="retry1-qty-hint">
-                <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
-            </div>
-            <span id="retry1-qty-hint" class="form-text text-center">$<?= $prices['retry1']; ?> per person (<?= $inventory['retry1'] ?> remaining)</span>
-        </div>
-    </div>
-<?php endif ?>
 <?php if (!isset($_GET['update'])): ?>
 <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Launch</legend>
     <input type="hidden" id="upper-qty" name="upperQty" value="0">
@@ -87,6 +70,8 @@
         </div>
     </div>
 </fieldset>
+
+<?php endif ?>
 
 
 
@@ -153,6 +138,8 @@
         </div>
     </div>
 </fieldset>
+
+<?php if (!isset($_GET['update'])): ?>
 
 <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Details</legend>
     <div class="form-group form-row justify-content-center">

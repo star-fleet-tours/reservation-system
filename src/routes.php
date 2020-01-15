@@ -112,10 +112,10 @@ email;
 
         if (isset($_POST['updateReservation'])) {
 
-            $reservation['retry1Price'] = $prices['retry1'];
+            //$reservation['retry1Price'] = $prices['retry1'];
 
             $totalPrice = 0;
-            $totalPrice += $reservation['retry1Price']   * $reservation['retry1Qty'];
+            //$totalPrice += $reservation['retry1Price']   * $reservation['retry1Qty'];
             $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQtySm'];
             $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQtyMd'];
             $totalPrice += $reservation['shirtPrice']    * $reservation['shirtQtyLg'];
@@ -223,13 +223,14 @@ email;
         if (isset($reservation['updateReservation'])) {
             $reservationID = $reservation['updateReservation'];
             $originalReservation = $container->get('redis')->hGetAll("$currentMission:reservation:{$reservation['updateReservation']}");
-            $originalReservation['retry1Qty']       += $reservation['retry1Qty'];
+            //$originalReservation['retry1Qty']       += $reservation['retry1Qty'];
             $originalReservation['shirtQtySm']      += $reservation['shirtQtySm'];
             $originalReservation['shirtQtyMd']      += $reservation['shirtQtyMd'];
             $originalReservation['shirtQtyLg']      += $reservation['shirtQtyLg'];
             $originalReservation['shirtQtyXl']      += $reservation['shirtQtyXl'];
             $originalReservation['shirtQty2xl']     += $reservation['shirtQty2xl'];
             $originalReservation['shirtQty3xl']     += $reservation['shirtQty3xl'];
+            $originalReservation['stickerQty']      += $reservation['stickerQty'];
             $originalReservation['hatQty']          += $reservation['hatQty'];
             $originalReservation['cookieQty']       += $reservation['cookieQty'];
             $originalReservation['donation']        += $reservation['donation'];
@@ -241,7 +242,7 @@ email;
                     $chargeParams = [
                         'amount'               => $reservation['totalPaymentDue'] * 100,
                         'currency'             => 'usd',
-                        'description'          => "Star Fleet Tours " . strtoupper($currentMission) . " Retry - $reservationID",
+                        'description'          => "Star Fleet Tours " . strtoupper($currentMission) . " - $reservationID",
                         'statement_descriptor' => strtoupper($currentMission) . " Swag",
                     ];
                     if (isset($originalReservation['stripeCustomerID'])) {
@@ -267,8 +268,8 @@ email;
                 }
             }
 
-            $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'retry1Price', $reservation['retry1Price']);
-            $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'retry1Qty', $originalReservation['retry1Qty']);
+            //$container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'retry1Price', $reservation['retry1Price']);
+            //$container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'retry1Qty', $originalReservation['retry1Qty']);
             $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQtySm', $originalReservation['shirtQtySm']);
             $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQtyMd', $originalReservation['shirtQtyMd']);
             $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQtyLg', $originalReservation['shirtQtyLg']);
@@ -276,6 +277,7 @@ email;
             $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQty2xl', $originalReservation['shirtQty2xl']);
             $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'shirtQty3xl', $originalReservation['shirtQty3xl']);
             $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'cookieQty', $originalReservation['cookieQty']);
+            $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'stickerQty', $originalReservation['stickerQty']);
             $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'donation', $originalReservation['donation']);
             $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'subTotal', $originalReservation['subTotal']);
             $container->get('redis')->hSet("$currentMission:reservation:$reservationID", 'totalPaymentDue', $originalReservation['totalPaymentDue']);
