@@ -62,7 +62,7 @@ email;
             $args['ticketTime'] = strtotime(getenv("TICKET_SALE_TIME"));
             return $container->get('renderer')->render($response, $currentMission . '-countdown.phtml', $args);
         }
-        if (time() < strtotime(getenv("ALT_PUBLIC_SALE_TIME"))) {
+        if (time() < strtotime(getenv("ALT_PUBLIC_SALE_TIME")) && !isset($_GET['update'])) {
             $args['ticketTime'] = strtotime(getenv("ALT_PUBLIC_SALE_TIME"));
             return $container->get('renderer')->render($response, $currentMission . '-sold-out.phtml', $args);
         }
