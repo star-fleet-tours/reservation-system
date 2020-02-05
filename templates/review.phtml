@@ -32,7 +32,7 @@
                 <?php if ($reservation['standardQty'] > 0): ?>
                 <tr>
                   <!-- TODO: Show boat preferences -->
-                  <td>Standard Launch Ticket</td>
+                  <td>Standard Tour Ticket</td>
                   <td class="text-right">$<?= number_format($reservation['standardPrice'],2) ?>/ea</td>
                   <td class="text-right"><?= $reservation['standardQty'] ?></td>
                   <td class="text-right">$<?= number_format($reservation['standardPrice'] * $reservation['standardQty'],2) ?></td>

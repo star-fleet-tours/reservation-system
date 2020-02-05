@@ -9,7 +9,7 @@ return [
             'template_path' => __DIR__ . '/../templates/',
             'layout' => 'layout.phtml',
             'attributes' => [
-                'title' => 'Attend Crew Dragon IFA with Star✦Fleet Tours',
+                'title' => 'Attend the Atlas V-11 Pre-Launch Tour with Star✦Fleet Tours',
                 'stripePubKey' => getenv('STRIPE_PUBLIC_KEY'),
             ],
         ],
