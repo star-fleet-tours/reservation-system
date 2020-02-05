@@ -33,7 +33,7 @@
     <input type="hidden" id="private-qty" name="privateQty" value="0">
     <input type="hidden" id="tour-qty" name="tourQty" value="0">
     <div class="form-group form-row justify-content-center">
-        <label for="standard-qty" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Special Launch Tickets:</label>
+        <label for="standard-qty" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Standard Launch Tickets:</label>
         <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
             <div class="input-group">
                 <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
@@ -45,29 +45,8 @@
     </div>
 
     <div class="form-group form-row justify-content-center hidden">
-        <label for="boat-pref-1" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Boat Preference:</label>
-        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
-            <div class="form-group input-group input-group-sm">
-                <div class="input-group-prepend">
-                    <div class="input-group-text text-monospace font-weight-bold">1st </div>
-                </div>
-                <select id="boat-pref-1" name="boatPref1" class="form-control boat-preferences">
-                    <option value="none" selected>No preference</option>
-                    <option value="tnt1">TNT1 (18-person boat)</option>
-                    <option value="six-person">6-Person Boat</option>
-                </select>
-            </div>
-            <div class="form-group input-group input-group-sm">
-                <div class="input-group-prepend">
-                    <div class="input-group-text text-monospace font-weight-bold">2nd </div>
-                </div>
-                <select id="boat-pref-2" name="boatPref2" class="form-control boat-preferences">
-                    <option value="none" selected>No preference</option>
-                    <option value="tnt1">TNT1 (18-person boat)</option>
-                    <option value="six-person">6-Person Boat</option>
-                </select>
-            </div>
-        </div>
+        <input type="hidden" name="boat-pref-1" value="none" />
+        <input type="hidden" name="boat-pref-2" value="none" />
     </div>
 </fieldset>
 
