@@ -1,0 +1,173 @@
+<div class="alt-bg-section">
+<h2 class="text-center starfleet-font mx-3">Join us for ULA's Atlas V-11 Launch!</h2>
+
+<form action="/review" method="post" class="container justify-content-center" id="launch-form">
+
+<? if (isset($_GET['update'])): ?>
+<div class="alert alert-info text-center" role="alert">
+    You are adding items to your existing reservation, <strong><a href="/reservation/<?= $id ?>"><?= $id ?></a></strong>.
+</div>
+<input type="hidden" name="updateReservation" value="<?= $id ?>">
+<? endif ?>
+<? if (isset($_GET['soldOut'])): ?>
+    <div class="alert alert-danger text-center" role="alert">
+        <b>Sorry!</b> Someone already reserved those tickets while you were ordering. Please try again.
+    </div>
+<? endif ?>
+<? if (isset($_GET['paymentError'])): ?>
+    <div class="alert alert-danger text-center" role="alert">
+        <b>Sorry!</b> There was a problem processing your payment. Please try again.
+    </div>
+<? endif ?>
+<? if (isset($discountCode)): ?>
+    <div class="alert alert-success text-center" role="alert">
+    <b>Discount code "<?= $discountCode ?>" activated!</b> You will see your $<?= $discount['amount'] ?> discount applied on the next page.
+    </div>
+    <input type="hidden" name="discountCode" value="<?= $discountCode ?>">
+<? endif ?>
+
+
+<?php if (!isset($_GET['update'])): ?>
+<fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Launch</legend>
+    <input type="hidden" id="upper-qty" name="upperQty" value="0">
+    <input type="hidden" id="private-qty" name="privateQty" value="0">
+    <input type="hidden" id="tour-qty" name="tourQty" value="0">
+    <div class="form-group form-row justify-content-center">
+        <label for="standard-qty" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Special Launch Tickets:</label>
+        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+            <div class="input-group">
+                <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
+                <input type="number" id="standard-qty" name="standardQty" data-price="<?= $prices['standard'] ?>" min="0" max="<?= $inventory['standard'] ?>" step="1" value="0" pattern="[0-9]*" class="ticket price-calc form-control form-control-lg text-center" aria-describedby="standard-qty-hint">
+                <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
+            </div>
+            <span id="standard-qty-hint" class="form-text text-center">$<?= $prices['standard']; ?> per person (<?= $inventory['standard'] ?> remaining)</span>
+        </div>
+    </div>
+
+    <div class="form-group form-row justify-content-center hidden">
+        <label for="boat-pref-1" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Boat Preference:</label>
+        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+            <div class="form-group input-group input-group-sm">
+                <div class="input-group-prepend">
+                    <div class="input-group-text text-monospace font-weight-bold">1st </div>
+                </div>
+                <select id="boat-pref-1" name="boatPref1" class="form-control boat-preferences">
+                    <option value="none" selected>No preference</option>
+                    <option value="tnt1">TNT1 (18-person boat)</option>
+                    <option value="six-person">6-Person Boat</option>
+                </select>
+            </div>
+            <div class="form-group input-group input-group-sm">
+                <div class="input-group-prepend">
+                    <div class="input-group-text text-monospace font-weight-bold">2nd </div>
+                </div>
+                <select id="boat-pref-2" name="boatPref2" class="form-control boat-preferences">
+                    <option value="none" selected>No preference</option>
+                    <option value="tnt1">TNT1 (18-person boat)</option>
+                    <option value="six-person">6-Person Boat</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</fieldset>
+
+<?php endif ?>
+
+
+
+<fieldset class="border-top border-warning rounded p-2 my-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Swag</legend>
+    <div class="form-group form-row justify-content-center mt-3">
+        <label for="sticker-qty" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">
+            Additional Star<span class="themed-text">✦</span>Fleet Decal(s):<br>
+
+            <img src="/star-fleet-logo-stickers.jpg" style="max-width: 250px;" class="mt-3">
+        </label>
+        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+            <div class="input-group">
+                <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
+                <input type="number" id="sticker-qty" name="stickerQty" data-price="<?= $prices['sticker']; ?>" min="0" step="1" value="0" pattern="[0-9]*" class="price-calc form-control form-control-lg text-center" aria-describedby="sticker-qty-hint">
+                <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
+            </div>
+            <span id="sticker-qty-hint" class="form-text text-center">$<?= $prices['sticker']; ?> each</span>
+        </div>
+    </div>
+    <div class="form-group form-row justify-content-center">
+        <div class="form-check col-9 col-sm-11 col-md-10 col-lg-8">
+            <span id="sticker-qty-hint2" class="form-text"><b>Note:</b> Each launch reservation includes one free Star<span class="themed-text">✦</span>Fleet decal, but you're welcome to purchase more!</span>
+        </div>
+    </div>
+
+</fieldset>
+
+
+<fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Gratuity</legend>
+    <div class="form-group form-row justify-content-center">
+        <label for="small-qty" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Tip (Optional):</label>
+        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+            <div class="input-group">
+                <div class="input-group-prepend"><span class="input-group-text">$</span></div>
+                <input type="number" id="donation" name="donation" min="0.00" step="0.01" value="0.00" pattern="[0-9]*" class="monetary form-control form-control-lg" aria-describedby="dontaion-hint">
+
+                <div class="input-group-append"><span class="input-group-text alert-success">Thank you!</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group form-row justify-content-center">
+        <div class="form-check col-9 col-sm-11 col-md-10 col-lg-8">
+            <span id="donation-hint" class="form-text">Your generous gift will go directly toward keeping Star<span class="themed-text">✦</span>Fleet sustainable, helping reduce prices for others that can't afford it, and making more awesome launch-day opportunities available for everyone in the future. Thank you for all your support that makes our work possible!</span>
+        </div>
+    </div>
+</fieldset>
+
+<?php if (!isset($_GET['update'])): ?>
+
+<fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Details</legend>
+    <div class="form-group form-row justify-content-center">
+        <label for="reservation-name" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Name for Reservation:</label>
+        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+            <input type="text" id="reservation-name" name="reservationName" class="form-control form-control-lg" aria-describedby="reservation-name-hint" required>
+            <span id="reservation-name-hint" class="form-text text-center">First, full, or group/party name.</span>
+        </div>
+    </div>
+
+    <div class="form-group form-row justify-content-center">
+        <label for="reservation-email" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Email Address:</label>
+        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+            <input type="email" id="reservation-email" name="reservationEmail" class="form-control form-control-lg" aria-describedby="reservation-email-hint" required>
+            <span id="reservation-email-hint" class="form-text text-center">Your confirmation will be sent here.</span>
+        </div>
+    </div>
+
+    <div class="form-group form-row justify-content-center">
+        <div class="col-9 col-sm-12 col-md-10 col-lg-8">
+            <label for="special-needs" class="form-label font-weight-bold">Special Requests / Comments:</label>
+            <textarea class="form-control" id="special-requests" name="specialRequests"></textarea>
+        </div>
+    </div>
+
+</fieldset>
+
+<fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Terms and Conditions</legend>
+
+    <div class="form-group form-row justify-content-center">
+        <div class="form-check col-9 col-sm-12 col-md-10 col-lg-8">
+            <small id="fine-print">Tickets are valid for any day the mission launches, except if a scrub occurs after we leave port one hour prior to launch time (we offer a 25% discount on further attempts). Launch dates may change without warning; if you cannot make it, we may be able to offer a limited number of refunds for tickets or merchandise up to five business days in advance of the launch date, at our sole discretion. If you have any questions, please <a href="mailto:fleetcommand@star-fleet.tours">contact&nbsp;us</a> before purchasing. Thanks!</small>
+            <div id="accept-terms-wrapper" class="my-1">
+                <label class="form-check-label" for="accept-terms">
+                    <input class="" type="checkbox" id="accept-terms" name="acceptedTerms" value="yes" required>
+                    &nbsp; I agree to the <a href="https://www.star-fleet.tours/details/" target="_blank">Terms, Conditions, and Refund Policy</a>.
+                </label>
+            </div>
+        </div>
+    </div>
+<?php endif ?>
+
+
+    <div class="form-group form-row justify-content-center">
+        <div class="form-check col-9 col-sm-11 col-md-10 col-lg-8">
+            <button class="button btn btn-warning float-right btn-lg" type="submit">Review &amp; Pay &raquo;</button><br>
+        </div>
+    </div>
+</form>
+</div>
