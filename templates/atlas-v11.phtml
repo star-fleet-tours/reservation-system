@@ -1,5 +1,5 @@
 <div class="alt-bg-section">
-<h2 class="text-center starfleet-font mx-3">Join us for ULA's Atlas V-11 Pre-Launch Tour!</h2>
+<h2 class="text-center starfleet-font mx-3">Join us for ULA's Atlas V Launch!</h2>
 
 <form action="/review" method="post" class="container justify-content-center" id="launch-form">
 
@@ -28,12 +28,11 @@
 
 
 <?php if (!isset($_GET['update'])): ?>
-<fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Tour</legend>
+<fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Launch</legend>
     <input type="hidden" id="upper-qty" name="upperQty" value="0">
     <input type="hidden" id="private-qty" name="privateQty" value="0">
-    <input type="hidden" id="tour-qty" name="tourQty" value="0">
     <div class="form-group form-row justify-content-center">
-        <label for="standard-qty" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Pre-Launch Tour Tickets:</label>
+        <label for="standard-qty" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Launch Tickets:</label>
         <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
             <div class="input-group">
                 <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
@@ -45,9 +44,23 @@
     </div>
 
     <div class="form-group form-row justify-content-center hidden">
-        <p>There is no boat selection available for this pre-launch tour.</p>
-        <input type="hidden" name="boat-pref-1" value="none" />
-        <input type="hidden" name="boat-pref-2" value="none" />
+        <p>There is no boat selection available for this launch.</p>
+        <input type="hidden" name="boatPref1" value="TNT1" />
+        <input type="hidden" name="boatPref2" value="none" />
+    </div>
+
+    <div class="form-group form-row justify-content-center">
+        <label for="tour-qty" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Pre-Launch Tour Tickets:</label>
+        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+            <div class="input-group">
+                <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
+                <input type="number" id="tour-qty" name="tourQty" data-price="<?= $prices['tour']; ?>" min="0" max="<?= $inventory['tour'] ?>" step="1" value="0" pattern="[0-9]*" class="ticket price-calc form-control form-control-lg text-center" aria-describedby="tour-qty-hint">
+                <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
+            </div>
+            <span id="tour-qty-hint" class="form-text text-center">$<?= $prices['tour']; ?> per person (<?= $inventory['tour'] ?> remaining)</span>
+
+            <div class="alert alert-success hidden text-center mt-1" role="alert" id="discount-text"></div>
+        </div>
     </div>
 </fieldset>
 

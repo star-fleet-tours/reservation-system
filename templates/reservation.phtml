@@ -37,7 +37,7 @@
 
     <div class="reservation-info px-5">
 
-        <p>Thanks for your reservation to join Star<span class="themed-text">✦</span>Fleet Tours for ULA's Atlas V-11 pre-launch tour. We look forward to seeing you there! We will scan the above QR code (printed or on your phone) to check you in on launch day, so you don't need to do anything with it now. We've sent you a confirmation email with this same information; please check your spam or junk folder to make sure it didn't end up in there.</p>
+        <p>Thanks for your reservation to join Star<span class="themed-text">✦</span>Fleet Tours for an upcoming mission. We look forward to seeing you there! We will scan the above QR code (printed or on your phone) to check you in on launch day, so you don't need to do anything with it now. We've sent you a confirmation email with this same information; please check your spam or junk folder to make sure it didn't end up in there.</p>
 
         <p>Please carefully review our <a href="https://www.star-fleet.tours/details/" target="_blank">details</a> page for important info and tips on making the most of your launch experience. We'll post status updates and any changes to the launch date and our own plans on our <a href="https://www.star-fleet.tours/current/" target="_blank">current launch page</a>, as well as on our <a href="https://twitter.com/StarFleetTours" target="_blank">Twitter feed</a>, <a href="https://www.facebook.com/starfleettours/" target="_blank">Facebook page</a>, and <a href="https://join.slack.com/t/spacexmeetups/shared_invite/enQtMzE0MjY1MTY0Mzc1LTFlMGE4MjY1ZTI4ZjZlNWQ4ZWQzZjEwMGFhNDU3NGRhZjBmNThhNTMwNzc0OWZhZGZhNzQ0YjJjNTY1Y2Q2ZWY" target="_blank">Slack group</a>. As the launch approaches, please check those frequently to stay up to date.</p>
 
@@ -71,7 +71,7 @@
                 <?php endif; ?>
                 <?php if ($reservation['standardQty'] > 0): ?>
                 <tr>
-                  <td>Standard Tour Ticket<br><small>(Boat preference: <?= strtoupper($reservation['boatPref1']); ?>)</small></td>
+                  <td>Standard Launch Ticket<br><small>(Boat preference: <?= strtoupper($reservation['boatPref1']); ?>)</small></td>
                   <td class="text-right">$<?= number_format($reservation['standardPrice'],2) ?>/ea</td>
                   <td class="text-right"><?= $reservation['standardQty'] ?></td>
                   <td class="text-right">$<?= number_format($reservation['standardPrice'] * $reservation['standardQty'],2) ?></td>
@@ -88,7 +88,12 @@
 
                 <?php if ($reservation['tourQty'] > 0): ?>
                 <tr>
-                  <td>Pre-Launch Tour<br><small>(8:30am - <?= $reservation['tourPref1'] == 'none' ? 'n/a' : $reservation['tourPref1'] . ' choice' ?>; 12:30pm - <?= $reservation['tourPref2'] == 'none' ? 'N/A' : $reservation['tourPref2'] . ' choice' ?>)</small></td>
+                  <td>Pre-Launch Tour
+                  <?php if(isset($reservation['tourPref1'])): ?>
+                    <br><small>(8:30am - <?= $reservation['tourPref1'] == 'none' ? 'n/a' : $reservation['tourPref1'] . ' choice' ?>; 12:30pm - <?= $reservation['tourPref2'] == 'none' ? 'N/A' : $reservation['tourPref2'] . ' choice' ?>)</small>
+                  <?php endif ?>
+                  </td>
+
                   <td class="text-right">$<?= number_format($reservation['tourPrice'],2) ?>/ea</td>
                   <td class="text-right"><?= $reservation['tourQty'] ?></td>
                   <td class="text-right">$<?= number_format($reservation['tourPrice'] * $reservation['tourQty'],2) ?></td>
