@@ -67,13 +67,13 @@ $assignedCounts = [
         <th class="text-nowrap">Reservation Name</th>
         <th><!-- Comment Column --></th>
         <th class="hidden">Assigned Tour</th>
-        <th class="text-nowrap">Boat Assignment</th>
+        <th class="text-nowrap hidden">Boat Assignment</th>
         <th class="hidden">U</th>
         <th>S</th>
         <th class="hidden">P</th>
-        <th class="hidden">T</th>
+        <th class="">T</th>
         <th>DC</th>
-        <th>C</th>
+        <th class="hidden">C</th>
         <th class="hidden">H</th>
         <th class="hidden">SM</th>
         <th class="hidden">MD</th>
@@ -81,7 +81,7 @@ $assignedCounts = [
         <th class="hidden">XL</th>
         <th class="hidden">2XL</th>
         <th class="hidden">3XL</th>
-        <th class="pr-4 text-nowrap">Preferences</th>
+        <th class="pr-4 text-nowrap hidden">Preferences</th>
         <th>D</th>
     </tr>
     <?php foreach ($reservations as $confirmationCode => $reservation): ?>
@@ -101,7 +101,7 @@ $assignedCounts = [
             </button>
             <?php endif ?>
             </td>
-            <td <?php if(isset($reservation['launchCheckInTime'])): ?>class="alert-success"<?php endif ?>>
+            <td class="hidden" <?php if(isset($reservation['launchCheckInTime'])): ?>class="alert-success"<?php endif ?>>
                 <?php if (isset($reservation['assignedBoat'])): ?><?= $reservation['assignedBoat'] ?><?php elseif ($reservation['upperQty'] > 0): ?>OO2^<?php elseif ($reservation['privateQty'] > 0): ?>SL<?php endif ?>
                 <?php if (isset($reservation['assignedBoat']) && strtolower($reservation['assignedBoat']) == $reservation['boatPref1']): ?>
                     (1<sup>st</sup>)
@@ -116,9 +116,9 @@ $assignedCounts = [
             <td class="hidden"><?= $reservation['upperQty'] ?></td>
             <td class="text-nowrap"><small>🚀</small> <?= $reservation['standardQty'] ?></td>
             <td class="hidden"><?= $reservation['privateQty'] ?></td>
-            <td class="text-nowrap hidden"><small>🛥️</small> <?= $reservation['tourQty'] ?></td>
+            <td class="text-nowrap"><small>🛥️</small> <?= $reservation['tourQty'] ?></td>
             <td class="text-nowrap"><?= $reservation['stickerQty'] ?></td>
-            <td class="text-nowrap"><small>🍪</small> <?= $reservation['cookieQty'] ?></td>
+            <td class="text-nowrap hidden"><small>🍪</small> <?= $reservation['cookieQty'] ?></td>
             <td class="text-nowrap hidden"><small>🧢</small> <?= $reservation['hatQty'] ?></td>
             <td class="text-nowrap hidden"><small><small><small><small><small>👕</small></small></small></small></small> <?= $reservation['shirtQtySm'] ?></td>
             <td class="text-nowrap hidden"><small><small><small><small>👕</small></small></small></small> <?= $reservation['shirtQtyMd'] ?></td>
@@ -126,7 +126,7 @@ $assignedCounts = [
             <td class="text-nowrap hidden"><small><small>👕</small></small> <?= $reservation['shirtQtyXl'] ?></td>
             <td class="text-nowrap hidden"><small>👕</small> <?= $reservation['shirtQty2xl'] ?></td>
             <td class="text-nowrap hidden">👕 <?= $reservation['shirtQty3xl'] ?></td>
-            <td class="text-nowrap">
+            <td class="text-nowrap hidden">
                 <?php if ($reservation['tourQty'] > 0): ?>
                 <small>
                     <?php if ($reservation['tourPref1'] == 'first' && $reservation['tourPref2'] == 'second'): ?>
@@ -183,13 +183,13 @@ $assignedCounts = [
         <th>Reservation&nbsp;Name</th>
         <th><!-- Comment Column --></th>
         <th class="hidden">Assigned Tour</th>
-        <th>Boat Assignment</th>
+        <th class="hidden">Boat Assignment</th>
         <th class="hidden">U</th>
         <th>S</th>
         <th class="hidden">P</th>
-        <th class="hidden">T</th>
+        <th class="">T</th>
         <th>DC</th>
-        <th>C</th>
+        <th class="hidden">C</th>
         <th class="hidden">H</th>
         <th class="hidden">SM</th>
         <th class="hidden">MD</th>
@@ -197,7 +197,7 @@ $assignedCounts = [
         <th class="hidden">XL</th>
         <th class="hidden">2XL</th>
         <th class="hidden">3XL</th>
-        <th class="pr-4">Preferences</th>
+        <th class="hidden pr-4">Preferences</th>
         <th>D</th>
     </tr>
 </table>
