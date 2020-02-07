@@ -49,6 +49,20 @@
         <input type="hidden" name="boatPref2" value="none" />
     </div>
 
+    <input type="hidden" name="cookieQty" id="cookie-qty" value="0">
+
+    <div class="form-group form-row justify-content-center">
+        <label for="small-qty" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Private Boat Launch Tickets:</label>
+        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
+            <div class="input-group">
+                <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
+                <input type="number" id="private-qty" name="privateQty" data-price="<?= $prices['private']; ?>" min="0" max="<?= $inventory['private'] ?>" step="1" value="0" pattern="[0-9]*" class="ticket price-calc form-control form-control-lg text-center" aria-describedby="private-qty-hint">
+                <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
+            </div>
+            <span id="private-qty-hint" class="form-text text-center">$<?= $prices['private']; ?> per person (<?= $inventory['private'] ?> remaining)</span>
+        </div>
+    </div>
+
     <div class="form-group form-row justify-content-center">
         <label for="tour-qty" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Pre-Launch Tour Tickets:</label>
         <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
@@ -63,19 +77,6 @@
         </div>
     </div>
 
-    <input type="hidden" name="cookieQty" id="cookie-qty" value="0">
-
-    <div class="form-group form-row justify-content-center">
-        <label for="small-qty" class="col-form-label col-9 col-sm-6 col-md-5 col-lg-4 font-weight-bold">Private Boat Launch Tickets:</label>
-        <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
-            <div class="input-group">
-                <div class="input-group-prepend"><button class="btn btn-decrement btn-secondary" type="button"><strong>-</strong></button></div>
-                <input type="number" id="private-qty" name="privateQty" data-price="<?= $prices['private']; ?>" min="0" max="<?= $inventory['private'] ?>" step="1" value="0" pattern="[0-9]*" class="ticket price-calc form-control form-control-lg text-center" aria-describedby="private-qty-hint">
-                <div class="input-group-append"><button class="btn btn-increment btn-secondary" type="button"><strong>+</strong></button></div>
-            </div>
-            <span id="private-qty-hint" class="form-text text-center">$<?= $prices['private']; ?> per person (<?= $inventory['private'] ?> remaining)</span>
-        </div>
-    </div>
 </fieldset>
 
 <?php endif ?>
