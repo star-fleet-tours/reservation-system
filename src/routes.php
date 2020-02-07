@@ -534,6 +534,7 @@ email;
         return $response->withRedirect('/admin/inventory');
     });
     $app->post('/admin/reservation/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
         $fieldWhitelist = [
             'reservationName',
             'reservationEmail',
@@ -557,6 +558,13 @@ email;
         }
         if (isset($_GET['checkCancelled']) && !isset($_POST['cancelled'])) {
             $container->get('redis')->hDel("$currentMission:reservation:{$args['id']}", 'cancelled');
+        }
+        return $response->withRedirect('/admin/checkin/'.$args['id']);
+    });
+    $app->post('/admin/reservation-raw/{id}', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
+        foreach ($_POST as $key=>$val) {
+            $container->get('redis')->hSet("$currentMission:reservation:{$args['id']}", $key, $_POST[$key]);
         }
         return $response->withRedirect('/admin/checkin/'.$args['id']);
     });

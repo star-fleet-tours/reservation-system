@@ -388,5 +388,12 @@
     </form>
         <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Raw Reservation Data</legend></fieldset>
         <?php var_dump($reservation); ?>
+        <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">BE VERY CAREFUL DOWN HERE</legend></fieldset>
+        <form method="post" action="/admin/reservation-raw/<?= $id ?>">
+        <?php foreach($reservation as $key => $value): ?>
+        <?= $key; ?>: <input type="text" name="<?=$key;?>" value="<?=$value;?>"><br>
+        <?php endforeach; ?>
+        <br><br><input type="submit" value="update raw data (you SURE?)">
+        </form>
     </div>
 </div>
