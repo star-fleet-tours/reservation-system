@@ -215,6 +215,24 @@
     </form>
     <?php endif ?>
 
+    <?php if ($reservation['tourQty'] > 0): ?>
+    <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Tour Check-In</legend></fieldset>
+    <form action="/admin/reservation/<?= $id ?>" method="post" class="container justify-content-center" id="tour-checkin-form">
+    <div class="form-group form-row justify-content-center">
+        <div class="col-9 col-sm-12 col-md-10 col-lg-8">
+            <label for="tour-check-in-notes" class="form-label font-weight-bold">Tour Check-In Notes:</label>
+            <textarea class="form-control" id="tour-check-in-notes" name="tourCheckInNotes"><?php if (isset($reservation['tourCheckInNotes'])): ?><?= $reservation['tourCheckInNotes'] ?><?php endif ?></textarea>
+        </div>
+    </div>
+    <div class="form-group form-row justify-content-center">
+        <div class="form-check col-9 col-sm-11 col-md-10 col-lg-8">
+            <input type="hidden" name="tourCheckInTime" value="<?= time() ?>">
+            <button class="button btn btn-warning float-right btn-lg" type="submit">Check Party In &raquo;</button><br>
+        </div>
+    </div>
+    </form>
+    <?php endif; ?>
+
 
 <?php include __DIR__ . '/menu.phtml' ?>
 <div class="text-center">
@@ -263,22 +281,6 @@
     </form>
 
     <?php if ($reservation['tourQty'] > 0): ?>
-    <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Tour Check-In</legend></fieldset>
-    <form action="/admin/reservation/<?= $id ?>" method="post" class="container justify-content-center" id="tour-checkin-form">
-    <div class="form-group form-row justify-content-center">
-        <div class="col-9 col-sm-12 col-md-10 col-lg-8">
-            <label for="tour-check-in-notes" class="form-label font-weight-bold">Tour Check-In Notes:</label>
-            <textarea class="form-control" id="tour-check-in-notes" name="tourCheckInNotes"><?php if (isset($reservation['tourCheckInNotes'])): ?><?= $reservation['tourCheckInNotes'] ?><?php endif ?></textarea>
-        </div>
-    </div>
-    <div class="form-group form-row justify-content-center">
-        <div class="form-check col-9 col-sm-11 col-md-10 col-lg-8">
-            <input type="hidden" name="launchCheckInTime" value="<?= time() ?>">
-            <button class="button btn btn-warning float-right btn-lg" type="submit">Check Party In &raquo;</button><br>
-        </div>
-    </div>
-    </form>
-
     <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Update Tour Prefs</legend></fieldset>
     <form action="/admin/reservation/<?= $id ?>" method="post" class="container justify-content-center" id="tour-pref-form">
     <div class="form-group form-row justify-content-center">
