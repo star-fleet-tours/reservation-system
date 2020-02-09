@@ -212,9 +212,9 @@ $assignedCounts = [
         <th>Standard Tickets</th>
         <td><?= $standard ?> of <?= $standard + $inventory['standard'] ?></td>
     </tr>
-    <tr class="hidden">
+    <tr>
         <th>Private Tickets</th>
-        <td><?= $private ?></td>
+        <td><?= $private ?> of <?= $private + $inventory['private'] ?></td>
     </tr>
     <tr class="">
         <th>Tour Tickets</th>
