@@ -6,7 +6,7 @@ use Slim\Http\Response;
 use PHPMailer\PHPMailer\PHPMailer;
 
 return function (App $app) {
-    $currentMission = 'atlas-v11';
+    $currentMission = 'crs-20';
     $container = $app->getContainer();
 
     $inventoryCheck = new class($container, $currentMission) {
