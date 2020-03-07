@@ -418,6 +418,26 @@ email;
         $args['tours'] = $tours;
         return $container->get('renderer')->render($response, 'admin/tours.phtml', $args);
     });
+    $app->get('/admin/assign-boats-alt', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
+        error_reporting(E_ALL & ~E_NOTICE);
+        $reservationKeys = $container->get('redis')->zRangeByScore("$currentMission:reservations", '-inf', '+inf');
+        header('Content-Type:text/plain');
+        echo "FILLING OO2-UPPER: One pass, first 20 that fit.\n";
+        $oo2UpperPassengers = 0;
+        foreach ($reservationKeys as $reservationKey) {
+            $oo2UpperSpotsRemaining = 20 - $oo2UpperPassengers;
+            if ($oo2UpperSpotsRemaining == 0) continue;
+            $reservation = $container->get('redis')->hGetAll($reservationKey);
+            if (isset($reservation['cancelled'])) continue;
+            if (isset($reservation['assignedBoat']) || $reservation['standardQty'] == 0 || $reservation['standardQty'] > $oo2UpperSpotsRemaining || $reservation['boatPref1'] != 'oo2-upper') {
+                continue;
+            }
+            $oo2UpperPassengers += $reservation['standardQty'];
+            echo "- {$reservation['reservationName']}, party of {$reservation['standardQty']}, {$reservation['boatPref1']} preferred ($oo2UpperPassengers)\n";
+            $container->get('redis')->hSet($reservationKey, 'assignedBoat', 'OO2-UPPER');
+        }
+    });
     $app->get('/admin/assign-boats', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
         if (!$container->get('session')->exists('admin')) return $response->withRedirect('/admin/login');
         error_reporting(E_ALL & ~E_NOTICE);
