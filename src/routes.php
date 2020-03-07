@@ -423,14 +423,20 @@ email;
         error_reporting(E_ALL & ~E_NOTICE);
         $reservationKeys = $container->get('redis')->zRangeByScore("$currentMission:reservations", '-inf', '+inf');
         header('Content-Type:text/plain');
-        echo "FILLING OO2-UPPER: One pass, first 20 that fit.\n";
+        echo "DELETE ALL BOAT ASSIGNMENTS:\n";
+        foreach ($reservationKeys as $reservationKey) {
+            $container->get('redis')->hDel($reservationKey, 'assignedBoat');
+            echo "- HDEL {$reservationKey} assignedBoat\n";
+        }
+        echo "FILLING OO2-UPPER: One pass, first 18 that fit.\n";
         $oo2UpperPassengers = 0;
         foreach ($reservationKeys as $reservationKey) {
-            $oo2UpperSpotsRemaining = 20 - $oo2UpperPassengers;
+            $oo2UpperSpotsRemaining = 18 - $oo2UpperPassengers;
             if ($oo2UpperSpotsRemaining == 0) continue;
             $reservation = $container->get('redis')->hGetAll($reservationKey);
             if (isset($reservation['cancelled'])) continue;
             if (isset($reservation['assignedBoat']) || $reservation['standardQty'] == 0 || $reservation['standardQty'] > $oo2UpperSpotsRemaining || $reservation['boatPref1'] != 'oo2-upper') {
+                $container->get('redis')->hSet($reservationKey, 'assignedBoat', 'OO2-LOWER');
                 continue;
             }
             $oo2UpperPassengers += $reservation['standardQty'];
