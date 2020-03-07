@@ -432,7 +432,10 @@ email;
         $oo2UpperPassengers = 0;
         foreach ($reservationKeys as $reservationKey) {
             $oo2UpperSpotsRemaining = 18 - $oo2UpperPassengers;
-            if ($oo2UpperSpotsRemaining == 0) continue;
+            if ($oo2UpperSpotsRemaining == 0) {
+                $container->get('redis')->hSet($reservationKey, 'assignedBoat', 'OO2-LOWER');
+                continue;
+            }
             $reservation = $container->get('redis')->hGetAll($reservationKey);
             if (isset($reservation['cancelled'])) continue;
             if (isset($reservation['assignedBoat']) || $reservation['standardQty'] == 0 || $reservation['standardQty'] > $oo2UpperSpotsRemaining || $reservation['boatPref1'] != 'oo2-upper') {
