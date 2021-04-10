@@ -146,7 +146,7 @@ $assignedCounts = [
                 <small><?= $reservation['boatPref1'] ?> &gt; <?= $reservation['boatPref2'] ?> &gt; <?= $reservation['boatPref3'] ?></small>
                 <?php endif ?>
             </td>
-            <td class="text-nowrap"><?php if ($reservation['donation'] > 0): ?><small>💸</small> <?= number_format($reservation['donation'],2) ?><?php endif ?></td>
+            <td class="text-nowrap"><small>💸</small> <?= number_format($reservation['donation'],2) ?></td>
         </tr>
         <?php
             $i++;
