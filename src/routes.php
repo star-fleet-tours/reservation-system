@@ -6,7 +6,7 @@ use Slim\Http\Response;
 use PHPMailer\PHPMailer\PHPMailer;
 
 return function (App $app) {
-    $currentMission = 'crs-20';
+    $currentMission = 'crew2';
     $container = $app->getContainer();
 
     $inventoryCheck = new class($container, $currentMission) {
