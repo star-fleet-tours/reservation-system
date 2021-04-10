@@ -68,10 +68,10 @@ $assignedCounts = [
         <th><!-- Comment Column --></th>
         <th class="hidden">Assigned Tour</th>
         <th class="text-nowrap hidden">Boat Assignment</th>
-        <th class="hidden">U</th>
+        <th class="">U</th>
         <th>S</th>
         <th class="hidden">P</th>
-        <th class="hidden">T</th>
+        <th class="">T</th>
         <th>DC</th>
         <th>C</th>
         <th class="hidden">H</th>
@@ -113,10 +113,10 @@ $assignedCounts = [
                     (N/A)
                 <?php endif ?>
             </td>
-            <td class="hidden"><?= $reservation['upperQty'] ?></td>
+            <td class=""><?= $reservation['upperQty'] ?></td>
             <td class="text-nowrap <?php if(isset($reservation['launchCheckInTime']) && $reservation['standardQty'] > 0): ?>alert-success<?php endif ?>"><small>🚀</small> <?= $reservation['standardQty'] ?></td>
             <td class="text-nowrap hidden <?php if(isset($reservation['launchCheckInTime']) && $reservation['privateQty'] > 0): ?>alert-success<?php endif ?>"><small>🚀</small> <?= $reservation['privateQty'] ?></td>
-            <td class="text-nowrap hidden <?php if(isset($reservation['tourCheckInTime'])): ?>alert-success<?php endif ?>"><small>🛥️</small> <?= $reservation['tourQty'] ?></td>
+            <td class="text-nowrap <?php if(isset($reservation['tourCheckInTime'])): ?>alert-success<?php endif ?>"><small>🛥️</small> <?= $reservation['tourQty'] ?></td>
             <td class="text-nowrap"><?= $reservation['stickerQty'] ?></td>
             <td class="text-nowrap"><small>🍪</small> <?= $reservation['cookieQty'] ?></td>
             <td class="text-nowrap hidden"><small>🧢</small> <?= $reservation['hatQty'] ?></td>
