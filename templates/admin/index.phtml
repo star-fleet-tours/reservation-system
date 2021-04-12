@@ -71,7 +71,7 @@ $totalRevenue = 0;
         <th class="text-nowrap hidden">Boat Assignment</th>
         <th class="">U</th>
         <th>S</th>
-        <th class="hidden">P</th>
+        <th class="">P</th>
         <th class="">T</th>
         <th>DC</th>
         <th>C</th>
@@ -116,7 +116,7 @@ $totalRevenue = 0;
             </td>
             <td class=""><?= $reservation['upperQty'] ?></td>
             <td class="text-nowrap <?php if(isset($reservation['launchCheckInTime']) && $reservation['standardQty'] > 0): ?>alert-success<?php endif ?>"><small>🚀</small> <?= $reservation['standardQty'] ?></td>
-            <td class="text-nowrap hidden <?php if(isset($reservation['launchCheckInTime']) && $reservation['privateQty'] > 0): ?>alert-success<?php endif ?>"><small>🚀</small> <?= $reservation['privateQty'] ?></td>
+            <td class="text-nowrap  <?php if(isset($reservation['launchCheckInTime']) && $reservation['privateQty'] > 0): ?>alert-success<?php endif ?>"><small>🚀</small> <?= $reservation['privateQty'] ?></td>
             <td class="text-nowrap <?php if(isset($reservation['tourCheckInTime'])): ?>alert-success<?php endif ?>"><small>🛥️</small> <?= $reservation['tourQty'] ?></td>
             <td class="text-nowrap"><?= $reservation['stickerQty'] ?></td>
             <td class="text-nowrap"><small>🍪</small> <?= $reservation['cookieQty'] ?></td>
@@ -188,7 +188,7 @@ $totalRevenue = 0;
         <th class="hidden">Boat Assignment</th>
         <th class="">U</th>
         <th>S</th>
-        <th class="hidden">P</th>
+        <th class="">P</th>
         <th class="">T</th>
         <th>DC</th>
         <th>C</th>
@@ -214,7 +214,7 @@ $totalRevenue = 0;
         <th>Standard Tickets</th>
         <td><?= $standard ?> of <?= $standard + $inventory['standard'] ?></td>
     </tr>
-    <tr class="hidden">
+    <tr class="">
         <th>Private Tickets</th>
         <td><?= $private ?> of <?= $private + $inventory['private'] ?></td>
     </tr>
