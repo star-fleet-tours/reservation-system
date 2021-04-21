@@ -544,6 +544,8 @@ email;
         header('Content-Type:text/plain');
         foreach ($reservationKeys as $reservationKey) {
             $reservation = $container->get('redis')->hGetAll($reservationKey);
+            $reservation['reservationName'] = trim($reservation['reservationName']);
+            $reservation['reservationEmail'] = trim($reservation['reservationEmail']);
             if (isset($reservation['cancelled'])) continue;
             echo "{$reservation['reservationName']},{$reservation['reservationEmail']}\n";
         }
