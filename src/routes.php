@@ -106,7 +106,7 @@ email;
         $reservation['hatPrice']           = $prices['hat'];
         $reservation['cookiePrice']        = $prices['cookie'];
         $reservation['stickerPrice']       = $prices['sticker'];
-        $reservation['tourDiscountValue']  = 10;
+        $reservation['tourDiscountValue']  = 20;
 
         if (isset($_POST['updateReservation'])) {
 
