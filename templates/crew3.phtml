@@ -70,22 +70,24 @@
         <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
             <div class="form-group input-group input-group-sm">
                 <div class="input-group-prepend">
-                    <div class="input-group-text text-monospace">2:00pm</div>
+                    <div class="input-group-text text-monospace">2:00pm (Sold Out)</div>
                 </div>
-                <select id="tour-pref-1" name="tourPref1" class="form-control tour-preferences">
-                    <option value="" selected>Select preference...</option>
+                <input name="tourPref1" value="none" type="hidden">
+                <select id="tour-pref-1" name="tourPref1" class="form-control tour-preferences" disabled>
+                    <option value="">Select preference...</option>
                     <option value="first">1st choice</option>
                     <option value="second">2nd choice</option>
-                    <option value="none">Unavailable</option>
+                    <option value="none" selected>Unavailable</option>
                 </select>
             </div>
             <div class="form-group input-group input-group-sm">
                 <div class="input-group-prepend">
                     <div class="input-group-text text-monospace">4:30pm</div>
                 </div>
-                <select id="tour-pref-2" name="tourPref2" class="form-control tour-preferences">
-                    <option value="" selected>Select preference...</option>
-                    <option value="first">1st choice</option>
+                <input name="tourPref2" value="first" type="hidden">
+                <select id="tour-pref-2" name="tourPref2" class="form-control tour-preferences" disabled>
+                    <option value="">Select preference...</option>
+                    <option value="first" selected>1st choice</option>
                     <option value="second">2nd choice</option>
                     <option value="none">Unavailable</option>
                 </select>
