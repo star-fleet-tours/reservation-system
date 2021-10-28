@@ -82,8 +82,8 @@ $totalRevenue = 0;
         <th class="hidden">XL</th>
         <th class="hidden">2XL</th>
         <th class="hidden">3XL</th>
-        <th class="pr-4 text-nowrap">Tour Pref.</th>
         <th>D</th>
+        <th class="pr-4 text-nowrap">Tour Pref</th>
     </tr>
     <?php foreach ($reservations as $confirmationCode => $reservation): ?>
         <tr>
@@ -127,17 +127,18 @@ $totalRevenue = 0;
             <td class="text-nowrap hidden"><small><small>👕</small></small> <?= $reservation['shirtQtyXl'] ?></td>
             <td class="text-nowrap hidden"><small>👕</small> <?= $reservation['shirtQty2xl'] ?></td>
             <td class="text-nowrap hidden">👕 <?= $reservation['shirtQty3xl'] ?></td>
+            <td class=text-nowrap"><small>💸</small> <?= number_format($reservation['donation'],2) ?></td>
             <td class="text-nowrap">
                 <?php if ($reservation['tourQty'] > 0): ?>
                 <small>
                     <?php if ($reservation['tourPref1'] == 'first' && $reservation['tourPref2'] == 'second'): ?>
-                    12:00pm &gt; 4:30pm
+                    2:00pm &gt; 4:30pm
                     <?php elseif ($reservation['tourPref1'] == 'second' && $reservation['tourPref2'] == 'first'): ?>
-                    4:30pm &gt; 12:00pm
+                    4:30pm &gt; 2:00pm
                     <?php elseif ($reservation['tourPref1'] == 'none' && $reservation['tourPref2'] !='none'): ?>
                     4:30pm only
                     <?php elseif ($reservation['tourPref2'] == 'none' && $reservation['tourPref1'] !='none'): ?>
-                    12:00pm only
+                    2:00pm only
                     <?php elseif ($reservation['tourPref1'] == 'none'): ?>
                     wtf???
                     <?php endif ?>
@@ -147,7 +148,6 @@ $totalRevenue = 0;
                 <small><?= $reservation['boatPref1'] ?> &gt; <?= $reservation['boatPref2'] ?> &gt; <?= $reservation['boatPref3'] ?></small>
                 <?php endif */ ?>
             </td>
-            <td class="text-nowrap"><small>💸</small> <?= number_format($reservation['donation'],2) ?></td>
         </tr>
         <?php
             $i++;
@@ -199,8 +199,8 @@ $totalRevenue = 0;
         <th class="hidden">XL</th>
         <th class="hidden">2XL</th>
         <th class="hidden">3XL</th>
-        <th class="pr-4">Tour Pref.</th>
         <th>D</th>
+        <th class="pr-4">Tour Pref</th>
     </tr>
 </table>
 
