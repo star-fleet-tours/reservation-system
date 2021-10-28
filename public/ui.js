@@ -9,7 +9,7 @@ $(document).ready(function() {
         var launchTicketQty = howManyLaunchTickets();
         var tourTicketQty = parseInt($("input#tour-qty").val());
         if (tourTicketQty > 0) {
-            totalPrice -= 10 * Math.min(launchTicketQty, tourTicketQty);
+            totalPrice -= 20 * Math.min(launchTicketQty, tourTicketQty);
         }
         $("#cart-total").text(totalPrice.toFixed(2).toString());
     }
@@ -43,7 +43,7 @@ $(document).ready(function() {
         var tourTicketQty = parseInt($("input#tour-qty").val());
         var discountedTourTicketQty = Math.min(launchTicketQty, tourTicketQty)
         if (discountedTourTicketQty > 0) {
-            $("#discount-text").html("<b>Tour + Launch Discount:</b> $" + discountedTourTicketQty * 10);
+            $("#discount-text").html("<b>Tour + Launch Discount:</b> $" + discountedTourTicketQty * 20);
             $("#discount-text").show();
         } else {
             $("#discount-text").hide();
