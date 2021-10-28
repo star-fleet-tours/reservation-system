@@ -62,7 +62,7 @@
                 <?php endif; ?>
                 <?php if ($reservation['standardQty'] > 0): ?>
                 <tr>
-                  <td>Standard Launch Ticket<br><small>(Assigned boat: <?= strtoupper($reservation['assignedBoat']); ?>)</small></td>
+                  <td>Standard Launch Ticket<br><? /* ?><small>(Assigned boat: <?= strtoupper($reservation['assignedBoat']); ?>)</small><? */ ?></td>
                   <td class="text-right">$<?= number_format($reservation['standardPrice'],2) ?>/ea</td>
                   <td class="text-right"><?= $reservation['standardQty'] ?></td>
                   <td class="text-right">$<?= number_format($reservation['standardPrice'] * $reservation['standardQty'],2) ?></td>

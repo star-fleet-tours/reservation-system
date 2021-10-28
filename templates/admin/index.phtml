@@ -69,11 +69,11 @@ $totalRevenue = 0;
         <th><!-- Comment Column --></th>
         <th class="hidden">Assigned Tour</th>
         <th class="text-nowrap hidden">Boat Assignment</th>
-        <th class="">U</th>
-        <th>S</th>
-        <th class="">P</th>
+        <th class="hidden">U</th>
+        <th>L</th>
+        <th class="hidden">P</th>
         <th class="">T</th>
-        <th>DC</th>
+        <th class="hidden">DC</th>
         <th>C</th>
         <th class="hidden">H</th>
         <th class="hidden">SM</th>
@@ -82,7 +82,7 @@ $totalRevenue = 0;
         <th class="hidden">XL</th>
         <th class="hidden">2XL</th>
         <th class="hidden">3XL</th>
-        <th class="pr-4 text-nowrap hidden">Preferences</th>
+        <th class="pr-4 text-nowrap">Tour Pref.</th>
         <th>D</th>
     </tr>
     <?php foreach ($reservations as $confirmationCode => $reservation): ?>
@@ -114,11 +114,11 @@ $totalRevenue = 0;
                     (N/A)
                 <?php endif ?>
             </td>
-            <td class=""><?= $reservation['upperQty'] ?></td>
+            <td class="hidden"><?= $reservation['upperQty'] ?></td>
             <td class="text-nowrap <?php if(isset($reservation['launchCheckInTime']) && $reservation['standardQty'] > 0): ?>alert-success<?php endif ?>"><small>🚀</small> <?= $reservation['standardQty'] ?></td>
-            <td class="text-nowrap  <?php if(isset($reservation['launchCheckInTime']) && $reservation['privateQty'] > 0): ?>alert-success<?php endif ?>"><small>🚀</small> <?= $reservation['privateQty'] ?></td>
+            <td class="text-nowrap hidden <?php if(isset($reservation['launchCheckInTime']) && $reservation['privateQty'] > 0): ?>alert-success<?php endif ?>"><small>🚀</small> <?= $reservation['privateQty'] ?></td>
             <td class="text-nowrap <?php if(isset($reservation['tourCheckInTime'])): ?>alert-success<?php endif ?>"><small>🛥️</small> <?= $reservation['tourQty'] ?></td>
-            <td class="text-nowrap"><?= $reservation['stickerQty'] ?></td>
+            <td class="text-nowrap hidden"><?= $reservation['stickerQty'] ?></td>
             <td class="text-nowrap"><small>🍪</small> <?= $reservation['cookieQty'] ?></td>
             <td class="text-nowrap hidden"><small>🧢</small> <?= $reservation['hatQty'] ?></td>
             <td class="text-nowrap hidden"><small><small><small><small><small>👕</small></small></small></small></small> <?= $reservation['shirtQtySm'] ?></td>
@@ -127,25 +127,25 @@ $totalRevenue = 0;
             <td class="text-nowrap hidden"><small><small>👕</small></small> <?= $reservation['shirtQtyXl'] ?></td>
             <td class="text-nowrap hidden"><small>👕</small> <?= $reservation['shirtQty2xl'] ?></td>
             <td class="text-nowrap hidden">👕 <?= $reservation['shirtQty3xl'] ?></td>
-            <td class="text-nowrap hidden">
+            <td class="text-nowrap">
                 <?php if ($reservation['tourQty'] > 0): ?>
                 <small>
                     <?php if ($reservation['tourPref1'] == 'first' && $reservation['tourPref2'] == 'second'): ?>
-                    8:30am &gt; 12:30pm
+                    12:00pm &gt; 4:30pm
                     <?php elseif ($reservation['tourPref1'] == 'second' && $reservation['tourPref2'] == 'first'): ?>
-                    12:30pm &gt; 8:30am
+                    4:30pm &gt; 12:00pm
                     <?php elseif ($reservation['tourPref1'] == 'none' && $reservation['tourPref2'] !='none'): ?>
-                    12:30pm only
+                    4:30pm only
                     <?php elseif ($reservation['tourPref2'] == 'none' && $reservation['tourPref1'] !='none'): ?>
-                    8:30am only
+                    12:00pm only
                     <?php elseif ($reservation['tourPref1'] == 'none'): ?>
                     wtf???
                     <?php endif ?>
                 </small><br>
                 <?php endif ?>
-                <?php if ($reservation['standardQty'] > 0): ?>
+                <?php /* if ($reservation['standardQty'] > 0): ?>
                 <small><?= $reservation['boatPref1'] ?> &gt; <?= $reservation['boatPref2'] ?> &gt; <?= $reservation['boatPref3'] ?></small>
-                <?php endif ?>
+                <?php endif */ ?>
             </td>
             <td class="text-nowrap"><small>💸</small> <?= number_format($reservation['donation'],2) ?></td>
         </tr>
@@ -186,11 +186,11 @@ $totalRevenue = 0;
         <th><!-- Comment Column --></th>
         <th class="hidden">Assigned Tour</th>
         <th class="hidden">Boat Assignment</th>
-        <th class="">U</th>
-        <th>S</th>
-        <th class="">P</th>
+        <th class="hidden">U</th>
+        <th>L</th>
+        <th class="hidden">P</th>
         <th class="">T</th>
-        <th>DC</th>
+        <th class="hidden">DC</th>
         <th>C</th>
         <th class="hidden">H</th>
         <th class="hidden">SM</th>
@@ -199,14 +199,14 @@ $totalRevenue = 0;
         <th class="hidden">XL</th>
         <th class="hidden">2XL</th>
         <th class="hidden">3XL</th>
-        <th class="hidden pr-4">Preferences</th>
+        <th class="pr-4">Tour Pref.</th>
         <th>D</th>
     </tr>
 </table>
 
 <fieldset class="border-top border-warning rounded p-2 mt-4"><legend class="w-auto px-2 ml-4 font-weight-bold">Totals</legend></fieldset>
 <table class="table table-dark w-auto mx-auto">
-    <tr class="">
+    <tr class="hidden">
         <th>Upper Tickets</th>
         <td><?= $upper ?> of <?= $upper + $inventory['upper'] ?></td>
     </tr>
@@ -214,7 +214,7 @@ $totalRevenue = 0;
         <th>Standard Tickets</th>
         <td><?= $standard ?> of <?= $standard + $inventory['standard'] ?></td>
     </tr>
-    <tr class="">
+    <tr class="hidden">
         <th>Private Tickets</th>
         <td><?= $private ?> of <?= $private + $inventory['private'] ?></td>
     </tr>
@@ -230,7 +230,7 @@ $totalRevenue = 0;
         <th>Donations</th>
         <td>$<?= number_format($donations,2) ?></td>
     </tr>
-    <tr>
+    <tr class="hidden">
         <th>Decals</th>
         <td><?= $stickers ?></td>
     </tr>
