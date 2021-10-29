@@ -139,6 +139,8 @@ $totalRevenue = 0;
                     4:30pm only
                     <?php elseif ($reservation['tourPref2'] == 'none' && $reservation['tourPref1'] !='none'): ?>
                     2:00pm only
+                    <?php elseif ($reservation['tourPref3'] == 'first'): ?>
+                    11:30am only
                     <?php elseif ($reservation['tourPref1'] == 'none'): ?>
                     wtf???
                     <?php endif ?>

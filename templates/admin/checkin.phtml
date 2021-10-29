@@ -79,7 +79,7 @@
 
                 <?php if ($reservation['tourQty'] > 0): ?>
                 <tr>
-                  <td>Pre-Launch Tour<br><small>(2:00pm - <?= $reservation['tourPref1'] == 'none' ? 'n/a' : $reservation['tourPref1'] . ' choice' ?>; 4:30pm - <?= $reservation['tourPref2'] == 'none' ? 'N/A' : $reservation['tourPref2'] . ' choice' ?>)</small></td>
+                  <td>Pre-Launch Tour<br><small>(11:30am - <?= $reservation['tourPref3'] == 'none' ? 'n/a' : $reservation['tourPref3'] . ' choice' ?>; 2:00pm - <?= $reservation['tourPref1'] == 'none' ? 'n/a' : $reservation['tourPref1'] . ' choice' ?>; 4:30pm - <?= $reservation['tourPref2'] == 'none' ? 'N/A' : $reservation['tourPref2'] . ' choice' ?>)</small></td>
                   <td class="text-right">$<?= number_format($reservation['tourPrice'],2) ?>/ea</td>
                   <td class="text-right"><?= $reservation['tourQty'] ?></td>
                   <td class="text-right">$<?= number_format($reservation['tourPrice'] * $reservation['tourQty'],2) ?></td>
@@ -288,7 +288,19 @@
         <div class="col-9 col-sm-6 col-md-5 col-lg-4 align-self-center">
             <div class="form-group input-group input-group-sm">
                 <div class="input-group-prepend">
-                    <div class="input-group-text text-monospace">8:30am-12:30pm</div>
+                    <div class="input-group-text text-monospace">11:30am</div>
+                </div>
+                <select id="tour-pref-3" name="tourPref3" class="form-control">
+                    <option value="">Choose:</option>
+                    <option value="first" <?php if(isset($reservation['tourPref3']) && $reservation['tourPref3'] == 'first'): ?>selected<?php endif ?>>1st choice</option>
+                    <option value="second" <?php if(isset($reservation['tourPref3']) && $reservation['tourPref3'] == 'second'): ?>selected<?php endif ?>>2nd choice</option>
+                    <option value="third" <?php if(isset($reservation['tourPref3']) && $reservation['tourPref3'] == 'third'): ?>selected<?php endif ?>>3rd choice</option>
+                    <option value="none" <?php if(isset($reservation['tourPref3']) && $reservation['tourPref3'] == 'none'): ?>selected<?php endif ?>>Unavailable</option>
+                </select>
+            </div>
+            <div class="form-group input-group input-group-sm">
+                <div class="input-group-prepend">
+                    <div class="input-group-text text-monospace">2:00pm</div>
                 </div>
                 <select id="tour-pref-1" name="tourPref1" class="form-control">
                     <option value="">Choose:</option>
@@ -300,7 +312,7 @@
             </div>
             <div class="form-group input-group input-group-sm">
                 <div class="input-group-prepend">
-                    <div class="input-group-text text-monospace">12:30pm-4:30pm</div>
+                    <div class="input-group-text text-monospace">4:30pm</div>
                 </div>
                 <select id="tour-pref-2" name="tourPref2" class="form-control">
                     <option value="first" <?php if(isset($reservation['tourPref2']) && $reservation['tourPref2'] == 'first'): ?>selected<?php endif ?>>1st choice</option>
