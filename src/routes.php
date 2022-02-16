@@ -56,6 +56,8 @@ email;
     };
 
     $app->get('/', function (Request $request, Response $response, array $args) use ($container, $currentMission) {
+        header('Location: https://www.star-fleet.tours/');
+        die();
         if (time() < strtotime(getenv("TICKET_SALE_TIME"))) {
             $args['ticketTime'] = strtotime(getenv("TICKET_SALE_TIME"));
             return $container->get('renderer')->render($response, $currentMission . '-countdown.phtml', $args);
