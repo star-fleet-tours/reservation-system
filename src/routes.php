@@ -308,7 +308,7 @@ email;
                 $charge = \Stripe\Charge::create([
                     'amount'               => $reservation['totalPaymentDue'] * 100,
                     'currency'             => 'usd',
-                    'description'          => "Star Fleet Tours " . strtoupper($currentMission) . " Mission - $reservationID",
+                    'description'          => "Star Fleet Tours " . strtoupper($currentMission) . " - $reservationID",
                     'statement_descriptor' => strtoupper($currentMission) . " $reservationID",
                     'customer'             => $customer->id,
                 ],[
