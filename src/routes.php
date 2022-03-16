@@ -48,7 +48,9 @@ return function (App $app) {
 
 <p>Please carefully review the information on our <a href="https://www.star-fleet.tours/current/" target="_blank">tickets</a> page for the key details on where and when to meet, what to expect and other important announcements. In particular, if you've gone out with us before, note the **NEW** meeting location at Blue Points Marina, instead of at Sunrise Marina next to Grills. We'll post status updates and any changes to the launch date and our own plans there, as well as on our <a href="https://twitter.com/StarFleetTours" target="_blank">Twitter feed</a>, <a href="https://www.facebook.com/starfleettours/" target="_blank">Facebook page</a>, and <a href="https://join.slack.com/t/spacexmeetups/shared_invite/enQtMzE0MjY1MTY0Mzc1LTFlMGE4MjY1ZTI4ZjZlNWQ4ZWQzZjEwMGFhNDU3NGRhZjBmNThhNTMwNzc0OWZhZGZhNzQ0YjJjNTY1Y2Q2ZWY" target="_blank">Slack group</a>. As the event approaches, please check those frequently to stay up to date.</p>
 
-<p>If you have questions, concerns, or would otherwise like to get in touch with us, you can reach us on the aforementioned platforms, and we can also be reached by email at <a href="mailto:fleetcommand@star-fleet.tours" target="_blank">FleetCommand@Star-Fleet.Tours</a> (or simply respond to this email). For urgent issues or if you can't get a hold of us, you can call or text C.A.M. Gerlach at 571-488-5878, and Steven Giraldo at 941-879-4240. Thanks!</p>
+<p>If you have questions, concerns, or would otherwise like to get in touch with us, you can reach us on the aforementioned platforms, and we can also be reached by email at <a href="mailto:fleetcommand@star-fleet.tours" target="_blank">FleetCommand@Star-Fleet.Tours</a> (or simply respond to this email). For urgent issues or if you can't get a hold of us, you can call or text C.A.M. Gerlach at 571-488-5878, and Steven Giraldo at 941-879-4240.</p>
+
+<p>Thanks, and we can't wait to see you at the event!</p>
 email;
         $mail->send();
     };
